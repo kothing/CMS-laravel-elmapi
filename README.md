@@ -6,14 +6,22 @@ A headless CMS is a backend-only content management system that makes content ac
 
 # How to start
 
-## Required
+## Server Requirements
+- PHP >= 8.1
+- Mysql >= 5.7.8
+- BCMath PHP Extension
+- Ctype PHP Extension
+- DOM PHP Extension
+- Fileinfo PHP Extension
+- JSON PHP Extension
+- Mbstring PHP Extension
+- OpenSSL PHP Extension
+- PCRE PHP Extension
+- PDO PHP Extension
+- Tokenizer PHP Extension
+- XML PHP Extension
 
-PHP  
-- `fileinfo` extensions
-- `putenv()` enable
-- `proc_open()` enable
-
-## Install
+## Installation
 
 **1. Clone From Github**
 ```bash
