@@ -6,12 +6,14 @@ A headless CMS is a backend-only content management system that makes content ac
 
 # How to start
 
-## Required **
+## Required
 
 PHP  
 - `fileinfo` extensions
 - `putenv()` enable
 - `proc_open()` enable
+
+## Install
 
 **1. Clone From Github**
 ```bash
