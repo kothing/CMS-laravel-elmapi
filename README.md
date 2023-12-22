@@ -24,9 +24,9 @@ cd your-project-folder
 ```
 
 **3. Set folder permissions**
-1. storage 777
-2. bootstrap/cache 777
-3. public 777
+- storage 777
+- bootstrap/cache 777
+- public 777
 
 **4. Create a Database named**
 Create your database
