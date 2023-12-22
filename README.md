@@ -9,9 +9,9 @@ A headless CMS is a backend-only content management system that makes content ac
 ## Required **
 
 PHP  
-1. fileinfo extensions
-1. putenv() enable
-1. proc_open() enable
+- `fileinfo` extensions
+- `putenv()` enable
+- `proc_open()` enable
 
 **1. Clone From Github**
 ```bash
@@ -28,10 +28,12 @@ cd your-project-folder
 - bootstrap/cache 777
 - public 777
 
-**4. Create a Database named**  
+**4. Create a Database named**
+
 Create your database
 
-**5. Create and config env file**   
+**5. Create and config env file**
+
 Create a .env file by cloning .env.example file, configure the following information 
 ```
 APP_NAME='Your app name'
@@ -68,15 +70,16 @@ php artisan serve
 and open browser at `http://localhost:8000`
 
 
-**10. Go to CMS admin dashborad**  
-Login Now by giving this data.
+**10. Go to CMS admin dashborad**
+
+Login Now by giving this data `http://your-site-domain.com`
 ```php
 Username: admin@admin.com
 Password: admin
 ```
 You can find it in `database/seeders/DatabaseSeeder.php`
 
-`http://your-site-domain.com`
+
 
 ---
 
