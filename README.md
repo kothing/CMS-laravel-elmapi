@@ -28,7 +28,7 @@ cd your-project-folder
 - bootstrap/cache 777
 - public 777
 
-**4. Create a Database named**
+**4. Create a Database named**  
 Create your database
 
 **5. Create and config env file**   
