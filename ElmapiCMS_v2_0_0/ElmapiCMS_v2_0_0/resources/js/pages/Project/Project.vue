@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <div class="w-full xl:w-1/2 lg:w-3/4 m-auto mt-5">
+    <div clss="app__project-centre">
+        <div class="w-full m-auto mt-5">
             <project-header :project="project" class="mb-3"></project-header>
             
             <div class="grid grid-cols-1 sm:grid-cols-2">

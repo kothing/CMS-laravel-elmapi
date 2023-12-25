@@ -1,5 +1,5 @@
 <template>
-    <div class="flex h-full">
+    <div class="app__project-api flex h-full">
         <div class="w-96 h-full bg-white overflow-x-hidden">
             <project-header :project="project" class="bg-white"></project-header>
 

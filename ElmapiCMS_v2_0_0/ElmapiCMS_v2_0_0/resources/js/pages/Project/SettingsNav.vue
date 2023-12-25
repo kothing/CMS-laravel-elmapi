@@ -1,5 +1,5 @@
 <template>
-    <div class="p-4 bg-white">
+    <div class="app__project-nav p-4 bg-white">
         <h4 class="mb-2 p-2 font-bold text-lg">Settings</h4>
 
         <ul>

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="app__media-library">
         <h4 class="mb-2 py-2 font-bold text-lg">
             <i class="fas fa-images text-gray-600"></i> Media Library
             <ui-button v-if="!showUploader" color="indigo-500" class="float-right" @click.native="showUploader = true"><i class="fas fa-upload text-white mr-3"></i> Upload Files</ui-button>

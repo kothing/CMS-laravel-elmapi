@@ -2,6 +2,26 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+.app__container {
+    
+}
+
+.app__sidebar {
+    
+}
+
+.app__sidebar .app__main-menu {
+    
+}
+
+.app__sidebar .app__main-menu .app__main-menu-item {
+    
+}
+
+.app__sidebar .app__main-menu .app__sub-menu {
+    
+}
+
 .field_icon {
     width: 42px; height: 42px;
 }
