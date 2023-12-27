@@ -1,255 +1,256 @@
 <template>
-    <div class="flex h-full overflow-hidden">
-        <div class="w-96 h-full bg-white overflow-x-hidden">
-            <project-header :project="project" class="bg-white"></project-header>
-            <collection-sidebar :project="project"></collection-sidebar>
-        </div>
+    <div class="app__project-collection-item h-full relative">
+        <project-header :project="project" class="bg-white"></project-header>
 
-        <div class="w-9/12 p-4 overflow-x-auto">
-            <div class="mb-2 p-2 font-bold text-lg flex">
-                <div class="flex">
-                    {{ collection.name }} <small class="text-gray-400 ml-1">#{{ collection.slug }}</small>
-                </div>
-                <div class="flex ml-1">
-                    <ui-dropdown align="left">
-                        <template #trigger>
-                            <button class="text-indigo-500 hover:bg-gray-100 px-2 rounded-sm"><i class="fa fa-ellipsis-h object-bottom"></i></button>
-                        </template>
-
-                        <template #content>
-                            <ui-button type="button" color="white" hover="gray-200" class="w-full h-full" @click.native="openEditCollectionModal = true">
-                                <div class="text-black text-sm text-left"><i class="fa fa-edit"></i> Edit Collection</div>
-                            </ui-button>
-                            <ui-button type="button" color="white" hover="gray-200" class="w-full h-full" @click.native="deleteCollection(collection)">
-                                <div class="text-black text-sm text-left"><i class="fa fa-trash-alt text-red-500"></i> Delete Collection</div>
-                            </ui-button>
-                        </template>
-                    </ui-dropdown>
-                </div>
+        <div class="flex h-full pt-20 overflow-hidden">
+            <div class="w-96 h-full bg-white overflow-x-hidden">
+                <collection-sidebar :project="project"></collection-sidebar>
             </div>
-
-            <ul>
-                <draggable :list="collection.fields" @end="sortFields" v-bind="dragOptions" handle=".handle">
-                    <transition-group type="transition">
-                        <li class="w-full mb-2" v-for="field in collection.fields" :key="field.id">
-                            <div class="flex items-center w-full bg-white rounded-sm p-4">
-                                <i class="fas fa-grip-vertical mr-4 text-gray-500 cursor-pointer handle"></i>
-                                <div :class="fieldDetails[field.type].bg" class="mr-4 text-gray-100 rounded-sm text-xl items-center text-center flex field_icon_xl"><i :class="fieldDetails[field.type].icon" class="w-full"></i></div>
-                                <div class="items-center w-full">
-                                    <div class="text-lg">{{ field.label }}</div>
-
-                                    <div class="w-full flex justify-between">
-                                        <div class="flex space-x-1 items-center">
-                                            <span class="text-blue-900 text-sm rounded-sm bg-gray-200 px-3">#{{ field.name }}</span>
-                                            <span class="text-blue-900 text-sm rounded-sm bg-indigo-200 px-3">
-                                                {{ field.type }}
-                                                <span v-if="field.type == 'enumeration'">
-                                                    <span v-if="field.options.multiple">: multiple</span>
+            <div class="w-9/12 p-4 overflow-x-auto">
+                <div class="mb-2 p-2 font-bold text-lg flex">
+                    <div class="flex">
+                        {{ collection.name }} <small class="text-gray-400 ml-1">#{{ collection.slug }}</small>
+                    </div>
+                    <div class="flex ml-1">
+                        <ui-dropdown align="left">
+                            <template #trigger>
+                                <button class="text-indigo-500 hover:bg-gray-100 px-2 rounded-sm"><i class="fa fa-ellipsis-h object-bottom"></i></button>
+                            </template>
+    
+                            <template #content>
+                                <ui-button type="button" color="white" hover="gray-200" class="w-full h-full" @click.native="openEditCollectionModal = true">
+                                    <div class="text-black text-sm text-left"><i class="fa fa-edit"></i> Edit Collection</div>
+                                </ui-button>
+                                <ui-button type="button" color="white" hover="gray-200" class="w-full h-full" @click.native="deleteCollection(collection)">
+                                    <div class="text-black text-sm text-left"><i class="fa fa-trash-alt text-red-500"></i> Delete Collection</div>
+                                </ui-button>
+                            </template>
+                        </ui-dropdown>
+                    </div>
+                </div>
+    
+                <ul>
+                    <draggable :list="collection.fields" @end="sortFields" v-bind="dragOptions" handle=".handle">
+                        <transition-group type="transition">
+                            <li class="w-full mb-2" v-for="field in collection.fields" :key="field.id">
+                                <div class="flex items-center w-full bg-white rounded-sm p-4">
+                                    <i class="fas fa-grip-vertical mr-4 text-gray-500 cursor-pointer handle"></i>
+                                    <div :class="fieldDetails[field.type].bg" class="mr-4 text-gray-100 rounded-sm text-xl items-center text-center flex field_icon_xl"><i :class="fieldDetails[field.type].icon" class="w-full"></i></div>
+                                    <div class="items-center w-full">
+                                        <div class="text-lg">{{ field.label }}</div>
+    
+                                        <div class="w-full flex justify-between">
+                                            <div class="flex space-x-1 items-center">
+                                                <span class="text-blue-900 text-sm rounded-sm bg-gray-200 px-3">#{{ field.name }}</span>
+                                                <span class="text-blue-900 text-sm rounded-sm bg-indigo-200 px-3">
+                                                    {{ field.type }}
+                                                    <span v-if="field.type == 'enumeration'">
+                                                        <span v-if="field.options.multiple">: multiple</span>
+                                                    </span>
+                                                    <span v-if="field.type == 'date'">
+                                                        <span v-if="field.options.timepicker">: time</span>
+                                                    </span>
+                                                    <span v-if="field.type == 'media'">
+                                                        <span v-if="field.options.media.type == 1">: single</span>
+                                                        <span v-else-if="field.options.media.type == 2">: multiple</span>
+                                                    </span>
+                                                    <span v-else-if="field.type == 'relation'">
+                                                        <span v-if="field.options.relation.type == 1">: one-to-one</span>
+                                                        <span v-else-if="field.options.relation.type == 2">: one-to-many</span>
+                                                    </span>
                                                 </span>
-                                                <span v-if="field.type == 'date'">
-                                                    <span v-if="field.options.timepicker">: time</span>
-                                                </span>
-                                                <span v-if="field.type == 'media'">
-                                                    <span v-if="field.options.media.type == 1">: single</span>
-                                                    <span v-else-if="field.options.media.type == 2">: multiple</span>
-                                                </span>
-                                                <span v-else-if="field.type == 'relation'">
-                                                    <span v-if="field.options.relation.type == 1">: one-to-one</span>
-                                                    <span v-else-if="field.options.relation.type == 2">: one-to-many</span>
-                                                </span>
-                                            </span>
-                                            <span class="text-blue-900 text-sm rounded-sm bg-gray-100 px-3" v-if="field.validations.required.status"><i class="fas fa-star-of-life text-xs"></i> required</span>
-                                            <span class="text-blue-900 text-sm rounded-sm bg-gray-100 px-3" v-if="field.validations.unique.status"><i class="fas fa-fingerprint text-xs"></i> unique</span>
-                                            <span class="text-blue-900 text-sm rounded-sm bg-gray-100 px-3" v-if="field.options.repeatable"><i class="fas fa-redo text-xs"></i> repeatable</span>
-                                            <span class="text-blue-900 text-sm rounded-sm bg-gray-100 px-3" v-if="field.options.hideInContentList">hide in content list</span>
-                                            <span class="text-blue-900 text-sm rounded-sm bg-gray-100 px-3" v-if="field.options.hiddenInAPI">hidden in api</span>
-                                        </div>
-
-                                        <div>
-                                            <a @click="openNewFieldModal(field.type, true, field)" class="text-white text-sm rounded-sm bg-indigo-500 px-3 cursor-pointer hover:bg-indigo-600 whitespace-nowrap"><i class="fa fa-edit text-xs"></i> Edit</a>
-                                            <a @click="deleteField(field)" class="text-white text-sm rounded-sm bg-red-500 px-3 cursor-pointer hover:bg-red-600 whitespace-nowrap"><i class="fa fa-trash-alt text-xs"></i> Delete</a>
+                                                <span class="text-blue-900 text-sm rounded-sm bg-gray-100 px-3" v-if="field.validations.required.status"><i class="fas fa-star-of-life text-xs"></i> required</span>
+                                                <span class="text-blue-900 text-sm rounded-sm bg-gray-100 px-3" v-if="field.validations.unique.status"><i class="fas fa-fingerprint text-xs"></i> unique</span>
+                                                <span class="text-blue-900 text-sm rounded-sm bg-gray-100 px-3" v-if="field.options.repeatable"><i class="fas fa-redo text-xs"></i> repeatable</span>
+                                                <span class="text-blue-900 text-sm rounded-sm bg-gray-100 px-3" v-if="field.options.hideInContentList">hide in content list</span>
+                                                <span class="text-blue-900 text-sm rounded-sm bg-gray-100 px-3" v-if="field.options.hiddenInAPI">hidden in api</span>
+                                            </div>
+    
+                                            <div>
+                                                <a @click="openNewFieldModal(field.type, true, field)" class="text-white text-sm rounded-sm bg-indigo-500 px-3 cursor-pointer hover:bg-indigo-600 whitespace-nowrap"><i class="fa fa-edit text-xs"></i> Edit</a>
+                                                <a @click="deleteField(field)" class="text-white text-sm rounded-sm bg-red-500 px-3 cursor-pointer hover:bg-red-600 whitespace-nowrap"><i class="fa fa-trash-alt text-xs"></i> Delete</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </li>
-                    </transition-group>
-                </draggable>
-            </ul>
-        </div>
-
-        <div class="w-96 h-full overflow-x-hidden">
-            <div class="bg-white p-4 h-full" v-if="collection.name">
-                <h4 class="mb-2 p-2 font-bold text-lg">
-                    + Fields
-                </h4>
-                <ul>
-                    <li class="mb-2">
-                        <a @click="openNewFieldModal('text')" class="block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm">
-                            <div class="flex">
-                                <div :class="fieldDetails.text.bg" class="mr-2 text-gray-100 rounded-sm text-sm items-center text-center flex field_icon"><i :class="fieldDetails.text.icon" class="w-full"></i></div>
-                                <div>
-                                    <div class="text-sm">{{ fieldDetails.text.label }}</div>
-                                    <div class="text-xs mt-1">{{ fieldDetails.text.desc }}</div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="mb-2">
-                        <a @click="openNewFieldModal('longtext')" class="block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm">
-                            <div class="flex">
-                                <div :class="fieldDetails.longtext.bg" class="mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon"><i :class="fieldDetails.longtext.icon"></i></div>
-                                <div>
-                                    <div class="text-sm">{{ fieldDetails.longtext.label }}</div>
-                                    <div class="text-xs mt-1">{{ fieldDetails.longtext.desc }}</div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="mb-2">
-                        <a @click="openNewFieldModal('richtext')" class="block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm">
-                            <div class="flex">
-                                <div :class="fieldDetails.richtext.bg" class="mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon"><i :class="fieldDetails.richtext.icon"></i></div>
-                                <div>
-                                    <div class="text-sm">{{ fieldDetails.richtext.label }}</div>
-                                    <div class="text-xs mt-1">{{ fieldDetails.richtext.desc }}</div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="mb-2">
-                        <a @click="openNewFieldModal('slug')" class="block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm">
-                            <div class="flex">
-                                <div :class="fieldDetails.slug.bg" class="mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon"><i :class="fieldDetails.slug.icon"></i></div>
-                                <div>
-                                    <div class="text-sm">{{ fieldDetails.slug.label }}</div>
-                                    <div class="text-xs mt-1">{{ fieldDetails.slug.desc }}</div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="mb-2">
-                        <a @click="openNewFieldModal('email')" class="block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm">
-                            <div class="flex">
-                                <div :class="fieldDetails.email.bg" class="mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon"><i :class="fieldDetails.email.icon"></i></div>
-                                <div>
-                                    <div class="text-sm">{{ fieldDetails.email.label }}</div>
-                                    <div class="text-xs mt-1">{{ fieldDetails.email.desc }}</div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="mb-2">
-                        <a @click="openNewFieldModal('password')" class="block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm">
-                            <div class="flex">
-                                <div :class="fieldDetails.password.bg" class="mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon"><i :class="fieldDetails.password.icon"></i></div>
-                                <div>
-                                    <div class="text-sm">{{ fieldDetails.password.label }}</div>
-                                    <div class="text-xs mt-1">{{ fieldDetails.password.desc }}</div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="mb-2">
-                        <a @click="openNewFieldModal('number')" class="block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm">
-                            <div class="flex">
-                                <div :class="fieldDetails.number.bg" class="mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon"><i :class="fieldDetails.number.icon"></i></div>
-                                <div>
-                                    <div class="text-sm">{{ fieldDetails.number.label }}</div>
-                                    <div class="text-xs mt-1">{{ fieldDetails.number.desc }}</div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="mb-2">
-                        <a @click="openNewFieldModal('enumeration')" class="block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm">
-                            <div class="flex">
-                                <div :class="fieldDetails.enumeration.bg" class="mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon"><i :class="fieldDetails.enumeration.icon"></i></div>
-                                <div>
-                                    <div class="text-sm">{{ fieldDetails.enumeration.label }}</div>
-                                    <div class="text-xs mt-1">{{ fieldDetails.enumeration.desc }}</div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="mb-2">
-                        <a @click="openNewFieldModal('boolean')" class="block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm">
-                            <div class="flex">
-                                <div :class="fieldDetails.boolean.bg" class="mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon"><i :class="fieldDetails.boolean.icon"></i></div>
-                                <div>
-                                    <div class="text-sm">{{ fieldDetails.boolean.label }}</div>
-                                    <div class="text-xs mt-1">{{ fieldDetails.boolean.desc }}</div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="mb-2">
-                        <a @click="openNewFieldModal('color')" class="block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm">
-                            <div class="flex">
-                                <div :class="fieldDetails.color.bg" class="mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon"><i :class="fieldDetails.color.icon"></i></div>
-                                <div>
-                                    <div class="text-sm">{{ fieldDetails.color.label }}</div>
-                                    <div class="text-xs mt-1">{{ fieldDetails.color.desc }}</div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="mb-2">
-                        <a @click="openNewFieldModal('date')" class="block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm">
-                            <div class="flex">
-                                <div :class="fieldDetails.date.bg" class="mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon"><i :class="fieldDetails.date.icon"></i></div>
-                                <div>
-                                    <div class="text-sm">{{ fieldDetails.date.label }}</div>
-                                    <div class="text-xs mt-1">{{ fieldDetails.date.desc }}</div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="mb-2">
-                        <a @click="openNewFieldModal('time')" class="block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm">
-                            <div class="flex">
-                                <div :class="fieldDetails.time.bg" class="mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon"><i :class="fieldDetails.time.icon"></i></div>
-                                <div>
-                                    <div class="text-sm">{{ fieldDetails.time.label }}</div>
-                                    <div class="text-xs mt-1">{{ fieldDetails.time.desc }}</div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="mb-2">
-                        <a @click="openNewFieldModal('media')" class="block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm">
-                            <div class="flex">
-                                <div :class="fieldDetails.media.bg" class="mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon"><i :class="fieldDetails.media.icon"></i></div>
-                                <div>
-                                    <div class="text-sm">{{ fieldDetails.media.label }}</div>
-                                    <div class="text-xs mt-1">{{ fieldDetails.media.desc }}</div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="mb-2">
-                        <a @click="openNewFieldModal('relation')" class="block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm">
-                            <div class="flex">
-                                <div :class="fieldDetails.relation.bg" class="mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon"><i :class="fieldDetails.relation.icon"></i></div>
-                                <div>
-                                    <div class="text-sm">{{ fieldDetails.relation.label }}</div>
-                                    <div class="text-xs mt-1">{{ fieldDetails.relation.desc }}</div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="mb-2">
-                        <a @click="openNewFieldModal('json')" class="block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm">
-                            <div class="flex">
-                                <div :class="fieldDetails.json.bg" class="mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon"><i :class="fieldDetails.json.icon"></i></div>
-                                <div>
-                                    <div class="text-sm">{{ fieldDetails.json.label }}</div>
-                                    <div class="text-xs mt-1">{{ fieldDetails.json.desc }}</div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
+                            </li>
+                        </transition-group>
+                    </draggable>
                 </ul>
+            </div>
+            <div class="w-96 h-full overflow-x-hidden">
+                <div class="bg-white p-4 h-full" v-if="collection.name">
+                    <h4 class="mb-2 p-2 font-bold text-lg">
+                        + Fields
+                    </h4>
+                    <ul>
+                        <li class="mb-2">
+                            <a @click="openNewFieldModal('text')" class="block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm">
+                                <div class="flex">
+                                    <div :class="fieldDetails.text.bg" class="mr-2 text-gray-100 rounded-sm text-sm items-center text-center flex field_icon"><i :class="fieldDetails.text.icon" class="w-full"></i></div>
+                                    <div>
+                                        <div class="text-sm">{{ fieldDetails.text.label }}</div>
+                                        <div class="text-xs mt-1">{{ fieldDetails.text.desc }}</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a @click="openNewFieldModal('longtext')" class="block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm">
+                                <div class="flex">
+                                    <div :class="fieldDetails.longtext.bg" class="mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon"><i :class="fieldDetails.longtext.icon"></i></div>
+                                    <div>
+                                        <div class="text-sm">{{ fieldDetails.longtext.label }}</div>
+                                        <div class="text-xs mt-1">{{ fieldDetails.longtext.desc }}</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a @click="openNewFieldModal('richtext')" class="block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm">
+                                <div class="flex">
+                                    <div :class="fieldDetails.richtext.bg" class="mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon"><i :class="fieldDetails.richtext.icon"></i></div>
+                                    <div>
+                                        <div class="text-sm">{{ fieldDetails.richtext.label }}</div>
+                                        <div class="text-xs mt-1">{{ fieldDetails.richtext.desc }}</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a @click="openNewFieldModal('slug')" class="block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm">
+                                <div class="flex">
+                                    <div :class="fieldDetails.slug.bg" class="mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon"><i :class="fieldDetails.slug.icon"></i></div>
+                                    <div>
+                                        <div class="text-sm">{{ fieldDetails.slug.label }}</div>
+                                        <div class="text-xs mt-1">{{ fieldDetails.slug.desc }}</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a @click="openNewFieldModal('email')" class="block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm">
+                                <div class="flex">
+                                    <div :class="fieldDetails.email.bg" class="mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon"><i :class="fieldDetails.email.icon"></i></div>
+                                    <div>
+                                        <div class="text-sm">{{ fieldDetails.email.label }}</div>
+                                        <div class="text-xs mt-1">{{ fieldDetails.email.desc }}</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a @click="openNewFieldModal('password')" class="block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm">
+                                <div class="flex">
+                                    <div :class="fieldDetails.password.bg" class="mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon"><i :class="fieldDetails.password.icon"></i></div>
+                                    <div>
+                                        <div class="text-sm">{{ fieldDetails.password.label }}</div>
+                                        <div class="text-xs mt-1">{{ fieldDetails.password.desc }}</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a @click="openNewFieldModal('number')" class="block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm">
+                                <div class="flex">
+                                    <div :class="fieldDetails.number.bg" class="mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon"><i :class="fieldDetails.number.icon"></i></div>
+                                    <div>
+                                        <div class="text-sm">{{ fieldDetails.number.label }}</div>
+                                        <div class="text-xs mt-1">{{ fieldDetails.number.desc }}</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a @click="openNewFieldModal('enumeration')" class="block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm">
+                                <div class="flex">
+                                    <div :class="fieldDetails.enumeration.bg" class="mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon"><i :class="fieldDetails.enumeration.icon"></i></div>
+                                    <div>
+                                        <div class="text-sm">{{ fieldDetails.enumeration.label }}</div>
+                                        <div class="text-xs mt-1">{{ fieldDetails.enumeration.desc }}</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a @click="openNewFieldModal('boolean')" class="block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm">
+                                <div class="flex">
+                                    <div :class="fieldDetails.boolean.bg" class="mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon"><i :class="fieldDetails.boolean.icon"></i></div>
+                                    <div>
+                                        <div class="text-sm">{{ fieldDetails.boolean.label }}</div>
+                                        <div class="text-xs mt-1">{{ fieldDetails.boolean.desc }}</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a @click="openNewFieldModal('color')" class="block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm">
+                                <div class="flex">
+                                    <div :class="fieldDetails.color.bg" class="mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon"><i :class="fieldDetails.color.icon"></i></div>
+                                    <div>
+                                        <div class="text-sm">{{ fieldDetails.color.label }}</div>
+                                        <div class="text-xs mt-1">{{ fieldDetails.color.desc }}</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a @click="openNewFieldModal('date')" class="block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm">
+                                <div class="flex">
+                                    <div :class="fieldDetails.date.bg" class="mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon"><i :class="fieldDetails.date.icon"></i></div>
+                                    <div>
+                                        <div class="text-sm">{{ fieldDetails.date.label }}</div>
+                                        <div class="text-xs mt-1">{{ fieldDetails.date.desc }}</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a @click="openNewFieldModal('time')" class="block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm">
+                                <div class="flex">
+                                    <div :class="fieldDetails.time.bg" class="mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon"><i :class="fieldDetails.time.icon"></i></div>
+                                    <div>
+                                        <div class="text-sm">{{ fieldDetails.time.label }}</div>
+                                        <div class="text-xs mt-1">{{ fieldDetails.time.desc }}</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a @click="openNewFieldModal('media')" class="block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm">
+                                <div class="flex">
+                                    <div :class="fieldDetails.media.bg" class="mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon"><i :class="fieldDetails.media.icon"></i></div>
+                                    <div>
+                                        <div class="text-sm">{{ fieldDetails.media.label }}</div>
+                                        <div class="text-xs mt-1">{{ fieldDetails.media.desc }}</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a @click="openNewFieldModal('relation')" class="block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm">
+                                <div class="flex">
+                                    <div :class="fieldDetails.relation.bg" class="mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon"><i :class="fieldDetails.relation.icon"></i></div>
+                                    <div>
+                                        <div class="text-sm">{{ fieldDetails.relation.label }}</div>
+                                        <div class="text-xs mt-1">{{ fieldDetails.relation.desc }}</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a @click="openNewFieldModal('json')" class="block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm">
+                                <div class="flex">
+                                    <div :class="fieldDetails.json.bg" class="mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon"><i :class="fieldDetails.json.icon"></i></div>
+                                    <div>
+                                        <div class="text-sm">{{ fieldDetails.json.label }}</div>
+                                        <div class="text-xs mt-1">{{ fieldDetails.json.desc }}</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
 

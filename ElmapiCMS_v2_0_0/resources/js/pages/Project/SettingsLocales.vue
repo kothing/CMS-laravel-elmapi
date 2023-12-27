@@ -1,56 +1,57 @@
 <template>
-    <div class="app__project-locales flex h-full">
-        <div class="w-96 h-full bg-white overflow-x-hidden">
-            <project-header :project="project" class="bg-white"></project-header>
+    <div class="app__project-locales h-full relative">
+        <project-header :project="project" class="bg-white"></project-header>
 
-            <settings-nav :project="project"></settings-nav>
-        </div>
-
-        <div class="w-full overflow-x-hidden">
-            <div class="p-4">
-                <h4 class="mb-2 p-2 font-bold text-xl">Localization</h4>
-
-                <div class="bg-white mt-2 rounded-md p-4 w-full xl:w-3/5">
-                    <div>
-                        <div class="w-full flex justify-between">
-                            <div class="text-lg font-bold">Available Locales</div>
-                        </div>
-                        <div class="overflow-x-auto mt-1 flex rounded-sm">
-                            <table class="min-w-full divide-y divide-gray-200 border">
-                                <tbody class="bg-white divide-y divide-gray-200">
-                                    <tr v-for="locale in project.locales" :key="locale">
-                                        <td class="px-6 py-3 text-sm align-top">
-                                            {{ locale }}
-                                        </td>
-                                        <td class="px-6 py-3 text-sm align-top">
-                                            {{ getLocale(locale) }}
-                                        </td>
-                                        <td class="px-6 py-3 text-sm w-px text-center font-bold whitespace-nowrap">
-                                            <div v-if="locale == project.default_locale">Default</div>
-                                            <div v-else class="ml-2 cursor-pointer text-indigo-500 py-1 px-3 rounded-sm hover:bg-gray-100" @click="setDefaultLocale(locale)">Set as default</div>
-                                        </td>
-                                        <td class="px-6 py-3 text-sm w-px text-center">
-                                            <div v-if="locale != project.default_locale" class="ml-2 cursor-pointer text-red-500 py-1 px-3 rounded-sm hover:bg-gray-100" @click="deleteLocale(locale)">
-                                                <i class="fa fa-trash-alt"></i>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div class="mt-10">
-                        <div class="w-full flex justify-between">
-                            <div class="text-lg font-bold">Add a Locale</div>
-                        </div>
-
-                        <div class="flex">
-                            <div class="w-1/2 mr-2">
-                                <v-select :options="locales" :get-option-key="(o) => o.id" :get-option-label="(o) => o.id+' - '+o.name" :reduce="(o) => o.id" :clearable="false" class="v-select" :value="(option) => option[0]" placeholder="Select Locale" v-model="addLocaleData"></v-select>
+        <div class="flex h-full pt-20 overflow-hidden">
+            <div class="w-96 h-full bg-white overflow-x-hidden">
+                <settings-nav :project="project"></settings-nav>
+            </div>
+            <div class="w-full overflow-x-hidden">
+                <div class="p-4">
+                    <h4 class="mb-2 p-2 font-bold text-xl">Localization</h4>
+    
+                    <div class="w-full bg-white mt-2 rounded-md p-4">
+                        <div>
+                            <div class="w-full flex justify-between">
+                                <div class="text-lg font-bold">Available Locales</div>
                             </div>
-
-                            <ui-button color="indigo-500" @click.native="addLocale">+ Add</ui-button>
+                            <div class="overflow-x-auto mt-1 flex rounded-sm">
+                                <table class="min-w-full divide-y divide-gray-200 border">
+                                    <tbody class="bg-white divide-y divide-gray-200">
+                                        <tr v-for="locale in project.locales" :key="locale">
+                                            <td class="px-6 py-3 text-sm align-top">
+                                                {{ locale }}
+                                            </td>
+                                            <td class="px-6 py-3 text-sm align-top">
+                                                {{ getLocale(locale) }}
+                                            </td>
+                                            <td class="px-6 py-3 text-sm w-px text-center font-bold whitespace-nowrap">
+                                                <div v-if="locale == project.default_locale">Default</div>
+                                                <div v-else class="ml-2 cursor-pointer text-indigo-500 py-1 px-3 rounded-sm hover:bg-gray-100" @click="setDefaultLocale(locale)">Set as default</div>
+                                            </td>
+                                            <td class="px-6 py-3 text-sm w-px text-center">
+                                                <div v-if="locale != project.default_locale" class="ml-2 cursor-pointer text-red-500 py-1 px-3 rounded-sm hover:bg-gray-100" @click="deleteLocale(locale)">
+                                                    <i class="fa fa-trash-alt"></i>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+    
+                        <div class="mt-10">
+                            <div class="w-full flex justify-between">
+                                <div class="text-lg font-bold">Add a Locale</div>
+                            </div>
+    
+                            <div class="flex">
+                                <div class="w-1/2 mr-2">
+                                    <v-select :options="locales" :get-option-key="(o) => o.id" :get-option-label="(o) => o.id+' - '+o.name" :reduce="(o) => o.id" :clearable="false" class="v-select" :value="(option) => option[0]" placeholder="Select Locale" v-model="addLocaleData"></v-select>
+                                </div>
+    
+                                <ui-button color="indigo-500" @click.native="addLocale">+ Add</ui-button>
+                            </div>
                         </div>
                     </div>
                 </div>

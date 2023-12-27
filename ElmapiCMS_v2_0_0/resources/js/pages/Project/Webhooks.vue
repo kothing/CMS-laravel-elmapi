@@ -1,75 +1,77 @@
 <template>
-    <div class="app__project-webhooks flex h-full">
-        <div class="w-96 h-full bg-white overflow-x-hidden">
-            <project-header :project="project" class="bg-white"></project-header>
+    <div class="app__project-webhooks h-full relative">
+        <project-header :project="project" class="bg-white"></project-header>
 
-            <settings-nav :project="project"></settings-nav>
-        </div>
-
-        <div class="w-full overflow-x-hidden">
-            <div class="p-4">
-                <div class="flex justify-between p-2 items-center">
-                    <h4 class="mb-2 font-bold text-xl">Webhooks</h4>
-
-                    <ui-button color="indigo-500" @click.native="openNewWebhookModal = true"> + Create a New Webhook</ui-button>
-                </div>
-
-                <div class="bg-white mt-2 rounded-md p-4 w-full">
-                    <div class="mt-2">
-                        <div class="overflow-x-auto mt-1 flex rounded-sm">
-                            <table v-if="webhooks != undefined" class="w-full divide-y divide-gray-200 border">
-                                <thead class="bg-gray-100">
-                                    <tr>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">URL</th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Collections</th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Events</th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sources</th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-px"></th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-px"></th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-px"></th>
-                                    </tr>
-                                </thead>
-
-                                <tbody class="bg-white divide-y divide-gray-200">
-                                    <tr v-for="wh in webhooks" :key="wh.id">
-                                        <td class="px-6 py-3 text-sm whitespace-nowrap">{{ wh.name }}</td>
-                                        <td class="px-6 py-3 text-sm whitespace-nowrap">{{ wh.url }}</td>
-                                        <td class="px-6 py-3 text-sm">
-                                            <div class="text-gray-500 text-sm rounded-sm bg-gray-100 py-1 px-3 mb-1" v-for="(col, i) in wh.collections" :key="i">
-                                                {{ col.name }}
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-3 text-sm">
-                                            <div class="text-gray-500 text-sm rounded-sm bg-gray-100 py-1 px-3 mb-1" v-for="ev in wh.events" :key="ev">
-                                                {{ ev }}
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-3 text-sm">
-                                            <div class="text-gray-500 text-sm rounded-sm bg-gray-100 py-1 px-3 mb-1" v-for="src in wh.sources" :key="src">
-                                                {{ src }}
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-3 text-sm whitespace-nowrap text-center text-xl">
-                                            <i v-if="wh.status" class="fas fa-toggle-on text-green-500"></i>
-                                            <i v-else class="fas fa-toggle-off text-gray-500"></i>
-                                        </td>
-                                        <td class="px-6 py-3 text-sm whitespace-nowrap">
-                                            <router-link :to="{name: 'projects.settings.webhooks.logs', params: { project_id: project.id, webhook_id: wh.id }}" class="text-yellow-500 flex items-center"><i class="fas fa-history mr-2"></i> View Logs</router-link>
-                                        </td>
-                                        <td class="px-6 py-3 text-sm">
-                                            <div class="cursor-pointer text-indigo-500" @click="editWebhook(wh)">Edit</div>
-                                        </td>
-                                        <td class="px-6 py-3 text-sm">
-                                            <div class="cursor-pointer text-red-700" @click="deleteWebhook(wh)">Delete</div>
-                                        </td>
-                                    </tr>
-                                    <tr v-if="webhooks != undefined && webhooks.length === 0">
-                                        <td colspan="100%" class="text-center text-sm text-gray-500 p-5">This project does not have webhooks yet.</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+        <div class="flex h-full pt-20 overflow-hidden">
+            <div class="w-96 h-full bg-white overflow-x-hidden">
+                <settings-nav :project="project"></settings-nav>
+            </div>
+    
+            <div class="w-full overflow-x-hidden">
+                <div class="p-4">
+                    <div class="flex justify-between p-2 items-center">
+                        <h4 class="mb-2 font-bold text-xl">Webhooks</h4>
+    
+                        <ui-button color="indigo-500" @click.native="openNewWebhookModal = true"> + Create a New Webhook</ui-button>
+                    </div>
+    
+                    <div class="bg-white mt-2 rounded-md p-4 w-full">
+                        <div class="mt-2">
+                            <div class="overflow-x-auto mt-1 flex rounded-sm">
+                                <table v-if="webhooks != undefined" class="w-full divide-y divide-gray-200 border">
+                                    <thead class="bg-gray-100">
+                                        <tr>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">URL</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Collections</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Events</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sources</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-px"></th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-px"></th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-px"></th>
+                                        </tr>
+                                    </thead>
+    
+                                    <tbody class="bg-white divide-y divide-gray-200">
+                                        <tr v-for="wh in webhooks" :key="wh.id">
+                                            <td class="px-6 py-3 text-sm whitespace-nowrap">{{ wh.name }}</td>
+                                            <td class="px-6 py-3 text-sm whitespace-nowrap">{{ wh.url }}</td>
+                                            <td class="px-6 py-3 text-sm">
+                                                <div class="text-gray-500 text-sm rounded-sm bg-gray-100 py-1 px-3 mb-1" v-for="(col, i) in wh.collections" :key="i">
+                                                    {{ col.name }}
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-3 text-sm">
+                                                <div class="text-gray-500 text-sm rounded-sm bg-gray-100 py-1 px-3 mb-1" v-for="ev in wh.events" :key="ev">
+                                                    {{ ev }}
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-3 text-sm">
+                                                <div class="text-gray-500 text-sm rounded-sm bg-gray-100 py-1 px-3 mb-1" v-for="src in wh.sources" :key="src">
+                                                    {{ src }}
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-3 text-sm whitespace-nowrap text-center text-xl">
+                                                <i v-if="wh.status" class="fas fa-toggle-on text-green-500"></i>
+                                                <i v-else class="fas fa-toggle-off text-gray-500"></i>
+                                            </td>
+                                            <td class="px-6 py-3 text-sm whitespace-nowrap">
+                                                <router-link :to="{name: 'projects.settings.webhooks.logs', params: { project_id: project.id, webhook_id: wh.id }}" class="text-yellow-500 flex items-center"><i class="fas fa-history mr-2"></i> View Logs</router-link>
+                                            </td>
+                                            <td class="px-6 py-3 text-sm">
+                                                <div class="cursor-pointer text-indigo-500" @click="editWebhook(wh)">Edit</div>
+                                            </td>
+                                            <td class="px-6 py-3 text-sm">
+                                                <div class="cursor-pointer text-red-700" @click="deleteWebhook(wh)">Delete</div>
+                                            </td>
+                                        </tr>
+                                        <tr v-if="webhooks != undefined && webhooks.length === 0">
+                                            <td colspan="100%" class="text-center text-sm text-gray-500 p-5">This project does not have webhooks yet.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

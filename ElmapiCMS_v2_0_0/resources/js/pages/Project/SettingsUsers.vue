@@ -1,94 +1,96 @@
 <template>
-    <div class="app__project-users flex h-full">
-        <div class="w-96 h-full bg-white overflow-x-hidden">
-            <project-header :project="project" class="bg-white"></project-header>
+    <div class="app__project-users h-full relative">
+        <project-header :project="project" class="bg-white"></project-header>
 
-            <settings-nav :project="project"></settings-nav>
-        </div>
+        <div class="flex h-full pt-20 overflow-hidden">
+            <div class="w-96 h-full bg-white overflow-x-hidden">
+                <settings-nav :project="project"></settings-nav>
+            </div>
 
-        <div class="w-full overflow-x-hidden">
-            <div class="p-4">
-                <h4 class="mb-2 p-2 font-bold text-xl">Users & Roles</h4>
-
-                <div class="bg-white mt-2 rounded-md p-4 w-full xl:w-3/5">
-                    <div class="overflow-x-auto w-full border clear-both mt-2">
-                        <table class="min-w-full divide-y divide-gray-200 ">
-                            <thead class="bg-gray-100">
-                                <tr>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Users</th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-64"></th>
-                                </tr>
-                            </thead>
-
-                            <tbody class="bg-white divide-y divide-gray-200">
-                                <tr>
-                                    <td class="px-6 py-3 text-sm align-top">
-                                        Admin
-                                        <small class="block text-gray-600 text-xs">Can create and edit collections and content</small>
-                                    </td>
-                                    <td class="px-6 py-3 text-sm">
-                                        <div v-for="user in super_admins" :key="user.id" class="border border-gray-100 mb-2 block w-full p-2">
-                                            <div class="flex items-center">
-                                                <div>
-                                                    <div class="flex bg-green-500 text-white p-2 text-md rounded-full text-center mr-2 w-9"><div class="w-full text-center">{{ getUserNameInitials(user.name) }}</div></div>
-                                                </div>
-                                                <div>
-                                                    <div class="block">{{user.name}}</div>
-                                                    <div class="block text-sm">{{user.email}}</div>
+            <div class="w-full overflow-x-hidden">
+                <div class="p-4">
+                    <h4 class="mb-2 p-2 font-bold text-xl">Users & Roles</h4>
+    
+                    <div class="w-full bg-white mt-2 rounded-md p-4">
+                        <div class="overflow-x-auto w-full border clear-both mt-2">
+                            <table class="min-w-full divide-y divide-gray-200 ">
+                                <thead class="bg-gray-100">
+                                    <tr>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Users</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-64"></th>
+                                    </tr>
+                                </thead>
+    
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="px-6 py-3 text-sm align-top">
+                                            Admin
+                                            <small class="block text-gray-600 text-xs">Can create and edit collections and content</small>
+                                        </td>
+                                        <td class="px-6 py-3 text-sm">
+                                            <div v-for="user in super_admins" :key="user.id" class="border border-gray-100 mb-2 block w-full p-2">
+                                                <div class="flex items-center">
+                                                    <div>
+                                                        <div class="flex bg-green-500 text-white p-2 text-md rounded-full text-center mr-2 w-9"><div class="w-full text-center">{{ getUserNameInitials(user.name) }}</div></div>
+                                                    </div>
+                                                    <div>
+                                                        <div class="block">{{user.name}}</div>
+                                                        <div class="block text-sm">{{user.email}}</div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div v-for="user in admins" :key="user.id" class="border border-gray-100 mb-2 block w-full p-2">
-                                            <div class="flex flex-start w-full items-center">
-                                                <div>
-                                                    <div class="flex bg-green-500 text-white p-2 text-md rounded-full text-center mr-2 w-9"><div class="w-full text-center">{{ getUserNameInitials(user.name) }}</div></div>
-                                                </div>
-                                                <div>
-                                                    <div class="block">{{user.name}}</div>
-                                                    <div class="block text-sm">{{user.email}}</div>
-                                                </div>
-                                                <div class="ml-auto">
-                                                    <i class="fa fa-minus-circle text-red-400 cursor-pointer hover:text-red-500 text-lg ml-2" @click="removeUser(user, 'admin')"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-3 text-sm text-right align-top">
-                                        <ui-button color="indigo-500" @click.native="assignUser('admin')">
-                                            + Assign User
-                                        </ui-button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="px-6 py-3 text-sm align-top">
-                                        Editor
-                                        <small class="block text-gray-600 text-xs">Can create and edit content</small>
-                                    </td>
-                                    <td class="px-6 py-3 text-sm">
-                                        <div v-for="user in editors" :key="user.id" class="border border-gray-100 mb-2 block w-full p-2">
-                                            <div class="flex flex-start w-full items-center">
-                                                <div>
-                                                    <div class="flex bg-green-500 text-white p-2 text-md rounded-full text-center mr-2 w-9"><div class="w-full text-center">{{ getUserNameInitials(user.name) }}</div></div>
-                                                </div>
-                                                <div>
-                                                    <div class="block">{{user.name}}</div>
-                                                    <div class="block text-sm">{{user.email}}</div>
-                                                </div>
-                                                <div class="ml-auto">
-                                                    <i class="fa fa-minus-circle text-red-400 cursor-pointer hover:text-red-500 text-lg ml-2" @click="removeUser(user, 'editor')"></i>
+                                            <div v-for="user in admins" :key="user.id" class="border border-gray-100 mb-2 block w-full p-2">
+                                                <div class="flex flex-start w-full items-center">
+                                                    <div>
+                                                        <div class="flex bg-green-500 text-white p-2 text-md rounded-full text-center mr-2 w-9"><div class="w-full text-center">{{ getUserNameInitials(user.name) }}</div></div>
+                                                    </div>
+                                                    <div>
+                                                        <div class="block">{{user.name}}</div>
+                                                        <div class="block text-sm">{{user.email}}</div>
+                                                    </div>
+                                                    <div class="ml-auto">
+                                                        <i class="fa fa-minus-circle text-red-400 cursor-pointer hover:text-red-500 text-lg ml-2" @click="removeUser(user, 'admin')"></i>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-3 text-sm text-right align-top">
-                                        <ui-button color="indigo-500" @click.native="assignUser('editor')">
-                                            + Assign User
-                                        </ui-button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                        </td>
+                                        <td class="px-6 py-3 text-sm text-right align-top">
+                                            <ui-button color="indigo-500" @click.native="assignUser('admin')">
+                                                + Assign User
+                                            </ui-button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-3 text-sm align-top">
+                                            Editor
+                                            <small class="block text-gray-600 text-xs">Can create and edit content</small>
+                                        </td>
+                                        <td class="px-6 py-3 text-sm">
+                                            <div v-for="user in editors" :key="user.id" class="border border-gray-100 mb-2 block w-full p-2">
+                                                <div class="flex flex-start w-full items-center">
+                                                    <div>
+                                                        <div class="flex bg-green-500 text-white p-2 text-md rounded-full text-center mr-2 w-9"><div class="w-full text-center">{{ getUserNameInitials(user.name) }}</div></div>
+                                                    </div>
+                                                    <div>
+                                                        <div class="block">{{user.name}}</div>
+                                                        <div class="block text-sm">{{user.email}}</div>
+                                                    </div>
+                                                    <div class="ml-auto">
+                                                        <i class="fa fa-minus-circle text-red-400 cursor-pointer hover:text-red-500 text-lg ml-2" @click="removeUser(user, 'editor')"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-3 text-sm text-right align-top">
+                                            <ui-button color="indigo-500" @click.native="assignUser('editor')">
+                                                + Assign User
+                                            </ui-button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

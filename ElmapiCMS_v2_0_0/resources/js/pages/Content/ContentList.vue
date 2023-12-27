@@ -1,13 +1,15 @@
 <template>
-    <div class="flex h-full overflow-hidden">
-        <div class="w-96 overflow-x-hidden h-full bg-white">
-            <project-header :project="project" class="bg-white"></project-header>
-
-            <content-sidebar :project="project"></content-sidebar>
-        </div>
-
-        <div class="p-4 w-full overflow-x-auto">
-            <content-table v-if="$route.params.col_id !== undefined" :collection_id="parseInt($route.params.col_id)"></content-table>
+    <div class="h-full relative overflow-hidden">
+        <project-header :project="project" class="bg-white"></project-header>
+        
+        <div class="flex h-full pt-20 overflow-hidden">
+            <div class="w-96 overflow-x-hidden h-full bg-white">
+                <content-sidebar :project="project"></content-sidebar>
+            </div>
+    
+            <div class="p-4 w-full overflow-x-auto">
+                <content-table v-if="$route.params.col_id !== undefined" :collection_id="parseInt($route.params.col_id)"></content-table>
+            </div>
         </div>
     </div>
 </template>

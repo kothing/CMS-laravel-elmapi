@@ -1,7 +1,8 @@
 <template>
-    <div class="app__project-collection flex h-full overflow-hidden">
-        <div class="w-96 h-full bg-white overflow-x-hidden">
-            <project-header :project="project" class="bg-white"></project-header>
+    <div class="app__project-collection h-full relative overflow-hidden">
+        <project-header :project="project" class="bg-white"></project-header>
+        
+        <div class="w-96 h-full pt-20 bg-white overflow-x-hidden">
             <collection-sidebar :project="project"></collection-sidebar>
         </div>
     </div>

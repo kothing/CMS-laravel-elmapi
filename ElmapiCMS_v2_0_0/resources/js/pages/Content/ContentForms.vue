@@ -1,29 +1,31 @@
 <template>
-    <div class="flex h-full overflow-hidden">
-        <div class="w-96 overflow-x-hidden bg-white">
-            <project-header :project="project" class="bg-white"></project-header>
-
-            <content-sidebar :project="project"></content-sidebar>
-        </div>
-
-        <div class="p-4 w-full overflow-x-auto">
-            <div class="mb-2 py-2 font-bold text-lg flex justify-end">
-                <div class="flex-1">
-                    {{ collection.name }} <small class="text-gray-500 font-normal"> / Forms</small>
-                </div>
+    <div class="h-full relative overflow-hidden">
+        <project-header :project="project" class="bg-white"></project-header>
+        
+        <div class="flex h-full pt-20 overflow-hidden">
+            <div class="w-96 overflow-x-hidden bg-white">
+                <content-sidebar :project="project"></content-sidebar>
             </div>
-
-            <div class="space-y-10">
-                <div class="grid grid-cols-1 gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                    <div @click="openNewFormModal = true" class="bg-green-500 hover:bg-green-600 text-white cursor-pointer items-center flex justify-center py-5">
-                        <i class="fas fa-plus-circle md:mr-4 text-sm md:text-xl"></i>
-                        Create a New Form
+    
+            <div class="p-4 w-full overflow-x-auto">
+                <div class="mb-2 py-2 font-bold text-lg flex justify-end">
+                    <div class="flex-1">
+                        {{ collection.name }} <small class="text-gray-500 font-normal"> / Forms</small>
                     </div>
-
-                    <router-link :to="{ name: 'projects.content.forms.show', params: { project_id: $route.params.project_id, col_id: $route.params.col_id, form_id: form.id } }" v-for="form in forms" :key="form.id" class="bg-white hover:bg-gray-100 px-10 py-6 text-gray-900 border border-gray-100 cursor-pointer items-center rounded-sm relative">
-                        <span class="font-bold mt-3 block text-lg">{{ form.name }}</span>
-                        <span class="text-sm block">{{ form.description }}</span>
-                    </router-link>
+                </div>
+    
+                <div class="space-y-10">
+                    <div class="grid grid-cols-1 gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                        <div @click="openNewFormModal = true" class="bg-green-500 hover:bg-green-600 text-white cursor-pointer items-center flex justify-center py-5">
+                            <i class="fas fa-plus-circle md:mr-4 text-sm md:text-xl"></i>
+                            Create a New Form
+                        </div>
+    
+                        <router-link :to="{ name: 'projects.content.forms.show', params: { project_id: $route.params.project_id, col_id: $route.params.col_id, form_id: form.id } }" v-for="form in forms" :key="form.id" class="bg-white hover:bg-gray-100 px-10 py-6 text-gray-900 border border-gray-100 cursor-pointer items-center rounded-sm relative">
+                            <span class="font-bold mt-3 block text-lg">{{ form.name }}</span>
+                            <span class="text-sm block">{{ form.description }}</span>
+                        </router-link>
+                    </div>
                 </div>
             </div>
         </div>

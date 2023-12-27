@@ -1,96 +1,97 @@
 <template>
-    <div class="app__project-api flex h-full">
-        <div class="w-96 h-full bg-white overflow-x-hidden">
-            <project-header :project="project" class="bg-white"></project-header>
-
-            <settings-nav :project="project"></settings-nav>
-        </div>
-
-        <div class="w-full overflow-x-hidden">
-            <div class="p-4">
-                <h4 class="mb-2 p-2 font-bold text-xl">API Access</h4>
-
-                <div class="bg-white mt-2 rounded-md p-4 w-full xl:w-3/5">
-                    <div>
-                        <div class="text-lg font-bold">Project ID</div>
-                        <div class="mt-1 flex rounded-sm cursor-pointer" @click="copyToClipboard(project.uuid)">
-                            <span class="inline-flex items-center px-3 rounded-l-sm border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm cursor-pointer"><i class="far fa-copy"></i></span>
-                            <input type="text" readonly disabled :value="project.uuid" v-forminput class="rounded-l-none cursor-pointer">
-                        </div>
-                    </div>
-
-                    <div class="mt-5">
-                        <div class="text-lg font-bold">Content API Endpoint</div>
-                        <div class="mt-1 flex rounded-sm cursor-pointer" @click="copyToClipboard(endpointUrl)">
-                            <span class="inline-flex items-center px-3 rounded-l-sm border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm cursor-pointer"><i class="far fa-copy"></i></span>
-                            <input type="text" readonly disabled :value="endpointUrl" v-forminput class="rounded-l-none cursor-pointer">
-                        </div>
-                    </div>
-
-                    <div class="mt-10">
-                        <label for="togglePublic" class="p-5 border border-gray-300 rounded-sm text-sm flex items-center space-x-2 cursor-pointer" v-if="project.public_api">
-                            <div class="relative">
-                                <input type="checkbox" id="togglePublic" class="sr-only" v-model="enable_public_access" @click.prevent="disablePublicAccess">
-                                <div class="block bg-gray-600 w-14 h-8 rounded-full"></div>
-                                <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
-                            </div>
-                            <span>Disable Public API Access</span>
-                        </label>
-                        <label for="togglePublic" class="p-5 border border-gray-300 rounded-sm text-sm flex items-center space-x-2 cursor-pointer" v-else-if="!project.public_api">
-                            <div class="relative">
-                                <input type="checkbox" id="togglePublic" class="sr-only" v-model="enable_public_access" @click.prevent="enablePublicAccess">
-                                <div class="block bg-gray-600 w-14 h-8 rounded-full"></div>
-                                <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
-                            </div>
-                            <span>Enable Public API Access</span>
-                        </label>
-                    </div>
-
-                    <div class="mt-10">
-                        <div class="w-full flex justify-between">
-                            <div class="text-lg font-bold">Access Tokens</div>
-
-                            <div>
-                                <div class="cursor-pointer text-indigo-700" @click="openNewTokenModal = true">Create New Token</div>
+    <div class="app__project-api h-full relative">
+        <project-header :project="project" class="bg-white"></project-header>
+        
+        <div class="flex h-full pt-20 overflow-hidden">
+            <div class="w-96 h-full bg-white overflow-x-hidden">
+                <settings-nav :project="project"></settings-nav>
+            </div>
+            <div class="w-full overflow-x-hidden">
+                <div class="p-4">
+                    <h4 class="mb-2 p-2 font-bold text-xl">API Access</h4>
+    
+                    <div class="w-full bg-white mt-2 rounded-md p-4">
+                        <div>
+                            <div class="text-lg font-bold">Project ID</div>
+                            <div class="mt-1 flex rounded-sm cursor-pointer" @click="copyToClipboard(project.uuid)">
+                                <span class="inline-flex items-center px-3 rounded-l-sm border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm cursor-pointer"><i class="far fa-copy"></i></span>
+                                <input type="text" readonly disabled :value="project.uuid" v-forminput class="rounded-l-none cursor-pointer">
                             </div>
                         </div>
-                        <div class="overflow-x-auto mt-1 flex rounded-sm">
-                            <table class="min-w-full divide-y divide-gray-200 border">
-                                <thead class="bg-gray-100">
-                                    <tr>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Permissions</th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-px"></th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-px"></th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-px"></th>
-                                    </tr>
-                                </thead>
-
-                                <tbody class="bg-white divide-y divide-gray-200">
-                                    <tr v-for="token in tokens" :key="token.id">
-                                        <td class="px-6 py-3 text-sm whitespace-nowrap">{{ token.name }}</td>
-                                        <td class="px-6 py-3 text-sm whitespace-nowrap">
-                                            <span class="text-gray-500 text-sm rounded-sm bg-gray-100 py-1 px-3 mr-2" v-for="perm in token.abilities" :key="perm">
-                                                {{ perm }}
-                                            </span>
-                                        </td>
-                                        <td class="px-6 py-3 text-sm whitespace-nowrap">
-                                            <span v-show="token.last_used_at !== null">
-                                                Last Used at {{ token.last_used_at | date('D MMM YYYY, H:mm') }}
-                                            </span>
-                                        </td>
-                                        <td class="px-6 py-3 text-sm">
-                                            <div class="cursor-pointer text-indigo-500" @click="editToken(token)">Edit</div>
-                                        </td>
-                                        <td class="px-6 py-3 text-sm">
-                                            <div class="cursor-pointer text-red-700" @click="deleteToken(token)">Revoke</div>
-                                        </td>
-                                    </tr>
-                                    <tr v-if="tokens != undefined && tokens.length === 0">
-                                        <td colspan="100%" class="text-center text-sm text-gray-500 p-5">This project does not have tokens yet. In order to access to the API create a new token.</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+    
+                        <div class="mt-5">
+                            <div class="text-lg font-bold">Content API Endpoint</div>
+                            <div class="mt-1 flex rounded-sm cursor-pointer" @click="copyToClipboard(endpointUrl)">
+                                <span class="inline-flex items-center px-3 rounded-l-sm border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm cursor-pointer"><i class="far fa-copy"></i></span>
+                                <input type="text" readonly disabled :value="endpointUrl" v-forminput class="rounded-l-none cursor-pointer">
+                            </div>
+                        </div>
+    
+                        <div class="mt-10">
+                            <label for="togglePublic" class="p-5 border border-gray-300 rounded-sm text-sm flex items-center space-x-2 cursor-pointer" v-if="project.public_api">
+                                <div class="relative">
+                                    <input type="checkbox" id="togglePublic" class="sr-only" v-model="enable_public_access" @click.prevent="disablePublicAccess">
+                                    <div class="block bg-gray-600 w-14 h-8 rounded-full"></div>
+                                    <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
+                                </div>
+                                <span>Disable Public API Access</span>
+                            </label>
+                            <label for="togglePublic" class="p-5 border border-gray-300 rounded-sm text-sm flex items-center space-x-2 cursor-pointer" v-else-if="!project.public_api">
+                                <div class="relative">
+                                    <input type="checkbox" id="togglePublic" class="sr-only" v-model="enable_public_access" @click.prevent="enablePublicAccess">
+                                    <div class="block bg-gray-600 w-14 h-8 rounded-full"></div>
+                                    <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
+                                </div>
+                                <span>Enable Public API Access</span>
+                            </label>
+                        </div>
+    
+                        <div class="mt-10">
+                            <div class="w-full flex justify-between">
+                                <div class="text-lg font-bold">Access Tokens</div>
+    
+                                <div>
+                                    <div class="cursor-pointer text-indigo-700" @click="openNewTokenModal = true">Create New Token</div>
+                                </div>
+                            </div>
+                            <div class="overflow-x-auto mt-1 flex rounded-sm">
+                                <table class="min-w-full divide-y divide-gray-200 border">
+                                    <thead class="bg-gray-100">
+                                        <tr>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Permissions</th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-px"></th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-px"></th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-px"></th>
+                                        </tr>
+                                    </thead>
+    
+                                    <tbody class="bg-white divide-y divide-gray-200">
+                                        <tr v-for="token in tokens" :key="token.id">
+                                            <td class="px-6 py-3 text-sm whitespace-nowrap">{{ token.name }}</td>
+                                            <td class="px-6 py-3 text-sm whitespace-nowrap">
+                                                <span class="text-gray-500 text-sm rounded-sm bg-gray-100 py-1 px-3 mr-2" v-for="perm in token.abilities" :key="perm">
+                                                    {{ perm }}
+                                                </span>
+                                            </td>
+                                            <td class="px-6 py-3 text-sm whitespace-nowrap">
+                                                <span v-show="token.last_used_at !== null">
+                                                    Last Used at {{ token.last_used_at | date('D MMM YYYY, H:mm') }}
+                                                </span>
+                                            </td>
+                                            <td class="px-6 py-3 text-sm">
+                                                <div class="cursor-pointer text-indigo-500" @click="editToken(token)">Edit</div>
+                                            </td>
+                                            <td class="px-6 py-3 text-sm">
+                                                <div class="cursor-pointer text-red-700" @click="deleteToken(token)">Revoke</div>
+                                            </td>
+                                        </tr>
+                                        <tr v-if="tokens != undefined && tokens.length === 0">
+                                            <td colspan="100%" class="text-center text-sm text-gray-500 p-5">This project does not have tokens yet. In order to access to the API create a new token.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -183,7 +184,6 @@
                 </ui-button>
             </template>
         </ui-modal>
-
     </div>
 </template>
 
