@@ -131,14 +131,13 @@
                                         <input type="checkbox" v-if="relation_type != 1" v-model="selectAll" @click="selectAllFn()" v-formcheckbox>
                                     </div>
                                 </th>
-                                <th  v-if="listOptions.getItems !== 'trashed'" scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    <span class="sr-only">Edit</span>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap cursor-pointer" v-for="field in collection.fields" :key="field.id" v-show="field.type != 'password' && field.type != 'json' && columns[field.name]" @click="sortBy(field.name, 1)">
+                                    <div class="w-full flex justify-between item-center">
+                                        {{ field.label }}
+                                        <i v-if="listOptions.orderBy == field.name && listOptions.criteria == 'ASC'" class="fa fa-sort-amount-up-alt text-indigo-500 ml-2"></i>
+                                        <i v-if="listOptions.orderBy == field.name && listOptions.criteria == 'DESC'" class="fa fa-sort-amount-down-alt text-indigo-500 ml-2"></i>
+                                    </div>
                                 </th>
-                                <th  v-if="listOptions.getItems !== 'trashed'" scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    <span class="sr-only">Delete</span>
-                                </th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
-
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap cursor-pointer" v-if="columns.created_at" @click="sortBy('created_at')">
                                     <div class="w-full flex justify-between item-center">
                                         Created At
@@ -181,54 +180,19 @@
                                         <i v-if="listOptions.orderBy == 'published_by' && listOptions.criteria == 'DESC'" class="fa fa-sort-amount-down-alt text-indigo-500 ml-2"></i>
                                     </div>
                                 </th>
-
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap cursor-pointer" v-for="field in collection.fields" :key="field.id" v-show="field.type != 'password' && field.type != 'json' && columns[field.name]" @click="sortBy(field.name, 1)">
-                                    <div class="w-full flex justify-between item-center">
-                                        {{ field.label }}
-                                        <i v-if="listOptions.orderBy == field.name && listOptions.criteria == 'ASC'" class="fa fa-sort-amount-up-alt text-indigo-500 ml-2"></i>
-                                        <i v-if="listOptions.orderBy == field.name && listOptions.criteria == 'DESC'" class="fa fa-sort-amount-down-alt text-indigo-500 ml-2"></i>
-                                    </div>
+                                <th  v-if="listOptions.getItems !== 'trashed'" scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <span class="sr-only">Edit</span>
                                 </th>
+                                <th  v-if="listOptions.getItems !== 'trashed'" scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <span class="sr-only">Delete</span>
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
                             <tr v-for="item in content.data" :key="item.id">
                                 <td class="pl-2 py-4 text-sm text-center w-px">
                                     <input type="checkbox" :checked="checkIfSelected(item.id)" @click="selectRecord(item.id)" v-formcheckbox>
-                                </td>
-                                <td v-if="listOptions.getItems != 'trashed'" class="pl-2 py-4 text-sm text-center w-px">
-                                    <router-link :to="{name: 'projects.content.edit', params: { project_id: $route.params.project_id, col_id: collection_id, content_id: item.id } }" class="text-indigo-500 p-2 px-3 rounded-sm hover:bg-gray-100 cursor-pointer bg-gray-50"><i class="fa fa-pencil-alt"></i></router-link>
-                                </td>
-                                <td v-if="listOptions.getItems != 'trashed'" class="pl-2 py-4 text-sm text-center w-px">
-                                    <a class="text-orange-500 p-2 px-3 rounded-sm hover:bg-gray-100 cursor-pointer bg-gray-50" @click="moveToTrashContent(item)"><i class="fa fa-trash-restore"></i></a>
-                                </td>
-                                <td class="pl-2 py-4 text-sm text-center w-px">
-                                    <div v-if="item.form_id === null">
-                                        <span v-if="item.published_at !== null" class="text-gray-500  rounded-sm bg-green-200 px-3 py-1">published</span>
-                                        <span v-else class="text-gray-500 rounded-sm bg-gray-200 px-3 py-1">draft</span>
-                                    </div>
-                                    <div v-else>
-                                        <span v-if="item.published_at !== null" class="text-gray-200 rounded-sm bg-blue-400 px-3 py-1" v-tooltip="'Submitted at '+dateFormat(item.form.created_at)+'. Form name: '+item.form.name">published</span>
-                                        <span v-else class="text-gray-500 rounded-sm bg-blue-200 px-3 py-1" v-tooltip="'Submitted at '+dateFormat(item.form.created_at)+'. Form name: '+item.form.name">draft</span>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-3 text-sm w-px whitespace-nowrap text-gray-600" v-if="columns.created_at">
-                                    {{ item.created_at | date('D MMM YYYY, H:mm') }}
-                                </td>
-                                <td class="px-6 py-3 text-sm w-px whitespace-nowrap text-gray-600 text-center" v-if="columns.created_by">
-                                    <div class="bg-green-500 text-white p-2 text-md rounded-full text-center mr-2 w-9" v-tooltip="item.created_by.name"><div class="w-full text-center">{{ getUserNameInitials(item.created_by.name) }}</div></div>
-                                </td>
-                                <td class="px-6 py-3 text-sm w-px whitespace-nowrap text-gray-600" v-if="columns.updated_at">
-                                    {{ item.updated_at | date('D MMM YYYY, H:mm') }}
-                                </td>
-                                <td class="px-6 py-3 text-sm w-px whitespace-nowrap text-gray-600" v-if="columns.updated_by">
-                                    <div v-if="item.updated_by !== null" class="bg-green-500 text-white p-2 text-md rounded-full text-center mr-2 w-9" v-tooltip="item.updated_by.name"><div class="w-full text-center">{{ getUserNameInitials(item.updated_by.name) }}</div></div>
-                                </td>
-                                <td class="px-6 py-3 text-sm w-px whitespace-nowrap text-gray-600" v-if="columns.published_at">
-                                    {{ item.published_at | date('D MMM YYYY, H:mm') }}
-                                </td>
-                                <td class="px-6 py-3 text-sm w-px whitespace-nowrap text-gray-600" v-if="columns.published_by">
-                                    <div v-if="item.published_by !== null" class="bg-green-500 text-white p-2 text-md rounded-full text-center mr-2 w-9" v-tooltip="item.published_by.name"><div class="w-full text-center">{{ getUserNameInitials(item.published_by.name) }}</div></div>
                                 </td>
                                 <td class="px-6 py-3 text-sm min-w-full whitespace-nowrap"  v-for="field in collection.fields" :key="field.id" v-show="field.type != 'password' && field.type != 'json' && columns[field.name]">
                                     <span v-for="meta in item.meta" :key="meta.id">
@@ -255,6 +219,40 @@
                                             </span>
                                         </span>
                                     </span>
+                                </td>
+                                <td class="px-6 py-3 text-sm w-px whitespace-nowrap text-gray-600" v-if="columns.created_at">
+                                    {{ item.created_at | date('D MMM YYYY, H:mm') }}
+                                </td>
+                                <td class="px-6 py-3 text-sm w-px whitespace-nowrap text-gray-600 text-center" v-if="columns.created_by">
+                                    <div class="bg-green-500 text-white p-2 text-md rounded-full text-center mr-2 w-9" v-tooltip="item.created_by.name"><div class="w-full text-center">{{ getUserNameInitials(item.created_by.name) }}</div></div>
+                                </td>
+                                <td class="px-6 py-3 text-sm w-px whitespace-nowrap text-gray-600" v-if="columns.updated_at">
+                                    {{ item.updated_at | date('D MMM YYYY, H:mm') }}
+                                </td>
+                                <td class="px-6 py-3 text-sm w-px whitespace-nowrap text-gray-600" v-if="columns.updated_by">
+                                    <div v-if="item.updated_by !== null" class="bg-green-500 text-white p-2 text-md rounded-full text-center mr-2 w-9" v-tooltip="item.updated_by.name"><div class="w-full text-center">{{ getUserNameInitials(item.updated_by.name) }}</div></div>
+                                </td>
+                                <td class="px-6 py-3 text-sm w-px whitespace-nowrap text-gray-600" v-if="columns.published_at">
+                                    {{ item.published_at | date('D MMM YYYY, H:mm') }}
+                                </td>
+                                <td class="px-6 py-3 text-sm w-px whitespace-nowrap text-gray-600" v-if="columns.published_by">
+                                    <div v-if="item.published_by !== null" class="bg-green-500 text-white p-2 text-md rounded-full text-center mr-2 w-9" v-tooltip="item.published_by.name"><div class="w-full text-center">{{ getUserNameInitials(item.published_by.name) }}</div></div>
+                                </td>
+                                <td v-if="listOptions.getItems != 'trashed'" class="pl-2 py-4 text-sm text-center w-px">
+                                    <router-link :to="{name: 'projects.content.edit', params: { project_id: $route.params.project_id, col_id: collection_id, content_id: item.id } }" class="text-indigo-500 p-2 px-3 rounded-sm hover:bg-gray-100 cursor-pointer bg-gray-50"><i class="fa fa-pencil-alt"></i></router-link>
+                                </td>
+                                <td v-if="listOptions.getItems != 'trashed'" class="pl-2 py-4 text-sm text-center w-px">
+                                    <a class="text-orange-500 p-2 px-3 rounded-sm hover:bg-gray-100 cursor-pointer bg-gray-50" @click="moveToTrashContent(item)"><i class="fa fa-trash-restore"></i></a>
+                                </td>
+                                <td class="pl-2 py-4 text-sm text-center w-px">
+                                    <div v-if="item.form_id === null">
+                                        <span v-if="item.published_at !== null" class="text-gray-500  rounded-sm bg-green-200 px-3 py-1">published</span>
+                                        <span v-else class="text-gray-500 rounded-sm bg-gray-200 px-3 py-1">draft</span>
+                                    </div>
+                                    <div v-else>
+                                        <span v-if="item.published_at !== null" class="text-gray-200 rounded-sm bg-blue-400 px-3 py-1" v-tooltip="'Submitted at '+dateFormat(item.form.created_at)+'. Form name: '+item.form.name">published</span>
+                                        <span v-else class="text-gray-500 rounded-sm bg-blue-200 px-3 py-1" v-tooltip="'Submitted at '+dateFormat(item.form.created_at)+'. Form name: '+item.form.name">draft</span>
+                                    </div>
                                 </td>
                             </tr>
 

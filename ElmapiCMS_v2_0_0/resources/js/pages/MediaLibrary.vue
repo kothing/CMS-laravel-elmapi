@@ -407,7 +407,7 @@ export default {
                                 this.$delete(this.selectedFiles, i);
                         }
                         
-                        if(this.selectedFile.id == file.id){
+                        if(this.selectedFile?.id == file.id){
                             this.selectedFile = null;
                             this.fileUpdateData = {};
                         }
