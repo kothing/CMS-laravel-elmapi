@@ -1,5 +1,5 @@
 <template>
-    <div class="p-4 bg-white">
+    <div class="app__project-collection-sidebar p-4 bg-white">
         <div class="mb-4">
             <h4 class="mb-2 p-2 font-bold text-lg flex justify-between items-center h-10" v-if="!openSearchInput">
                 <div>

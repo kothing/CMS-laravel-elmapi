@@ -1,5 +1,5 @@
 <template>
-    <div class="m-3 p-3">
+    <div class="app__projects-dashboard m-3 p-3">
         <div clsss="app__projects-search">
             <div class="relative flex w-full flex-wrap items-stretch mb-4">
                 <span class="z-9 h-full leading-snug font-normal absolute text-center text-gray-400 absolute bg-transparent rounded-sm text-base items-center justify-center w-8 pl-3 py-3">
@@ -20,7 +20,6 @@
             </router-link>
 
         </div>
-       
 
         <ui-modal :show="openNewProjectModal" @close="closeNewProjectModal">
             <template #title>

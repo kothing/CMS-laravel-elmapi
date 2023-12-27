@@ -1,9 +1,11 @@
 <template>
-    <div class="p-4 flex border-b">
+    <div class="app__project-common-header p-4 flex border-b">
         <div class="w-full">
-            <div class="text-xl font-bold">
-                {{ project.name }}
-            </div>
+            <router-link :to="{name: 'projects', params: { project_id: project.id }}">
+                <div class="text-xl font-bold">
+                    {{ project.name }}
+                </div>
+            </router-link>
             <div class="text-sm">{{ project.description }}</div>
         </div>
         <div class="flex items-center">

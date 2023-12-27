@@ -1,9 +1,9 @@
 <template>
-    <div class="p-4 bg-white">
+    <div class="app__project-content-sidebar p-4 bg-white">
         <div class="mb-4">
             <h4 class="mb-2 p-2 font-bold text-lg flex justify-between items-center h-10" v-if="!openSearchInput">
                 <div>
-                    Content    
+                    Content
                 </div> 
                 <div>
                     <a class="text-sm text-blue-500 p-1 px-3 cursor-pointer rounded-md hover:bg-gray-100" @click="openSearchInput = true"><i class="fas fa-search"></i></a>

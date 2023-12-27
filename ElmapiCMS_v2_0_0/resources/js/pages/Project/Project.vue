@@ -1,5 +1,5 @@
 <template>
-    <div clss="app__project-centre">
+    <div class="app__project-centre">
         <div class="w-full m-auto mt-5">
             <project-header :project="project" class="mb-3"></project-header>
             

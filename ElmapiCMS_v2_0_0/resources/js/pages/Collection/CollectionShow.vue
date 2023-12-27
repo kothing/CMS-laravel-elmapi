@@ -1,12 +1,11 @@
 <template>
     <div class="flex h-full overflow-hidden">
-        <div class="w-96 overflow-x-hidden h-full bg-white">
+        <div class="w-96 h-full bg-white overflow-x-hidden">
             <project-header :project="project" class="bg-white"></project-header>
-
             <collection-sidebar :project="project"></collection-sidebar>
         </div>
 
-        <div class="p-4 w-9/12 overflow-x-auto">
+        <div class="w-9/12 p-4 overflow-x-auto">
             <div class="mb-2 p-2 font-bold text-lg flex">
                 <div class="flex">
                     {{ collection.name }} <small class="text-gray-400 ml-1">#{{ collection.slug }}</small>
@@ -79,7 +78,7 @@
             </ul>
         </div>
 
-        <div class="w-96 overflow-x-hidden h-full">
+        <div class="w-96 h-full overflow-x-hidden">
             <div class="bg-white p-4 h-full" v-if="collection.name">
                 <h4 class="mb-2 p-2 font-bold text-lg">
                     + Fields

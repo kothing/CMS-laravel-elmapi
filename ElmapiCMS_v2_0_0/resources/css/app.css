@@ -15,11 +15,21 @@
 }
 
 .app__sidebar .app__main-menu .app__main-menu-item {
-    
+
 }
 
 .app__sidebar .app__main-menu .app__sub-menu {
-    
+    position: relative;
+}
+
+.app__sidebar .app__main-menu .app__sub-menu::before {
+    position: absolute;
+    top: 0;
+    left: 2.5rem;
+    width: 0.075rem;
+    height: 100%;
+    content: "";
+    background-color: rgba(231,234,243,.6);
 }
 
 .field_icon {
