@@ -2,11 +2,11 @@
     <div class="app__content-media-library h-full relative overflow-hidden">
         <project-header :project="project" class="bg-white"></project-header>
         
-        <div class="flex w-full h-full pt-20 overflow-hidden">
-            <div class="w-96 overflow-x-hidden h-full bg-white">
+        <div class="flex h-full pt-20 overflow-hidden">
+            <div class="w-3/12 overflow-x-hidden h-full bg-white">
                 <content-sidebar :project="project"></content-sidebar>
             </div>
-            <div class="p-4 w-full overflow-x-auto">
+            <div class="w-9/12 p-4 overflow-x-auto">
                 <media-library :project="project"></media-library>
             </div>
         </div>

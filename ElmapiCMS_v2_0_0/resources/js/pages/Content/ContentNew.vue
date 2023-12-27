@@ -3,11 +3,11 @@
         <project-header :project="project" class="bg-white"></project-header>
         
         <div class="flex h-full pt-20 overflow-hidden">
-            <div class="w-96 overflow-x-hidden bg-white">
+            <div class="w-3/12 overflow-x-hidden bg-white">
                 <content-sidebar :project="project"></content-sidebar>
             </div>
     
-            <div class="p-4 w-full overflow-x-auto">
+            <div class="w-9/12 p-4 overflow-x-auto">
                 <div class="mb-2 py-2 font-bold text-lg flex justify-between">
                     <div>
                         {{ collection.name }} <small class="text-gray-500 font-normal"> / Create New Content</small>

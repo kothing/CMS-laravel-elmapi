@@ -2,7 +2,10 @@
     <div class="app__container flex h-screen bg-gray-50">
         <div :class="sidebarOpen ? 'block' : 'hidden'" @click="sidebarOpen = false" class="fixed z-1 inset-0 bg-black opacity-50 transition-opacity lg:hidden"></div>
 
-        <div :class="sidebarOpen ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'" class="app__sidebar w-64 fixed z-10 inset-y-0 left-0 transition duration-300 transform bg-gray-900 overflow-y-auto lg:translate-x-0 lg:static lg:inset-0 text-white">
+        <div 
+            :class="sidebarOpen ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'" 
+            class="app__sidebar w-64 fixed z-10 inset-y-0 left-0 transition duration-300 transform bg-gray-900 overflow-y-auto lg:translate-x-0 lg:static lg:inset-0 text-white"
+            >
             <div class="flex flex-col justify-between h-screen">
                 <div class="flex-item">
                     <div class="app__brand text-center">
@@ -88,9 +91,9 @@
                 </div>
             </header>
 
-            <!--<div class="flex-1 overflow-x-hidden">-->
+            <div class="flex-1 overflow-x-hidden">
                 <router-view></router-view>
-            <!--</div>-->
+            </div>
         </div>
     </div>
 </template>

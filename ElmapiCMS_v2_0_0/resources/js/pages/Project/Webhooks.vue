@@ -3,11 +3,11 @@
         <project-header :project="project" class="bg-white"></project-header>
 
         <div class="flex h-full pt-20 overflow-hidden">
-            <div class="w-96 h-full bg-white overflow-x-hidden">
+            <div class="w-3/12 h-full bg-white overflow-x-hidden">
                 <settings-nav :project="project"></settings-nav>
             </div>
     
-            <div class="w-full overflow-x-hidden">
+            <div class="w-9/12 overflow-x-hidden">
                 <div class="p-4">
                     <div class="flex justify-between p-2 items-center">
                         <h4 class="mb-2 font-bold text-xl">Webhooks</h4>

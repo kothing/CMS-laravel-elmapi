@@ -3,11 +3,11 @@
         <project-header :project="project" class="bg-white"></project-header>
         
         <div class="flex h-full pt-20 overflow-hidden">
-            <div class="w-96 overflow-x-hidden h-full bg-white">
+            <div class="w-3/12 overflow-x-hidden h-full bg-white">
                 <content-sidebar :project="project"></content-sidebar>
             </div>
     
-            <div class="p-4 w-full overflow-x-auto">
+            <div class="w-9/12 p-4 overflow-x-auto">
                 <content-table v-if="$route.params.col_id !== undefined" :collection_id="parseInt($route.params.col_id)"></content-table>
             </div>
         </div>
