@@ -1,5 +1,10 @@
 <template>
     <div class="app__project-common-header fixed w-full flex p-4 border-b bg-white">
+        <span class="flex items-center pr-4">
+            <router-link :to="{name: 'home'}">
+                <i class="fas fa-home"></i>
+            </router-link>
+        </span>
         <div class="w-full">
             <router-link :to="{name: 'projects', params: { project_id: project.id }}">
                 <div class="text-xl font-bold">

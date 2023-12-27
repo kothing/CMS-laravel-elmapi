@@ -77,7 +77,7 @@
             </div>
         </div>
 
-        <div class="app__content flex-1 flex flex-col">
+        <div class="app__content flex flex-col flex-1">
              <header class="app__content-header flex items-center py-1 px-3 bg-white border-b border-gray-200 lg:hidden">
                 <div class="m-r-2 flex items-center">
                     <button @click="sidebarOpen = !sidebarOpen" class="text-gray-500 focus:outline-none lg:hidden">
