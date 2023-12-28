@@ -11,16 +11,19 @@ use App\Http\Controllers\CollectionsController;
 use App\Http\Controllers\MediaLibraryController;
 use App\Http\Controllers\CollectionFieldsController;
 
-Route::middleware(['auth'])->get('/', function () {
+Route::get('/', function () {
     return view('app');
 });
 
 Route::middleware('auth:web')->prefix('admin')->group(function(){
+    Route::get('/', function () {
+        return view('admin');
+    });
+    
     Route::get('/user', function () {
         $user = auth()->user();
         return new UserResource($user);
     });
-
     Route::post('/user/update_name', [UsersController::class, 'updateName']);
     Route::post('/user/update_email', [UsersController::class, 'updateEmail']);
     Route::post('/user/update_password', [UsersController::class, 'updatePassword']);
@@ -120,6 +123,7 @@ Route::get('uploads/{dir}/{file}', function($dir, $file){
 
     abort(404);
 });
+
 Route::get('uploads/thumb/{dir}/{file}', function($dir, $file){
 
 	$path = 'public/' . $dir . '/thumbnails/' . $file;
