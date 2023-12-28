@@ -11,7 +11,7 @@ use App\Http\Controllers\CollectionsController;
 use App\Http\Controllers\MediaLibraryController;
 use App\Http\Controllers\CollectionFieldsController;
 
-Route::middleware(['auth'])->get('/', function () {
+Route::middleware(['auth'])->get('/admin', function () {
     return view('app');
 });
 
