@@ -19,8 +19,8 @@
                     </div>
                 </div>
     
-                <div class="grid grid-cols-5 space-x-4 h-full overflow-hidden">
-                    <div class="col-span-3 xl:col-span-4 p-5 bg-white mt-2 rounded-sm overflow-x-hidden">
+                <div class="grid grid-cols-6 space-x-4 h-full overflow-hidden">
+                    <div class="col-span-4 p-5 bg-white mt-2 rounded-sm overflow-x-hidden">
                         <div class="flex justify-end">
                             <div class="flex-1 border p-4">
                                 <input type="text" v-model="form.name" placeholder="Form Name" class="text-lg border-0 mb-2 pl-0" v-forminput>
@@ -123,7 +123,7 @@
                                                     <div v-if="field.type == 'number'">
                                                         <input type="number" step="any"  v-forminput disabled>
                                                     </div>
-                                                    <div class="w-full xl:w-1/4" v-if="field.type == 'enumeration'">
+                                                    <div class="w-full" v-if="field.type == 'enumeration'">
                                                         <v-select :options="field.options.enumeration" class="v-select bg-white" placeholder="Select" disabled></v-select>
                                                     </div>
                                                     <div v-if="field.type == 'boolean'">
@@ -196,7 +196,7 @@
                         <div class="clear-both h-32"></div>
                     </div>
     
-                    <div class="col-span-2 xl:col-span-1 mt-2 ml-2">
+                    <div class="col-span-2 mt-2 ml-2">
                         <content-forms-sidebar :forms="forms"></content-forms-sidebar>
     
                         <div class="bg-white mb-2 rounded-sm">

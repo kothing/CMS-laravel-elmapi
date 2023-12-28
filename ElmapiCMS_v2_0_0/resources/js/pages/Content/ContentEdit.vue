@@ -8,8 +8,11 @@
             </div>
             <div class="w-9/12 p-4 overflow-x-auto">
                 <div class="mb-2 py-2 font-bold text-lg flex justify-between">
-                    <div>
-                        {{ collection.name }} <small class="text-gray-500 font-normal"> / Update Content</small>
+                    <div class="flex">
+                        <router-link :to="{name: 'projects.content.list', params: { project_id: $route.params.project_id, col_id: $route.params.col_id } }">
+                            {{ collection.name }} 
+                        </router-link> 
+                        <small class="text-gray-500 font-normal"> / Update Content</small>
                     </div>
                     <div class="flex">
                         <ui-button :color="'indigo-500'" :disabled="!isSavingEnable" class="rounded-r-none" @click.native="saveEdit(false)">Save</ui-button>
@@ -52,15 +55,15 @@
                     </div>
                 </div>
     
-                <div class="grid grid-cols-5 space-x-4">
-                    <div class="col-span-3 xl:col-span-4 h-full p-5 mt-2 rounded-sm bg-white overflow-auto">
-                        <form class="space-y-6 pb-10">
-                            <div v-for="field in collection.fields" :key="field.id">
+                <div class="grid grid-cols-6 space-x-4">
+                    <div class="col-span-4 h-full p-5 mt-2 rounded-sm bg-white overflow-auto">
+                        <form class="space-y-6">
+                            <div v-for="field in collection.fields" :key="field.id" :class="`field-${field.type}`">
                                 <label v-formlabel>
                                     {{ field.label }}
                                 </label>
                                 <div class="mt-1 relative">
-                                    <div v-if="field.type == 'text'">
+                                    <div v-if="field.type == 'text'" class="field-type-text">
                                         <div v-if="field.options.repeatable">
                                             <div v-for="(input,index) in newData.data[field.name]" :key="index">
                                                 <div class="flex space-between">
@@ -68,7 +71,9 @@
                                                         <input type="text" v-model="input.value" :placeholder="field.placeholder" class="mb-1" v-forminput>
                                                     </div>
                                                     <div class="w-auto h-auto text-right" v-if="(index !== 0)">
-                                                        <div class="cursor-pointer text-sm border border-red-500 rounded-sm text-white bg-red-500 p-3 ml-2 text-center hover:bg-red-400" @click="removeLineFromRepeatableField(field, index)"><i class="fas fa-trash-alt"></i></div>
+                                                        <div class="cursor-pointer text-sm border border-red-500 rounded-sm text-white bg-red-500 p-3 ml-2 text-center hover:bg-red-400" @click="removeLineFromRepeatableField(field, index)">
+                                                            <i class="fas fa-trash-alt"></i>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <p class="text-sm text-red-600 mt-1 mb-1" v-if="newData.errors['data.'+field.name+'.'+index+'.value']">{{ newData.errors['data.'+field.name+'.'+index+'.value'][0] }}</p>
@@ -80,7 +85,7 @@
                                             <input v-else type="text" v-model="newData.data[field.name]" :placeholder="field.placeholder" v-forminput @input="newData.data[field.slug_field] = $slugify(newData.data[field.name]);">
                                         </div>
                                     </div>
-                                    <div v-if="field.type == 'longtext'">
+                                    <div v-if="field.type == 'longtext'" class="field-type-longtext">
                                         <div v-if="field.options.repeatable">
                                             <div v-for="(input,index) in newData.data[field.name]" :key="index">
                                                 <div class="flex space-between">
@@ -99,12 +104,18 @@
                                             <textarea v-model="newData.data[field.name]" :placeholder="field.placeholder" v-forminput></textarea>
                                         </div>
                                     </div>
-                                    <div v-if="field.type == 'richtext'" class="relative">
+                                    <div v-if="field.type == 'richtext'" class="field-type-richtext relative">
                                         <quill-editor
                                             :ref="'quillEditor_'+field.name"
-                                            :options="{ modules: { toolbar: '#toolbar_'+field.name, imageResize: {} }, placeholder: field.placeholder }"
+                                            :options="{ 
+                                                modules: { 
+                                                    toolbar: '#toolbar_'+field.name, 
+                                                    imageResize: {} 
+                                                }, 
+                                                placeholder: field.placeholder 
+                                            }"
                                             v-model="newData.data[field.name]"
-                                            class="h-96 mb-16 rounded-sm border-gray-200"
+                                            class="content-richtext-editor h-80 rounded-sm border-gray-200"
                                         >
                                             <div :id="'toolbar_'+field.name" slot="toolbar">
                                                 <span class="ql-formats">
@@ -159,7 +170,11 @@
                                                 <span class="ql-formats">
                                                     <button class="ql-link"></button>
                                                     <button type="button" @click="openMediaLibraryModalFn(field.name, true)">
-                                                        <svg viewBox="0 0 18 18"> <rect class="ql-stroke" height="10" width="12" x="3" y="4"></rect> <circle class="ql-fill" cx="6" cy="7" r="1"></circle> <polyline class="ql-even ql-fill" points="5 12 5 11 7 9 8 10 11 7 13 9 13 12 5 12"></polyline> </svg>
+                                                        <svg viewBox="0 0 18 18">
+                                                            <rect class="ql-stroke" height="10" width="12" x="3" y="4"></rect>
+                                                            <circle class="ql-fill" cx="6" cy="7" r="1"></circle>
+                                                            <polyline class="ql-even ql-fill" points="5 12 5 11 7 9 8 10 11 7 13 9 13 12 5 12"></polyline>
+                                                        </svg>
                                                     </button>
                                                     <button class="ql-video"></button>
                                                 </span>
@@ -171,7 +186,7 @@
                                         </quill-editor>
                                         <div class="clear-both"></div>
                                     </div>
-                                    <div v-if="field.type == 'slug'">
+                                    <div v-if="field.type == 'slug'" class="field-type-slug">
                                         <div v-if="field.options.slug.field === null">
                                             <input type="text" v-model="newData.data[field.name]" @input="newData.data[field.name] = $slugify(newData.data[field.name]);" :readonly="field.options.slug.readonly" :disabled="field.options.slug.readonly" :class="{'cursor-not-allowed': field.options.slug.readonly}" :placeholder="field.placeholder" v-forminput>
                                         </div>
@@ -179,7 +194,7 @@
                                             <input type="text" v-model="newData.data[field.name]" :readonly="field.options.slug.readonly" :disabled="field.options.slug.readonly" :class="{'cursor-not-allowed': field.options.slug.readonly}" :placeholder="field.placeholder" v-forminput>
                                         </div>
                                     </div>
-                                    <div v-if="field.type == 'email'">
+                                    <div v-if="field.type == 'email'" class="field-type-email">
                                         <div v-if="field.options.repeatable">
                                             <div v-for="(input,index) in newData.data[field.name]" :key="index">
                                                 <div class="flex space-between">
@@ -204,7 +219,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div v-if="field.type == 'password'">
+                                    <div v-if="field.type == 'password'" class="field-type-password">
                                         <div class="mt-1 flex rounded-sm shadow-sm">
                                             <span class="inline-flex items-center px-3 rounded-l-sm border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm"><i class="fa fa-lock"></i></span>
                                             <input :type="passwordShow[field.name] ? 'text' : 'password'" v-model="newData.data[field.name]" v-forminput class="rounded-l-none">
@@ -214,7 +229,7 @@
                                         </div>
                                         <p class="text-sm text-gray-600 mt-1">If left blank, the password will not be updated</p>
                                     </div>
-                                    <div v-if="field.type == 'number'">
+                                    <div v-if="field.type == 'number'" class="field-type-number">
                                         <div v-if="field.options.repeatable">
                                             <div v-for="(input,index) in newData.data[field.name]" :key="index">
                                                 <div class="flex space-between">
@@ -233,10 +248,10 @@
                                             <input type="number" step="any" v-model="newData.data[field.name]" v-forminput>
                                         </div>
                                     </div>
-                                    <div class="w-full xl:w-1/4" v-if="field.type == 'enumeration'">
+                                    <div v-if="field.type == 'enumeration'" class="field-type-enumeration w-full">
                                         <v-select :multiple="field.options.multiple" :options="field.options.enumeration" :selectable="selected => newData.data[field.name] !== undefined ? !newData.data[field.name].includes(selected) : []" class="v-select" placeholder="Select" v-model="newData.data[field.name]"></v-select>
                                     </div>
-                                    <div v-if="field.type == 'boolean'">
+                                    <div v-if="field.type == 'boolean'" class="field-type-boolean">
                                         <label for="toggleB" class="flex items-center cursor-pointer">
                                             <div class="relative">
                                                 <input type="checkbox" id="toggleB" class="sr-only" v-model="newData.data[field.name]" >
@@ -245,7 +260,7 @@
                                             </div>
                                         </label>
                                     </div>
-                                    <div v-if="field.type == 'color'" class="w-2/3 xl:w-1/4">
+                                    <div v-if="field.type == 'color'" class="field-type-color w-2/3 xl:w-1/4">
                                         <div v-if="field.options.repeatable">
                                             <div v-for="(input,index) in newData.data[field.name]" :key="index">
                                                 <div class="flex space-between">
@@ -264,7 +279,7 @@
                                             <colorpicker :color="newData.data[field.name]" v-model="newData.data[field.name]" />
                                         </div>
                                     </div>
-                                    <div v-if="field.type == 'date'" class="w-full xl:w-1/4">
+                                    <div v-if="field.type == 'date'" class="field-type-date w-full xl:w-1/4">
                                         <div v-if="field.options.repeatable">
                                             <div v-for="(input,index) in newData.data[field.name]" :key="index">
                                                 <div class="flex space-between">
@@ -297,7 +312,7 @@
                                             </v-date-picker>
                                         </div>
                                     </div>
-                                    <div v-if="field.type == 'time'" class="w-1/2 xl:w-1/12">
+                                    <div v-if="field.type == 'time'" class="field-type-time w-1/2 xl:w-1/12">
                                         <div v-if="field.options.repeatable">
                                             <div v-for="(input,index) in newData.data[field.name]" :key="index">
                                                 <div class="flex space-between">
@@ -316,7 +331,7 @@
                                             <input type="time" v-model="newData.data[field.name]" v-forminput>
                                         </div>
                                     </div>
-                                    <div v-if="field.type == 'media'" class="w-full">
+                                    <div v-if="field.type == 'media'" class="field-type-media w-full">
                                         <div class="w-32 h-32 float-left my-1 mr-2 p-3 bg-gray-200 rounded-sm flex items-center text-center cursor-pointer hover:bg-gray-300" @click="openMediaLibraryModalFn(field.name, false, field.options.media.type)">
                                             <div class="w-full">
                                                 <i class="fa fa-plus text-2xl text-gray-400"></i>
@@ -362,7 +377,7 @@
                                         </div>
     
                                     </div>
-                                    <div v-if="field.type == 'relation'" class="w-full">
+                                    <div v-if="field.type == 'relation'" class="field-type-relation w-full">
                                         <div class="w-full border rounded-sm p-2">
                                             <div class="text-indigo-500 text-sm cursor-pointer p-2 hover:bg-indigo-50 rounded-sm w-full lg:w-1/3 xl:1/4" @click="openRelationModalFn(field.name, field.options.relation.collection, field.options.relation.type)">
                                                 <i class="fa fa-link"></i> Select relation ({{ field.options.relation.type == 1 ? 'One to One' : 'One to Many'}})
@@ -424,7 +439,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div v-if="field.type == 'json'">
+                                    <div v-if="field.type == 'json'" class="field-type-json">
                                         <div class="w-full rounded-sm border border-gray-300">
                                             <codemirror ref="cmEditor" v-model="newData.data[field.name]" :options="cmOptions" />
                                         </div>
@@ -439,7 +454,7 @@
                         </form>
                     </div>
     
-                    <div class="col-span-2 xl:col-span-1 mt-2 ml-2">
+                    <div class="col-span-2 mt-2 ml-2">
                         <div class="bg-white mb-2 rounded-sm" v-if="Object.keys(newData.errors).length !== 0">
                             <div class="p-5">
                                 <p class="text-sm text-red-600 mt-1">

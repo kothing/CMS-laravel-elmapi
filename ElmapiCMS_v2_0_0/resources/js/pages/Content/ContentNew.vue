@@ -9,8 +9,11 @@
     
             <div class="w-9/12 p-4 overflow-x-auto">
                 <div class="mb-2 py-2 font-bold text-lg flex justify-between">
-                    <div>
-                        {{ collection.name }} <small class="text-gray-500 font-normal"> / Create New Content</small>
+                    <div class="flex">
+                        <router-link :to="{name: 'projects.content.list', params: { project_id: $route.params.project_id, col_id: $route.params.col_id } }">
+                            {{ collection.name }} 
+                        </router-link> 
+                        <small class="text-gray-500 font-normal"> / Create New Content</small>
                     </div>
                     <div class="flex">
                         <ui-button :color="'indigo-500'" class="rounded-r-none" @click.native="saveNew(false)">Save</ui-button>
@@ -52,10 +55,10 @@
                     </div>
                 </div>
     
-                <div class="grid grid-cols-5 space-x-4 h-full overflow-hidden">
-                    <div class="col-span-3 xl:col-span-4 p-5 bg-white mt-2 rounded-sm overflow-x-hidden">
+                <div class="grid grid-cols-6 space-x-4 h-full overflow-hidden">
+                    <div class="col-span-4 p-5 bg-white mt-2 rounded-sm overflow-x-hidden">
                         <form class="space-y-6">
-                            <div v-for="field in collection.fields" :key="field.id">
+                            <div v-for="field in collection.fields" :key="field.id" :class="`field-${field.type}`">
                                 <label v-formlabel>
                                     {{ field.label }}
                                 </label>
@@ -102,9 +105,15 @@
                                     <div v-if="field.type == 'richtext'" class="w-full relative">
                                         <quill-editor
                                             :ref="'quillEditor_'+field.name"
-                                            :options="{ modules: { toolbar: '#toolbar_'+field.name, imageResize: {} }, placeholder: field.placeholder }"
+                                            :options="{
+                                                modules: { 
+                                                    toolbar: '#toolbar_'+field.name, 
+                                                    imageResize: {} 
+                                                }, 
+                                                placeholder: field.placeholder 
+                                            }"
                                             v-model="newData.data[field.name]"
-                                            class="h-96 mb-16 rounded-sm border-gray-200"
+                                            class="content-richtext-editor h-80 rounded-sm border-gray-200"
                                         >
                                             <div :id="'toolbar_'+field.name" slot="toolbar">
                                                 <span class="ql-formats">
@@ -232,7 +241,7 @@
                                             <input type="number" step="any" v-model="newData.data[field.name]" v-forminput>
                                         </div>
                                     </div>
-                                    <div class="w-full xl:w-1/4" v-if="field.type == 'enumeration'">
+                                    <div class="w-full" v-if="field.type == 'enumeration'">
                                         <v-select :multiple="field.options.multiple" :options="field.options.enumeration" :selectable="selected => newData.data[field.name] !== undefined ? !newData.data[field.name].includes(selected) : []" class="v-select" placeholder="Select" v-model="newData.data[field.name]"></v-select>
                                     </div>
                                     <div v-if="field.type == 'boolean'">
@@ -440,7 +449,7 @@
                         <div class="clear-both h-32"></div>
                     </div>
     
-                    <div class="col-span-2 xl:col-span-1 mt-2 ml-2">
+                    <div class="col-span-2 mt-2 ml-2">
                         <div class="bg-white mb-2 rounded-sm" v-if="Object.keys(newData.errors).length !== 0">
                             <div class="p-5">
                                 <p class="text-sm text-red-600 mt-1">
