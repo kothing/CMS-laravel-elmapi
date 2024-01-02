@@ -8,7 +8,6 @@
     <meta name="description" content="">
 
     <!-- Tailwind -->
-    <!--<script src="https://cdn.tailwind.com/3.4.0"></script>-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
 
     <!-- AlpineJS -->
