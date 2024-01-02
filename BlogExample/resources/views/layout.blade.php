@@ -117,7 +117,6 @@
                 @endforeach
             </div>
             <div class="uppercase pb-6">{{ @$blog_info['copyright'] }}</div>
-            <div>Blog Template: <a href="https://github.com/davidgrzyb/tailwind-blog-template" target="_blank">davidgrzyb/tailwind-blog-template</a></div>
         </div>
     </footer>
 
