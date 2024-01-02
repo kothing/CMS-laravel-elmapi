@@ -8,19 +8,13 @@
     <meta name="description" content="">
 
     <!-- Tailwind -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /*@import url('https://fonts.googleapis.com/css?family=Karla:400,700&display=swap');*/
-
-        /*.font-family-karla {*/
-        /*    font-family: karla;*/
-        /*}*/
-    </style>
+    <!--<script src="https://cdn.tailwind.com/3.4.0"></script>-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
 
     <!-- AlpineJS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.8.2/alpine.js" defer></script>
     <!-- Font Awesome -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
 </head>
 <body class="bg-white font-family-karla">
 
