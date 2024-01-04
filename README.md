@@ -90,9 +90,6 @@ Password: admin
 You can find it in `database/seeders/DatabaseSeeder.php`
 
 
-
----
-
 ## Clear cache
 ```
 php artisan cache:clear
