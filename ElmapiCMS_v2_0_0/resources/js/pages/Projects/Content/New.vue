@@ -541,7 +541,7 @@ import UiDropdown from '../../../UI/Dropdown.vue'
 
 import ProjectHeader from '../_Sections_/ProjectHeader'
 import MediaLibrary from '../_Sections_/MediaLibrary.vue'
-import ContentSidebar from './_Sections_/ContentSidebar'
+import ContentSidebar from './_Sections_/ContentSidebar.vue'
 import ContentTable from './_Sections_/ContentTable.vue'
 
 import localesJson from '../../../locales'

@@ -331,8 +331,8 @@ import 'quill/dist/quill.bubble.css'
 import UiButton from '../../../UI/Button.vue'
 import UiModal from '../../../UI/Modal.vue'
 
-import ProjectHeader from '../_Sections_/ProjectHeader'
-import ContentSidebar from './_Sections_/ContentSidebar'
+import ProjectHeader from '../_Sections_/ProjectHeader.vue'
+import ContentSidebar from './_Sections_/ContentSidebar.vue'
 import ContentFormsSidebar from './_Sections_/ContentFormsSidebar.vue'
 
 Vue.use(Clipboard)

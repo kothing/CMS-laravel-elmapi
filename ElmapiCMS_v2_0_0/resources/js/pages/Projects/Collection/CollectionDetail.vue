@@ -609,8 +609,8 @@ import UiDropdown from '../../../UI/Dropdown.vue'
 import UiButton from '../../../UI/Button.vue';
 import UiModal from '../../../UI/Modal.vue'
 
-import ProjectHeader from '../_Sections_/ProjectHeader'
-import CollectionSidebar from './_Sections_/CollectionSidebar'
+import ProjectHeader from '../_Sections_/ProjectHeader.vue'
+import CollectionSidebar from './_Sections_/CollectionSidebar.vue'
 
 export default {
     components: {

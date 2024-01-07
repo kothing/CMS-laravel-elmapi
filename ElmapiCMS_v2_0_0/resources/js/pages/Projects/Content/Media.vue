@@ -16,7 +16,7 @@
 <script>
 import ProjectHeader from '../_Sections_/ProjectHeader'
 import MediaLibrary from '../_Sections_/MediaLibrary.vue'
-import ContentSidebar from './_Sections_/ContentSidebar'
+import ContentSidebar from './_Sections_/ContentSidebar.vue'
 
 export default {
     components: {

@@ -15,9 +15,9 @@
 </template>
 
 <script>
-import ProjectHeader from '../_Sections_/ProjectHeader'
-import ContentSidebar from './_Sections_/ContentSidebar'
-import ContentTable from './_Sections_/ContentTable'
+import ProjectHeader from '../_Sections_/ProjectHeader.vue'
+import ContentSidebar from './_Sections_/ContentSidebar.vue'
+import ContentTable from './_Sections_/ContentTable.vue'
 
 
 export default {

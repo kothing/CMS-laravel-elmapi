@@ -68,8 +68,8 @@ import UiButton from '../../../UI/Button.vue'
 import UiModal from '../../../UI/Modal.vue'
 import UiDropdown from '../../../UI/Dropdown.vue'
 
-import ProjectHeader from '../_Sections_/ProjectHeader'
-import ContentSidebar from './_Sections_/ContentSidebar'
+import ProjectHeader from '../_Sections_/ProjectHeader.vue'
+import ContentSidebar from './_Sections_/ContentSidebar.vue'
 import ContentFormsSidebar from './_Sections_/ContentFormsSidebar.vue'
 
 export default {

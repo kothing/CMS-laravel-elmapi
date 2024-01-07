@@ -9,7 +9,7 @@
             <div class="flex flex-col justify-between h-screen">
                 <div class="flex-item">
                     <div class="app__brand text-center">
-                        <brand />
+                        <brand></brand>
                     </div>
                     <nav class="app__main-menu mt-6">
                         <router-link 
@@ -21,8 +21,8 @@
                             <span class="text-xs">Dashboard</span>
                         </router-link>
                         <router-link 
-                            :to="{name: 'project'}" 
-                            :exact-active-class="'bg-gray-700'"
+                            :to="{name: 'projects'}" 
+                            :active-class="'bg-gray-700'"
                             class="app__main-menu-item flex flex-nowrap items-center my-2 px-8 py-4 block hover:bg-gray-700 rounded-sm"
                         >
                             <i class="app__menu-item-icon pr-4 fas fa-list"></i>

@@ -102,8 +102,8 @@ import "codemirror/addon/display/autorefresh.js";
 import UiButton from '../../../UI/Button.vue'
 import UiModal from '../../../UI/Modal.vue'
 
-import ProjectHeader from '../_Sections_/ProjectHeader'
-import SettingsNav from './_Sections_/SettingsNav'
+import ProjectHeader from '../_Sections_/ProjectHeader.vue'
+import SettingsNav from './_Sections_/SettingsNav.vue'
 
 export default {
     components: {
