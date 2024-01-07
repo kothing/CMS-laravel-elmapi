@@ -6,7 +6,7 @@
         <!--    </router-link>-->
         <!--</span>-->
         <div class="w-full">
-            <router-link :to="{name: 'projects', params: { project_id: project.id }}">
+            <router-link :to="{name: 'projects.index', params: { project_id: project.id }}">
                 <div class="text-xl font-bold">
                     Project: {{ project.name }}
                 </div>
