@@ -21,7 +21,7 @@
                             <span class="text-xs">Dashboard</span>
                         </router-link>
                         <router-link 
-                            :to="{name: 'projects.index'}" 
+                            :to="{name: 'project'}" 
                             :active-class="'bg-gray-700'"
                             class="app__main-menu-item flex flex-nowrap items-center my-2 px-8 py-4 block hover:bg-gray-700 rounded-sm"
                         >
