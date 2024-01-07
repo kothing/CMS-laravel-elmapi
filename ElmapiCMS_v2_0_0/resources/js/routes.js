@@ -8,6 +8,7 @@ Vue.use(VueRouter)
 
 const Dashboard = () => import(/* webpackChunkName: "dashboard" */'./pages/Dashboard');
 const Profile = () => import(/* webpackChunkName: "profile" */'./pages/Profile');
+const Projects = () => "";
 const Project = () => import(/* webpackChunkName: "project" */'./pages/Project');
 const ProjectIndex = () => import(/* webpackChunkName: "projects.index" */'./pages/Projects/Index');
 const ProjectCollection = () => import(/* webpackChunkName: "project.collection" */'./pages/Projects/Collection/Collection');
@@ -33,6 +34,7 @@ const routes = [
 	{ path: '/', name: 'dashboard', component: Dashboard },
 	{ path: '/profile', name: 'profile', component: Profile },
 	{ path: '/project/', name: 'project', component: Project },
+	{ path: '/projects/', name: 'projects', component: Projects },
 	{ path: '/projects/:project_id', name: 'projects.index', component: ProjectIndex,
 		beforeEnter: (to ,from, next) => {
 			const roles = store.getters && store.getters.user.roles;
