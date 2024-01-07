@@ -501,7 +501,7 @@ export default {
             axios.post('/admin/content/forms/'+this.$route.params.project_id+'/'+this.$route.params.col_id, this.new_form).then((response) => {
                 this.closeNewFormModal();
                 this.$toast.success('New form created.');
-                this.$router.push({ name: 'projects.content.forms.show', params: { project_id: this.project.id, collection_id: this.collection.id, form_id: response.data.id } });
+                this.$router.push({ name: 'projects.content.forms.detail', params: { project_id: this.project.id, collection_id: this.collection.id, form_id: response.data.id } });
             }, (error) => {
                 if(error.response.status == 422){
                     this.new_form.errors = error.response.data.errors;

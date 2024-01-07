@@ -21,7 +21,7 @@
                             Create a New Form
                         </div>
     
-                        <router-link :to="{ name: 'projects.content.forms.show', params: { project_id: $route.params.project_id, col_id: $route.params.col_id, form_id: form.id } }" v-for="form in forms" :key="form.id" class="bg-white hover:bg-gray-100 px-10 py-6 text-gray-900 border border-gray-100 cursor-pointer items-center rounded-sm relative">
+                        <router-link :to="{ name: 'projects.content.forms.detail', params: { project_id: $route.params.project_id, col_id: $route.params.col_id, form_id: form.id } }" v-for="form in forms" :key="form.id" class="bg-white hover:bg-gray-100 px-10 py-6 text-gray-900 border border-gray-100 cursor-pointer items-center rounded-sm relative">
                             <span class="font-bold mt-3 block text-lg">{{ form.name }}</span>
                             <span class="text-sm block">{{ form.description }}</span>
                         </router-link>
@@ -126,7 +126,7 @@ export default {
             axios.post('/admin/content/forms/'+this.$route.params.project_id+'/'+this.$route.params.col_id, this.new_form).then((response) => {
                 this.closeNewFormModal();
                 this.$toast.success('New form created.');
-                this.$router.push({ name: 'projects.content.forms.show', params: { project_id: this.project.id, collection_id: this.collection.id, form_id: response.data.id } });
+                this.$router.push({ name: 'projects.content.forms.detail', params: { project_id: this.project.id, collection_id: this.collection.id, form_id: response.data.id } });
             }, (error) => {
                 if(error.response.status == 422){
                     this.new_form.errors = error.response.data.errors;

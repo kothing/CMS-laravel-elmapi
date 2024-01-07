@@ -29,7 +29,7 @@
                 <transition-group type="transition">
                     <li class="mb-2 inline-flex items-center w-full" v-for="collection in filterSearch" :key="collection.id">
                         <i class="fas fa-grip-vertical mr-4 text-gray-500 cursor-pointer handle"></i>
-                        <router-link :to="{name: 'projects.collections.show', params: { id: project.id, col_id: collection.id  }}" class="block w-full p-2 cursor-pointer hover:bg-gray-100 rounded">{{ collection.name }}</router-link>
+                        <router-link :to="{name: 'projects.collections.detail', params: { id: project.id, col_id: collection.id  }}" class="block w-full p-2 cursor-pointer hover:bg-gray-100 rounded">{{ collection.name }}</router-link>
                     </li>
                 </transition-group>
             </draggable>
