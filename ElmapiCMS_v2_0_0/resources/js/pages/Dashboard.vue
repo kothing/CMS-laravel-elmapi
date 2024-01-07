@@ -14,7 +14,7 @@
                 Create New Project
             </div>
 
-            <router-link v-for="project in projects" :key="project.id" :to="{name: 'projects', params: { project_id: project.id }}" class="bg-white hover:bg-gray-100 p-10 text-gray-900 border border-gray-100 cursor-pointer items-center rounded-sm">
+            <router-link v-for="project in projects" :key="project.id" :to="{name: 'projects.index', params: { project_id: project.id }}" class="bg-white hover:bg-gray-100 p-10 text-gray-900 border border-gray-100 cursor-pointer items-center rounded-sm">
                 <span class="font-bold">{{ project.name }}</span>
                 <span class="text-sm block">{{ project.description }}</span>
             </router-link>

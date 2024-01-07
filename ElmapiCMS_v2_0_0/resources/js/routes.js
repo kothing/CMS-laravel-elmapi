@@ -8,7 +8,8 @@ Vue.use(VueRouter)
 
 const Dashboard = () => import(/* webpackChunkName: "dashboard" */'./pages/Dashboard');
 const Profile = () => import(/* webpackChunkName: "profile" */'./pages/Profile');
-const ProjectIndex = () => import(/* webpackChunkName: "projects" */'./pages/ProjectIndex');
+const Project = () => import(/* webpackChunkName: "projects" */'./pages/Project');
+const ProjectIndex = () => import(/* webpackChunkName: "projects.index" */'./pages/Projects/Index');
 const ProjectCollection = () => import(/* webpackChunkName: "project.collection" */'./pages/Projects/Collection/Collection');
 const ProjectCollectionDetail = () => import(/* webpackChunkName: "project.collection.detail" */'./pages/Projects/Collection/CollectionDetail');
 const ProjectContentIndex = () => import(/* webpackChunkName: "project.content" */'./pages/Projects/Content/Index');
@@ -31,7 +32,20 @@ const ProjectSettingsWebhookLogs = () => import(/* webpackChunkName: "project.se
 const routes = [
 	{ path: '/', name: 'dashboard', component: Dashboard },
 	{ path: '/profile', name: 'profile', component: Profile },
-	{ path: '/projects/', name: 'projects', component: ProjectIndex },
+	{ path: '/projects/', name: 'projects', component: Project },
+	{ path: '/projects/:project_id', name: 'projects.index', component: ProjectIndex,
+		beforeEnter: (to ,from, next) => {
+			const roles = store.getters && store.getters.user.roles;
+
+			if(roles.includes('super_admin'))
+				return next();
+
+			if(!roles.includes('admin'+to.params.project_id) && !roles.includes('editor'+to.params.project_id))
+				return next('/');
+
+			return next();
+		}
+	},
 	{ path: '/projects/:project_id/collections', name: 'projects.collections', component: ProjectCollection,
 		beforeEnter: (to ,from, next) => {
 			const roles = store.getters && store.getters.user.roles;
