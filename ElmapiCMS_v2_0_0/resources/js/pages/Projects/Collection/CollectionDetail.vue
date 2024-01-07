@@ -604,12 +604,13 @@
 </template>
 
 <script>
-import ProjectHeader from '../Project/ProjectHeader'
-import UiButton from '../../UI/Button.vue';
-import UiModal from '../../UI/Modal.vue'
-import CollectionSidebar from './CollectionSidebar'
 import draggable from 'vuedraggable'
-import UiDropdown from '../../UI/Dropdown.vue'
+import UiDropdown from '../../../UI/Dropdown.vue'
+import UiButton from '../../../UI/Button.vue';
+import UiModal from '../../../UI/Modal.vue'
+
+import ProjectHeader from '../_Sections_/ProjectHeader'
+import CollectionSidebar from './_Sections_/CollectionSidebar'
 
 export default {
     components: {

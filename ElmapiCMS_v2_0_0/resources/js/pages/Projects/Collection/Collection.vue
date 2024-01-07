@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import CollectionSidebar from './CollectionSidebar'
-import ProjectHeader from '../Project/ProjectHeader'
+import ProjectHeader from '../_Sections_/ProjectHeader'
+import CollectionSidebar from './_Sections_/CollectionSidebar'
 
 export default {
     components: {

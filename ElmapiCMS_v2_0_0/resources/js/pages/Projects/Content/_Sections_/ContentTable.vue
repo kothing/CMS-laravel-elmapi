@@ -416,13 +416,15 @@
 
 <script>
 import Vue from 'vue'
-import UiModal from '../../UI/Modal.vue'
-import UiButton from '../../UI/Button.vue'
-import UiDropdown from '../../UI/Dropdown.vue'
-import store from '../../store'
-import VTooltip from 'v-tooltip'
-Vue.use(VTooltip)
 import moment from 'moment';
+import VTooltip from 'v-tooltip'
+
+import store from '../../../store'
+import UiModal from '../../../UI/Modal.vue'
+import UiButton from '../../../UI/Button.vue'
+import UiDropdown from '../../../UI/Dropdown.vue'
+
+Vue.use(VTooltip)
 
 export default {
     components: {

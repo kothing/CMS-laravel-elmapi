@@ -170,12 +170,14 @@
 <script>
 import Vue from 'vue'
 import Clipboard from 'v-clipboard'
-Vue.use(Clipboard)
 
-import ProjectHeader from './ProjectHeader'
-import SettingsNav from './SettingsNav'
-import UiButton from '../../UI/Button.vue'
-import UiModal from '../../UI/Modal.vue'
+import UiButton from '../../../UI/Button.vue'
+import UiModal from '../../../UI/Modal.vue'
+
+import ProjectHeader from '../_Sections_/ProjectHeader'
+import SettingsNav from './_Sections_/SettingsNav'
+
+Vue.use(Clipboard)
 
 export default {
     components: {

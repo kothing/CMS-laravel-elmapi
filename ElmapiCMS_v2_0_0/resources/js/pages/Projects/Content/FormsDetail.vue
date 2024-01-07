@@ -309,11 +309,10 @@
 </template>
 
 <script>
-import ProjectHeader from '../Project/ProjectHeader'
-import ContentSidebar from './ContentSidebar'
-import UiButton from '../../UI/Button.vue'
-import UiModal from '../../UI/Modal.vue'
-import ContentFormsSidebar from './ContentFormsSidebar.vue'
+import Vue from 'vue'
+import Clipboard from 'v-clipboard'
+import draggable from 'vuedraggable'
+import { diff } from "deep-diff";
 
 import { codemirror } from 'vue-codemirror'
 import 'codemirror/lib/codemirror.css'
@@ -329,12 +328,14 @@ import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 
-import Vue from 'vue'
-import Clipboard from 'v-clipboard'
-Vue.use(Clipboard)
+import UiButton from '../../../UI/Button.vue'
+import UiModal from '../../../UI/Modal.vue'
 
-import draggable from 'vuedraggable'
-import { diff } from "deep-diff";
+import ProjectHeader from '../_Sections_/ProjectHeader'
+import ContentSidebar from './_Sections_/ContentSidebar'
+import ContentFormsSidebar from './_Sections_/ContentFormsSidebar.vue'
+
+Vue.use(Clipboard)
 
 export default {
     components: {

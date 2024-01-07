@@ -1,5 +1,5 @@
 <template>
-    <router-link :to="{name: 'home'}" :exact-active-class="'bg-none'" class="block w-full">
+    <router-link :to="{name: 'dashboard'}" :exact-active-class="'bg-none'" class="block w-full">
        <!-- <img src="/images/logo-dark.png" class="w-24 m-auto" alt=""> -->
        <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto" width="84" height="84" viewBox="0 0 169.635 169.633">
           <path id="Rectangle_8" data-name="Rectangle 8" d="M31.213,0H138.422a31.213,31.213,0,0,1,31.213,31.213V138.422a31.212,31.212,0,0,1-31.212,31.212H31.212A31.212,31.212,0,0,1,0,138.422V31.213A31.213,31.213,0,0,1,31.213,0Z"/>

@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import ProjectHeader from '../Project/ProjectHeader'
-import ContentSidebar from './ContentSidebar'
+import ProjectHeader from '../_Sections_/ProjectHeader'
+import ContentSidebar from './_Sections_/ContentSidebar'
 
 export default {
     components: {

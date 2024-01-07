@@ -67,10 +67,11 @@
 </template>
 
 <script>
-import ProjectHeader from './ProjectHeader'
-import SettingsNav from './SettingsNav'
-import UiButton from '../../UI/Button.vue'
-import checkRole from '../../checkrole'
+import UiButton from '../../../UI/Button.vue'
+import checkRole from '../../../checkrole'
+
+import ProjectHeader from '../_Sections_/ProjectHeader'
+import SettingsNav from './_Sections_/SettingsNav'
 
 export default {
     components: {
@@ -127,7 +128,7 @@ export default {
                 if (result.value) {
                     axios.delete('/admin/projects/delete/'+this.project.id).then((response) => {
                         this.$toast.success('Project deleted.');
-                        this.$router.push({ name: 'home' });
+                        this.$router.push({ name: 'dashboard' });
                     });
                 }
             });

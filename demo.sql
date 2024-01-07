@@ -6,7 +6,7 @@
 # https://github.com/sequelpro/sequelpro
 #
 # Host: 127.0.0.1 (MySQL 8.0.31)
-# Database: elmapicms
+# Database: demo
 # Generation Time: 2023-01-28 13:11:54 +0000
 # ************************************************************
 

@@ -183,10 +183,12 @@
 </template>
 
 <script>
-import ProjectHeader from './ProjectHeader'
-import SettingsNav from './SettingsNav'
-import UiButton from '../../UI/Button.vue'
-import UiModal from '../../UI/Modal.vue'
+
+import UiButton from '../../../UI/Button.vue'
+import UiModal from '../../../UI/Modal.vue'
+
+import ProjectHeader from '../_Sections_/ProjectHeader'
+import SettingsNav from './_Sections_/SettingsNav'
 
 export default {
     components: {

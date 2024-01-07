@@ -558,12 +558,7 @@
 
 <script>
 import Vue from 'vue'
-import ProjectHeader from '../Project/ProjectHeader'
-import ContentSidebar from './ContentSidebar'
-import UiButton from '../../UI/Button.vue'
-import UiModal from '../../UI/Modal.vue'
-import UiDropdown from '../../UI/Dropdown.vue'
-import MediaLibrary from '../MediaLibrary.vue'
+
 import { codemirror } from 'vue-codemirror'
 import { diff } from "deep-diff";
 import 'codemirror/lib/codemirror.css'
@@ -579,9 +574,17 @@ import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 
-import ContentTable from './ContentTable.vue'
+import UiButton from '../../../UI/Button.vue'
+import UiModal from '../../../UI/Modal.vue'
+import UiDropdown from '../../../UI/Dropdown.vue'
 
-import localesJson from '../../locales'
+import ProjectHeader from '../_Sections_/ProjectHeader'
+import MediaLibrary from '../_Sections_/MediaLibrary.vue'
+
+import ContentSidebar from './_Sections_/ContentSidebar'
+import ContentTable from './_Sections_/ContentTable.vue'
+
+import localesJson from '../../../locales'
 
 export default {
     components: {

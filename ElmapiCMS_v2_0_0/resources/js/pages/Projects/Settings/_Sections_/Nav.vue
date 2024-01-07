@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import checkRole from '../../checkrole'
+import checkRole from '../../../../checkrole'
 
 export default {
     props: ['project'],

@@ -73,9 +73,9 @@
 </template>
 
 <script>
-import UiButton from '../../UI/Button.vue';
-import UiModal from '../../UI/Modal.vue'
 import draggable from 'vuedraggable'
+import UiButton from '../../../../UI/Button.vue';
+import UiModal from '../../../../UI/Modal.vue'
 
 export default {
     components: {

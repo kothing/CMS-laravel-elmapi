@@ -18,7 +18,6 @@
                 <span class="font-bold">{{ project.name }}</span>
                 <span class="text-sm block">{{ project.description }}</span>
             </router-link>
-
         </div>
 
         <ui-modal :show="openNewProjectModal" @close="closeNewProjectModal">

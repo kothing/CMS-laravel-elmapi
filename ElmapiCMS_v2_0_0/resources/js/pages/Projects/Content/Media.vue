@@ -1,30 +1,28 @@
 <template>
-    <div class="h-full relative overflow-hidden">
+    <div class="app__content-media-library h-full relative overflow-hidden">
         <project-header :project="project" class="bg-white"></project-header>
         
         <div class="flex h-full pt-20 overflow-hidden">
             <div class="w-3/12 overflow-x-hidden h-full bg-white">
                 <content-sidebar :project="project"></content-sidebar>
             </div>
-    
             <div class="w-9/12 p-4 overflow-x-auto">
-                <content-table v-if="$route.params.col_id !== undefined" :collection_id="parseInt($route.params.col_id)"></content-table>
+                <media-library :project="project"></media-library>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import ProjectHeader from '../Project/ProjectHeader'
-import ContentSidebar from './ContentSidebar'
-import ContentTable from './ContentTable'
-
+import ProjectHeader from '../_Sections_/ProjectHeader'
+import MediaLibrary from '../_Sections_/MediaLibrary.vue'
+import ContentSidebar from './_Sections_/ContentSidebar'
 
 export default {
     components: {
         ProjectHeader,
         ContentSidebar,
-        ContentTable
+        MediaLibrary,
     },
 
     data(){
@@ -35,7 +33,7 @@ export default {
 
     methods: {
         getProject(){
-            axios.get('/admin/content/project/'+this.$route.params.project_id).then((response) => {
+            axios.get('/admin/projects/'+this.$route.params.project_id).then((response) => {
                 this.project = response.data;
             });
         },

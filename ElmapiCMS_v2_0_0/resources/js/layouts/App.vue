@@ -13,14 +13,21 @@
                     </div>
                     <nav class="app__main-menu mt-6">
                         <router-link 
-                            :to="{name: 'home'}" 
+                            :to="{name: 'dashboard'}" 
                             :exact-active-class="'bg-gray-700'" 
                             class="app__main-menu-item flex flex-nowrap items-center my-2 px-8 py-4 block hover:bg-gray-700 rounded-sm"
                         >
                             <i class="app__menu-item-icon pr-4 fas fa-tv"></i>
                             <span class="text-xs">Dashboard</span>
                         </router-link>
-    
+                        <router-link 
+                            :to="{name: 'project'}" 
+                            :exact-active-class="'bg-gray-700'"
+                            class="app__main-menu-item flex flex-nowrap items-center my-2 px-8 py-4 block hover:bg-gray-700 rounded-sm"
+                        >
+                            <i class="app__menu-item-icon pr-4 fas fa-list"></i>
+                            <span class="text-xs">Project</span>
+                        </router-link>
                         <div v-if="isProjectPage" class="app__sub-menu pl-10 bg-gray-800">
                             <router-link 
                                 v-if="checkRole(['admin'+$route.params.project_id])" 
@@ -38,15 +45,6 @@
                             >
                                 <i class="app__menu-item-icon pr-4 fas fa-edit"></i>
                                 <span class="text-xs">Content</span>
-                            </router-link>
-                            <router-link 
-                                v-if="checkRole(['super_admin'])"
-                                :to="{name: 'projects.settings.webhooks', params: { project_id: $route.params.project_id }}" 
-                                :active-class="'bg-gray-700'"  
-                                class="app__sub-menu-item flex flex-nowrap items-center px-6 py-4 block hover:bg-gray-700 rounded-sm"
-                            >
-                                <i class="app__menu-item-icon pr-4 fas fa-network-wired"></i>
-                                <span class="text-xs">Webhooks</span>
                             </router-link>
                             <router-link 
                                 v-if="checkRole(['super_admin'])"
