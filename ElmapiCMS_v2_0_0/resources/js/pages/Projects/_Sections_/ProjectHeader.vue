@@ -1,7 +1,7 @@
 <template>
     <div class="app__project-common-header fixed w-full flex p-4 border-b bg-white">
         <!--<span class="flex items-center pr-4">-->
-        <!--    <router-link :to="{name: 'home'}">-->
+        <!--    <router-link :to="{name: 'dashborad'}">-->
         <!--        <i class="fas fa-arrow-left"></i>-->
         <!--    </router-link>-->
         <!--</span>-->
