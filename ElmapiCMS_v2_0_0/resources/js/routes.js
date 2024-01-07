@@ -33,12 +33,12 @@ const routes = [
 		beforeEnter: (to ,from, next) => {
 			const roles = store.getters && store.getters.user.roles;
 
-			if(roles.includes('super_admin'))
+			if(roles.includes('super_admin')) {
 				return next();
-
-			if(!roles.includes('admin'+to.params.project_id) && !roles.includes('editor'+to.params.project_id))
+			}
+			if(!roles.includes('admin'+to.params.project_id) && !roles.includes('editor'+to.params.project_id)) {
 				return next('/');
-
+			}
 			return next();
 		}
 	},

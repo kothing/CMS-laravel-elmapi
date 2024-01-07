@@ -54,7 +54,9 @@
     
                         <hr class="clear-both mt-5 mb-5">
     
-                        <ui-button v-if="checkRole(['super_admin'])" :color="'red-500'" class="float-right" @click.native="deleteProject()"><i class="fa fa-exclamation-triangle"></i> Delete Project</ui-button>
+                        <ui-button v-if="checkRole(['super_admin'])" :color="'red-500'" class="float-right" @click.native="deleteProject()">
+                            <i class="fa fa-exclamation-triangle"></i> Delete Project
+                        </ui-button>
     
                         <div class="clear-both"></div>
                     </div>
