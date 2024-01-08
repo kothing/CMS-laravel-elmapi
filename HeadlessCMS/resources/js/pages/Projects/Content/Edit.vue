@@ -582,7 +582,7 @@ import ProjectHeader from '../_Sections_/ProjectHeader.vue'
 import MediaLibrary from '../_Sections_/MediaLibrary.vue'
 
 import ContentSidebar from './_Sections_/ContentSidebar.vue'
-import ContentTable from './_Sections_/ContentTable.vue.vue'
+import ContentTable from './_Sections_/ContentTable.vue'
 
 import localesJson from '../../../locales'
 
