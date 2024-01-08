@@ -232,7 +232,7 @@ const routes = [
 ];
 const router = new VueRouter({
 	routes: routes,
-	// linkExactActiveClass: 'bg-gray-100',
+	linkExactActiveClass: 'bg-gray-100',
 });
 
 router.beforeEach(async(to, from, next) => {
