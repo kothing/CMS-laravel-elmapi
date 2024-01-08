@@ -1,4 +1,4 @@
-(self["webpackChunk"] = self["webpackChunk"] || []).push([["project.collection"],{
+(self["webpackChunk"] = self["webpackChunk"] || []).push([["project.collection.detail"],{
 
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/UI/Button.vue?vue&type=script&lang=js":
 /*!****************************************************************************************************************************************************************************************!*\
@@ -141,10 +141,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/Projects/Collection/Collection.vue?vue&type=script&lang=js":
-/*!*******************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/Projects/Collection/Collection.vue?vue&type=script&lang=js ***!
-  \*******************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/Projects/Collection/CollectionDetail.vue?vue&type=script&lang=js":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/Projects/Collection/CollectionDetail.vue?vue&type=script&lang=js ***!
+  \*************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -152,30 +152,425 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Sections_ProjectHeader_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../_Sections_/ProjectHeader.vue */ "./resources/js/pages/Projects/_Sections_/ProjectHeader.vue");
-/* harmony import */ var _Sections_CollectionSidebar_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./_Sections_/CollectionSidebar.vue */ "./resources/js/pages/Projects/Collection/_Sections_/CollectionSidebar.vue");
+/* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.umd.js");
+/* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuedraggable__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _UI_Dropdown_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../UI/Dropdown.vue */ "./resources/js/UI/Dropdown.vue");
+/* harmony import */ var _UI_Button_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../UI/Button.vue */ "./resources/js/UI/Button.vue");
+/* harmony import */ var _UI_Modal_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../UI/Modal.vue */ "./resources/js/UI/Modal.vue");
+/* harmony import */ var _Sections_ProjectHeader_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../_Sections_/ProjectHeader.vue */ "./resources/js/pages/Projects/_Sections_/ProjectHeader.vue");
+/* harmony import */ var _Sections_CollectionSidebar_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./_Sections_/CollectionSidebar.vue */ "./resources/js/pages/Projects/Collection/_Sections_/CollectionSidebar.vue");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
+
+
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    CollectionSidebar: _Sections_CollectionSidebar_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    ProjectHeader: _Sections_ProjectHeader_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+    ProjectHeader: _Sections_ProjectHeader_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+    UiButton: _UI_Button_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    UiModal: _UI_Modal_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    CollectionSidebar: _Sections_CollectionSidebar_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
+    draggable: (vuedraggable__WEBPACK_IMPORTED_MODULE_0___default()),
+    UiDropdown: _UI_Dropdown_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
     return {
-      project: {}
+      project: {},
+      collection: {},
+      openNewFieldModalStatus: false,
+      current_field_type: "text",
+      processingAddNewField: false,
+      editStatus: false,
+      openEditCollectionModal: false,
+      editCollectionData: {
+        errors: {
+          name: '',
+          slug: ''
+        }
+      },
+      new_field: _defineProperty(_defineProperty({
+        type: null,
+        options: {},
+        project_id: this.$route.params.project_id,
+        collection_id: this.$route.params.col_id,
+        errors: {
+          label: '',
+          name: '',
+          "options.enumeration": ''
+        }
+      }, "options", {
+        enumeration: {},
+        relation: {},
+        slug: {},
+        hideInContentList: false,
+        hiddenInAPI: false,
+        repeatable: false
+      }), "validations", {
+        required: {
+          status: false,
+          message: null
+        },
+        unique: {
+          status: false,
+          message: null
+        },
+        charcount: {
+          status: false,
+          message: null,
+          type: 'Between',
+          min: null,
+          max: null
+        }
+      }),
+      slug: {
+        field: null
+      },
+      enumeration: {
+        item: null,
+        list: [],
+        itemvalid: true
+      },
+      media: {
+        type: 1
+      },
+      relation: {
+        collection: null,
+        type: 1
+      },
+      charcount: {
+        fields: ['Between', 'Min', 'Max']
+      },
+      fieldDetails: {
+        text: {
+          label: "Text",
+          desc: "Single line text (headings, titles)",
+          icon: "fas fa-font",
+          bg: "bg-yellow-400"
+        },
+        longtext: {
+          label: "Long Text",
+          desc: "Multi line text like descriptions",
+          icon: "fas fa-align-left",
+          bg: "bg-yellow-600"
+        },
+        richtext: {
+          label: "Rich Text",
+          desc: "Rich text editor with formatting",
+          icon: "fas fa-outdent",
+          bg: "bg-yellow-900"
+        },
+        slug: {
+          label: "Slug",
+          desc: "Like Urls and permalinks",
+          icon: "fas fa-link",
+          bg: "bg-green-400"
+        },
+        email: {
+          label: "E-mail",
+          desc: "Email field with validation",
+          icon: "fas fa-at",
+          bg: "bg-red-400"
+        },
+        password: {
+          label: "Password",
+          desc: "Password field with encryption",
+          icon: "fas fa-lock",
+          bg: "bg-blue-400"
+        },
+        number: {
+          label: "Number",
+          desc: "Integer, decimal, float numbers",
+          icon: "fas fa-sort-numeric-up",
+          bg: "bg-pink-600"
+        },
+        enumeration: {
+          label: "Enumeration",
+          desc: "List of values",
+          icon: "fas fa-list-ol",
+          bg: "bg-green-600"
+        },
+        "boolean": {
+          label: "Boolean",
+          desc: "True or false",
+          icon: "fas fa-check-square",
+          bg: "bg-red-600"
+        },
+        color: {
+          label: "Color",
+          desc: "Color picker",
+          icon: "fas fa-tint",
+          bg: "bg-orange-400"
+        },
+        date: {
+          label: "Date",
+          desc: "Calendar date picker",
+          icon: "fas fa-calendar-alt",
+          bg: "bg-indigo-600"
+        },
+        time: {
+          label: "Time",
+          desc: "Time picker",
+          icon: "fas fa-calendar-check",
+          bg: "bg-purple-600"
+        },
+        media: {
+          label: "Media",
+          desc: "Files, images, videos from the library",
+          icon: "fas fa-photo-video",
+          bg: "bg-gray-500"
+        },
+        relation: {
+          label: "Relation",
+          desc: "Collection relations",
+          icon: "fas fa-exchange-alt",
+          bg: "bg-pink-400"
+        },
+        json: {
+          label: "JSON",
+          desc: "Data in JSON format",
+          icon: "fas fa-code",
+          bg: "bg-red-700"
+        }
+      }
     };
   },
   methods: {
-    getProject: function getProject() {
+    getCollection: function getCollection() {
       var _this = this;
-      axios.get('/admin/collections/project/' + this.$route.params.project_id).then(function (response) {
-        _this.project = response.data;
+      axios.get('/admin/collections/show/' + this.$route.params.project_id + '/' + this.$route.params.col_id).then(function (response) {
+        _this.project = response.data.project;
+        _this.collection = response.data.collection;
+        _this.editCollectionData.id = response.data.collection.id;
+        _this.editCollectionData.project_id = response.data.project.id;
+        _this.editCollectionData.name = response.data.collection.name;
+        _this.editCollectionData.slug = response.data.collection.slug;
+      });
+    },
+    openNewFieldModal: function openNewFieldModal(field_type, edit, field) {
+      this.openNewFieldModalStatus = true;
+      this.new_field.type = field_type;
+      this.current_field_type = field_type;
+      if (edit) {
+        this.editStatus = true;
+        if (field_type == "slug") {
+          this.slug = field.options.slug;
+        }
+        if (field_type == "media") {
+          this.media.type = field.options.media.type;
+        }
+        if (field_type == "relation") {
+          this.relation.collection = field.options.relation.collection;
+          this.relation.type = field.options.relation.type;
+        }
+        if (field_type == "enumeration") {
+          this.enumeration.list = field.options.enumeration;
+        }
+        this.new_field = {
+          id: field.id,
+          label: field.label,
+          name: field.name,
+          description: field.description,
+          placeholder: field.placeholder,
+          type: field_type,
+          options: field.options,
+          project_id: this.$route.params.project_id,
+          collection_id: this.$route.params.col_id,
+          errors: {
+            label: '',
+            name: '',
+            "options.enumeration": ''
+          },
+          validations: field.validations
+        };
+      }
+    },
+    closeNewFieldModal: function closeNewFieldModal() {
+      this.openNewFieldModalStatus = false;
+      this.clearData();
+    },
+    addNewFieldSubmit: function addNewFieldSubmit() {
+      var _this2 = this;
+      if (this.new_field.type == "slug") {
+        this.new_field.options.slug = this.slug;
+      }
+      if (this.new_field.type == "media") {
+        this.new_field.options.media = {
+          type: this.media.type
+        };
+      }
+      if (this.new_field.type == "relation") {
+        this.new_field.options.relation = {
+          collection: this.relation.collection,
+          type: this.relation.type
+        };
+      }
+      if (this.editStatus) {
+        axios.post('/admin/collections/fields/update/' + this.$route.params.project_id + '/' + this.$route.params.col_id + '/' + this.new_field.id, this.new_field).then(function (response) {
+          _this2.$toast.success('Field has been updated.');
+          _this2.closeNewFieldModal();
+          _this2.getCollection();
+        }, function (error) {
+          if (error.response.status == 422) {
+            _this2.new_field.errors = error.response.data.errors;
+          }
+        });
+      } else {
+        axios.post('/admin/collections/fields/store/' + this.$route.params.project_id + '/' + this.$route.params.col_id, this.new_field).then(function (response) {
+          _this2.$toast.success('New field added.');
+          _this2.closeNewFieldModal();
+          _this2.getCollection();
+        }, function (error) {
+          if (error.response.status == 422) {
+            _this2.new_field.errors = error.response.data.errors;
+          }
+        });
+      }
+    },
+    clearData: function clearData() {
+      this.editStatus = false;
+      this.new_field = _defineProperty(_defineProperty({
+        type: null,
+        options: {},
+        project_id: this.$route.params.project_id,
+        collection_id: this.$route.params.col_id,
+        errors: {
+          label: '',
+          name: '',
+          "options.enumeration": ''
+        }
+      }, "options", {
+        enumeration: {},
+        media: {},
+        relation: {},
+        slug: {},
+        timepicker: false,
+        hideInContentList: false
+      }), "validations", {
+        required: {
+          status: false,
+          message: null
+        },
+        unique: {
+          status: false,
+          message: null
+        },
+        charcount: {
+          status: false,
+          message: null,
+          type: 'Between',
+          min: null,
+          max: null
+        }
+      }), this.slug = {
+        field: null
+      };
+      this.enumeration = {
+        item: null,
+        list: [],
+        itemvalid: true
+      };
+      this.media = {
+        type: 1
+      };
+      this.relation = {
+        collection: null,
+        type: 1
+      };
+    },
+    sortFields: function sortFields() {
+      this.collection.fields.map(function (field, index) {
+        field.order = index + 1;
+      });
+      axios.post('/admin/collections/fields/update-order/' + this.$route.params.project_id + '/' + this.$route.params.col_id, this.collection.fields);
+    },
+    addToEnumList: function addToEnumList() {
+      if (this.enumeration.item != null) {
+        this.enumeration.list.push(this.enumeration.item);
+        this.enumeration.item = null;
+        this.enumeration.itemvalid = true;
+        this.new_field.options.enumeration = this.enumeration.list;
+      } else {
+        this.enumeration.itemvalid = false;
+      }
+    },
+    removeEnumItem: function removeEnumItem(index) {
+      this.enumeration.list.splice(index, 1);
+    },
+    deleteField: function deleteField(field) {
+      var _this3 = this;
+      this.$swal.fire({
+        title: 'Are you sure',
+        text: "you want to delete this field? All the content will be lost!"
+      }).then(function (result) {
+        if (result.value) {
+          axios["delete"]('/admin/collections/fields/delete/' + _this3.$route.params.project_id + '/' + _this3.$route.params.col_id + '/' + field.id).then(function (response) {
+            _this3.$toast.success('Field deleted.');
+            _this3.getCollection();
+          });
+        }
+      });
+    },
+    closeEditCollectionModal: function closeEditCollectionModal() {
+      this.openEditCollectionModal = false;
+      this.getCollection();
+      this.editCollectionData = {
+        errors: {
+          name: '',
+          slug: ''
+        }
+      };
+    },
+    editCollectionSubmit: function editCollectionSubmit() {
+      var _this4 = this;
+      axios.post('/admin/collections/update/' + this.$route.params.project_id + '/' + this.$route.params.col_id, this.editCollectionData).then(function (response) {
+        _this4.$toast.success('Collection updated.');
+        _this4.closeEditCollectionModal();
+      }, function (error) {
+        if (error.response.status == 422) {
+          _this4.editCollectionData.errors = error.response.data.errors;
+        }
+      });
+    },
+    deleteCollection: function deleteCollection(collection) {
+      var _this5 = this;
+      this.$swal.fire({
+        title: 'Are you sure',
+        text: "you want to delete this collection? All the content will be lost!"
+      }).then(function (result) {
+        if (result.value) {
+          axios["delete"]('/admin/collections/delete/' + _this5.$route.params.project_id + '/' + collection.id).then(function (response) {
+            _this5.$toast.success('Collection deleted.');
+            _this5.$router.push({
+              name: 'projects',
+              params: {
+                id: _this5.project.id
+              }
+            });
+          });
+        }
       });
     }
   },
   mounted: function mounted() {
-    this.getProject();
+    this.getCollection();
+  },
+  computed: {
+    dragOptions: function dragOptions() {
+      return {
+        animation: 200
+      };
+    }
+  },
+  watch: {
+    '$route.params.col_id': function $routeParamsCol_id(newId, oldId) {
+      this.getCollection();
+      this.clearData();
+    }
   }
 });
 
@@ -389,10 +784,10 @@ render._withStripped = true;
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/Projects/Collection/Collection.vue?vue&type=template&id=2b0874ba":
-/*!******************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/Projects/Collection/Collection.vue?vue&type=template&id=2b0874ba ***!
-  \******************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/Projects/Collection/CollectionDetail.vue?vue&type=template&id=5feb7554":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/Projects/Collection/CollectionDetail.vue?vue&type=template&id=5feb7554 ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -405,19 +800,1793 @@ var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
-    staticClass: "app__project-collection h-full relative overflow-hidden"
+    staticClass: "app__project-collection-item h-full relative"
   }, [_c("project-header", {
     staticClass: "bg-white",
     attrs: {
       project: _vm.project
     }
   }), _vm._v(" "), _c("div", {
-    staticClass: "w-96 h-full pt-20 bg-white overflow-x-hidden"
+    staticClass: "flex h-full pt-20 overflow-hidden"
+  }, [_c("div", {
+    staticClass: "w-3/12 h-full bg-white overflow-x-hidden"
   }, [_c("collection-sidebar", {
     attrs: {
       project: _vm.project
     }
-  })], 1)], 1);
+  })], 1), _vm._v(" "), _c("div", {
+    staticClass: "w-6/12 h-full p-4 overflow-x-auto"
+  }, [_c("div", {
+    staticClass: "mb-2 p-2 font-bold text-lg flex"
+  }, [_c("div", {
+    staticClass: "flex"
+  }, [_vm._v("\n                    " + _vm._s(_vm.collection.name) + " "), _c("small", {
+    staticClass: "text-gray-400 ml-1"
+  }, [_vm._v("#" + _vm._s(_vm.collection.slug))])]), _vm._v(" "), _c("div", {
+    staticClass: "flex ml-1"
+  }, [_c("ui-dropdown", {
+    attrs: {
+      align: "left"
+    },
+    scopedSlots: _vm._u([{
+      key: "trigger",
+      fn: function fn() {
+        return [_c("button", {
+          staticClass: "text-indigo-500 hover:bg-gray-100 px-2 rounded-sm"
+        }, [_c("i", {
+          staticClass: "fa fa-ellipsis-h object-bottom"
+        })])];
+      },
+      proxy: true
+    }, {
+      key: "content",
+      fn: function fn() {
+        return [_c("ui-button", {
+          staticClass: "w-full h-full",
+          attrs: {
+            type: "button",
+            color: "white",
+            hover: "gray-200"
+          },
+          nativeOn: {
+            click: function click($event) {
+              _vm.openEditCollectionModal = true;
+            }
+          }
+        }, [_c("div", {
+          staticClass: "text-black text-sm text-left"
+        }, [_c("i", {
+          staticClass: "fa fa-edit"
+        }), _vm._v(" Edit Collection")])]), _vm._v(" "), _c("ui-button", {
+          staticClass: "w-full h-full",
+          attrs: {
+            type: "button",
+            color: "white",
+            hover: "gray-200"
+          },
+          nativeOn: {
+            click: function click($event) {
+              return _vm.deleteCollection(_vm.collection);
+            }
+          }
+        }, [_c("div", {
+          staticClass: "text-black text-sm text-left"
+        }, [_c("i", {
+          staticClass: "fa fa-trash-alt text-red-500"
+        }), _vm._v(" Delete Collection")])])];
+      },
+      proxy: true
+    }])
+  })], 1)]), _vm._v(" "), _c("ul", [_c("draggable", _vm._b({
+    attrs: {
+      list: _vm.collection.fields,
+      handle: ".handle"
+    },
+    on: {
+      end: _vm.sortFields
+    }
+  }, "draggable", _vm.dragOptions, false), [_c("transition-group", {
+    attrs: {
+      type: "transition"
+    }
+  }, _vm._l(_vm.collection.fields, function (field) {
+    return _c("li", {
+      key: field.id,
+      staticClass: "w-full mb-2"
+    }, [_c("div", {
+      staticClass: "flex items-center w-full bg-white rounded-sm p-4"
+    }, [_c("i", {
+      staticClass: "fas fa-grip-vertical mr-4 text-gray-500 cursor-pointer handle"
+    }), _vm._v(" "), _c("div", {
+      staticClass: "mr-4 text-gray-100 rounded-sm text-xl items-center text-center flex field_icon_xl",
+      "class": _vm.fieldDetails[field.type].bg
+    }, [_c("i", {
+      staticClass: "w-full",
+      "class": _vm.fieldDetails[field.type].icon
+    })]), _vm._v(" "), _c("div", {
+      staticClass: "items-center w-full"
+    }, [_c("div", {
+      staticClass: "text-lg"
+    }, [_vm._v(_vm._s(field.label))]), _vm._v(" "), _c("div", {
+      staticClass: "w-full flex justify-between"
+    }, [_c("div", {
+      staticClass: "flex space-x-1 items-center"
+    }, [_c("span", {
+      staticClass: "text-blue-900 text-sm rounded-sm bg-gray-200 px-3"
+    }, [_vm._v("#" + _vm._s(field.name))]), _vm._v(" "), _c("span", {
+      staticClass: "text-blue-900 text-sm rounded-sm bg-indigo-200 px-3"
+    }, [_vm._v("\n                                                " + _vm._s(field.type) + "\n                                                "), field.type == "enumeration" ? _c("span", [field.options.multiple ? _c("span", [_vm._v(": multiple")]) : _vm._e()]) : _vm._e(), _vm._v(" "), field.type == "date" ? _c("span", [field.options.timepicker ? _c("span", [_vm._v(": time")]) : _vm._e()]) : _vm._e(), _vm._v(" "), field.type == "media" ? _c("span", [field.options.media.type == 1 ? _c("span", [_vm._v(": single")]) : field.options.media.type == 2 ? _c("span", [_vm._v(": multiple")]) : _vm._e()]) : field.type == "relation" ? _c("span", [field.options.relation.type == 1 ? _c("span", [_vm._v(": one-to-one")]) : field.options.relation.type == 2 ? _c("span", [_vm._v(": one-to-many")]) : _vm._e()]) : _vm._e()]), _vm._v(" "), field.validations.required.status ? _c("span", {
+      staticClass: "text-blue-900 text-sm rounded-sm bg-gray-100 px-3"
+    }, [_c("i", {
+      staticClass: "fas fa-star-of-life text-xs"
+    }), _vm._v(" required")]) : _vm._e(), _vm._v(" "), field.validations.unique.status ? _c("span", {
+      staticClass: "text-blue-900 text-sm rounded-sm bg-gray-100 px-3"
+    }, [_c("i", {
+      staticClass: "fas fa-fingerprint text-xs"
+    }), _vm._v(" unique")]) : _vm._e(), _vm._v(" "), field.options.repeatable ? _c("span", {
+      staticClass: "text-blue-900 text-sm rounded-sm bg-gray-100 px-3"
+    }, [_c("i", {
+      staticClass: "fas fa-redo text-xs"
+    }), _vm._v(" repeatable")]) : _vm._e(), _vm._v(" "), field.options.hideInContentList ? _c("span", {
+      staticClass: "text-blue-900 text-sm rounded-sm bg-gray-100 px-3"
+    }, [_vm._v("hide in content list")]) : _vm._e(), _vm._v(" "), field.options.hiddenInAPI ? _c("span", {
+      staticClass: "text-blue-900 text-sm rounded-sm bg-gray-100 px-3"
+    }, [_vm._v("hidden in api")]) : _vm._e()]), _vm._v(" "), _c("div", [_c("a", {
+      staticClass: "text-white text-sm rounded-sm bg-indigo-500 px-3 cursor-pointer hover:bg-indigo-600 whitespace-nowrap",
+      on: {
+        click: function click($event) {
+          return _vm.openNewFieldModal(field.type, true, field);
+        }
+      }
+    }, [_c("i", {
+      staticClass: "fa fa-edit text-xs"
+    }), _vm._v(" Edit")]), _vm._v(" "), _c("a", {
+      staticClass: "text-white text-sm rounded-sm bg-red-500 px-3 cursor-pointer hover:bg-red-600 whitespace-nowrap",
+      on: {
+        click: function click($event) {
+          return _vm.deleteField(field);
+        }
+      }
+    }, [_c("i", {
+      staticClass: "fa fa-trash-alt text-xs"
+    }), _vm._v(" Delete")])])])])])]);
+  }), 0)], 1)], 1)]), _vm._v(" "), _c("div", {
+    staticClass: "w-3/12 h-full bg-white overflow-x-hidden"
+  }, [_vm.collection.name ? _c("div", {
+    staticClass: "h-full p-4"
+  }, [_c("h4", {
+    staticClass: "mb-2 p-2 font-bold text-lg"
+  }, [_vm._v("\n                    + Fields\n                ")]), _vm._v(" "), _c("ul", [_c("li", {
+    staticClass: "mb-2"
+  }, [_c("a", {
+    staticClass: "block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm",
+    on: {
+      click: function click($event) {
+        return _vm.openNewFieldModal("text");
+      }
+    }
+  }, [_c("div", {
+    staticClass: "flex"
+  }, [_c("div", {
+    staticClass: "mr-2 text-gray-100 rounded-sm text-sm items-center text-center flex field_icon",
+    "class": _vm.fieldDetails.text.bg
+  }, [_c("i", {
+    staticClass: "w-full",
+    "class": _vm.fieldDetails.text.icon
+  })]), _vm._v(" "), _c("div", [_c("div", {
+    staticClass: "text-sm"
+  }, [_vm._v(_vm._s(_vm.fieldDetails.text.label))]), _vm._v(" "), _c("div", {
+    staticClass: "text-xs mt-1"
+  }, [_vm._v(_vm._s(_vm.fieldDetails.text.desc))])])])])]), _vm._v(" "), _c("li", {
+    staticClass: "mb-2"
+  }, [_c("a", {
+    staticClass: "block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm",
+    on: {
+      click: function click($event) {
+        return _vm.openNewFieldModal("longtext");
+      }
+    }
+  }, [_c("div", {
+    staticClass: "flex"
+  }, [_c("div", {
+    staticClass: "mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon",
+    "class": _vm.fieldDetails.longtext.bg
+  }, [_c("i", {
+    "class": _vm.fieldDetails.longtext.icon
+  })]), _vm._v(" "), _c("div", [_c("div", {
+    staticClass: "text-sm"
+  }, [_vm._v(_vm._s(_vm.fieldDetails.longtext.label))]), _vm._v(" "), _c("div", {
+    staticClass: "text-xs mt-1"
+  }, [_vm._v(_vm._s(_vm.fieldDetails.longtext.desc))])])])])]), _vm._v(" "), _c("li", {
+    staticClass: "mb-2"
+  }, [_c("a", {
+    staticClass: "block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm",
+    on: {
+      click: function click($event) {
+        return _vm.openNewFieldModal("richtext");
+      }
+    }
+  }, [_c("div", {
+    staticClass: "flex"
+  }, [_c("div", {
+    staticClass: "mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon",
+    "class": _vm.fieldDetails.richtext.bg
+  }, [_c("i", {
+    "class": _vm.fieldDetails.richtext.icon
+  })]), _vm._v(" "), _c("div", [_c("div", {
+    staticClass: "text-sm"
+  }, [_vm._v(_vm._s(_vm.fieldDetails.richtext.label))]), _vm._v(" "), _c("div", {
+    staticClass: "text-xs mt-1"
+  }, [_vm._v(_vm._s(_vm.fieldDetails.richtext.desc))])])])])]), _vm._v(" "), _c("li", {
+    staticClass: "mb-2"
+  }, [_c("a", {
+    staticClass: "block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm",
+    on: {
+      click: function click($event) {
+        return _vm.openNewFieldModal("slug");
+      }
+    }
+  }, [_c("div", {
+    staticClass: "flex"
+  }, [_c("div", {
+    staticClass: "mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon",
+    "class": _vm.fieldDetails.slug.bg
+  }, [_c("i", {
+    "class": _vm.fieldDetails.slug.icon
+  })]), _vm._v(" "), _c("div", [_c("div", {
+    staticClass: "text-sm"
+  }, [_vm._v(_vm._s(_vm.fieldDetails.slug.label))]), _vm._v(" "), _c("div", {
+    staticClass: "text-xs mt-1"
+  }, [_vm._v(_vm._s(_vm.fieldDetails.slug.desc))])])])])]), _vm._v(" "), _c("li", {
+    staticClass: "mb-2"
+  }, [_c("a", {
+    staticClass: "block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm",
+    on: {
+      click: function click($event) {
+        return _vm.openNewFieldModal("email");
+      }
+    }
+  }, [_c("div", {
+    staticClass: "flex"
+  }, [_c("div", {
+    staticClass: "mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon",
+    "class": _vm.fieldDetails.email.bg
+  }, [_c("i", {
+    "class": _vm.fieldDetails.email.icon
+  })]), _vm._v(" "), _c("div", [_c("div", {
+    staticClass: "text-sm"
+  }, [_vm._v(_vm._s(_vm.fieldDetails.email.label))]), _vm._v(" "), _c("div", {
+    staticClass: "text-xs mt-1"
+  }, [_vm._v(_vm._s(_vm.fieldDetails.email.desc))])])])])]), _vm._v(" "), _c("li", {
+    staticClass: "mb-2"
+  }, [_c("a", {
+    staticClass: "block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm",
+    on: {
+      click: function click($event) {
+        return _vm.openNewFieldModal("password");
+      }
+    }
+  }, [_c("div", {
+    staticClass: "flex"
+  }, [_c("div", {
+    staticClass: "mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon",
+    "class": _vm.fieldDetails.password.bg
+  }, [_c("i", {
+    "class": _vm.fieldDetails.password.icon
+  })]), _vm._v(" "), _c("div", [_c("div", {
+    staticClass: "text-sm"
+  }, [_vm._v(_vm._s(_vm.fieldDetails.password.label))]), _vm._v(" "), _c("div", {
+    staticClass: "text-xs mt-1"
+  }, [_vm._v(_vm._s(_vm.fieldDetails.password.desc))])])])])]), _vm._v(" "), _c("li", {
+    staticClass: "mb-2"
+  }, [_c("a", {
+    staticClass: "block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm",
+    on: {
+      click: function click($event) {
+        return _vm.openNewFieldModal("number");
+      }
+    }
+  }, [_c("div", {
+    staticClass: "flex"
+  }, [_c("div", {
+    staticClass: "mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon",
+    "class": _vm.fieldDetails.number.bg
+  }, [_c("i", {
+    "class": _vm.fieldDetails.number.icon
+  })]), _vm._v(" "), _c("div", [_c("div", {
+    staticClass: "text-sm"
+  }, [_vm._v(_vm._s(_vm.fieldDetails.number.label))]), _vm._v(" "), _c("div", {
+    staticClass: "text-xs mt-1"
+  }, [_vm._v(_vm._s(_vm.fieldDetails.number.desc))])])])])]), _vm._v(" "), _c("li", {
+    staticClass: "mb-2"
+  }, [_c("a", {
+    staticClass: "block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm",
+    on: {
+      click: function click($event) {
+        return _vm.openNewFieldModal("enumeration");
+      }
+    }
+  }, [_c("div", {
+    staticClass: "flex"
+  }, [_c("div", {
+    staticClass: "mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon",
+    "class": _vm.fieldDetails.enumeration.bg
+  }, [_c("i", {
+    "class": _vm.fieldDetails.enumeration.icon
+  })]), _vm._v(" "), _c("div", [_c("div", {
+    staticClass: "text-sm"
+  }, [_vm._v(_vm._s(_vm.fieldDetails.enumeration.label))]), _vm._v(" "), _c("div", {
+    staticClass: "text-xs mt-1"
+  }, [_vm._v(_vm._s(_vm.fieldDetails.enumeration.desc))])])])])]), _vm._v(" "), _c("li", {
+    staticClass: "mb-2"
+  }, [_c("a", {
+    staticClass: "block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm",
+    on: {
+      click: function click($event) {
+        return _vm.openNewFieldModal("boolean");
+      }
+    }
+  }, [_c("div", {
+    staticClass: "flex"
+  }, [_c("div", {
+    staticClass: "mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon",
+    "class": _vm.fieldDetails["boolean"].bg
+  }, [_c("i", {
+    "class": _vm.fieldDetails["boolean"].icon
+  })]), _vm._v(" "), _c("div", [_c("div", {
+    staticClass: "text-sm"
+  }, [_vm._v(_vm._s(_vm.fieldDetails["boolean"].label))]), _vm._v(" "), _c("div", {
+    staticClass: "text-xs mt-1"
+  }, [_vm._v(_vm._s(_vm.fieldDetails["boolean"].desc))])])])])]), _vm._v(" "), _c("li", {
+    staticClass: "mb-2"
+  }, [_c("a", {
+    staticClass: "block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm",
+    on: {
+      click: function click($event) {
+        return _vm.openNewFieldModal("color");
+      }
+    }
+  }, [_c("div", {
+    staticClass: "flex"
+  }, [_c("div", {
+    staticClass: "mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon",
+    "class": _vm.fieldDetails.color.bg
+  }, [_c("i", {
+    "class": _vm.fieldDetails.color.icon
+  })]), _vm._v(" "), _c("div", [_c("div", {
+    staticClass: "text-sm"
+  }, [_vm._v(_vm._s(_vm.fieldDetails.color.label))]), _vm._v(" "), _c("div", {
+    staticClass: "text-xs mt-1"
+  }, [_vm._v(_vm._s(_vm.fieldDetails.color.desc))])])])])]), _vm._v(" "), _c("li", {
+    staticClass: "mb-2"
+  }, [_c("a", {
+    staticClass: "block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm",
+    on: {
+      click: function click($event) {
+        return _vm.openNewFieldModal("date");
+      }
+    }
+  }, [_c("div", {
+    staticClass: "flex"
+  }, [_c("div", {
+    staticClass: "mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon",
+    "class": _vm.fieldDetails.date.bg
+  }, [_c("i", {
+    "class": _vm.fieldDetails.date.icon
+  })]), _vm._v(" "), _c("div", [_c("div", {
+    staticClass: "text-sm"
+  }, [_vm._v(_vm._s(_vm.fieldDetails.date.label))]), _vm._v(" "), _c("div", {
+    staticClass: "text-xs mt-1"
+  }, [_vm._v(_vm._s(_vm.fieldDetails.date.desc))])])])])]), _vm._v(" "), _c("li", {
+    staticClass: "mb-2"
+  }, [_c("a", {
+    staticClass: "block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm",
+    on: {
+      click: function click($event) {
+        return _vm.openNewFieldModal("time");
+      }
+    }
+  }, [_c("div", {
+    staticClass: "flex"
+  }, [_c("div", {
+    staticClass: "mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon",
+    "class": _vm.fieldDetails.time.bg
+  }, [_c("i", {
+    "class": _vm.fieldDetails.time.icon
+  })]), _vm._v(" "), _c("div", [_c("div", {
+    staticClass: "text-sm"
+  }, [_vm._v(_vm._s(_vm.fieldDetails.time.label))]), _vm._v(" "), _c("div", {
+    staticClass: "text-xs mt-1"
+  }, [_vm._v(_vm._s(_vm.fieldDetails.time.desc))])])])])]), _vm._v(" "), _c("li", {
+    staticClass: "mb-2"
+  }, [_c("a", {
+    staticClass: "block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm",
+    on: {
+      click: function click($event) {
+        return _vm.openNewFieldModal("media");
+      }
+    }
+  }, [_c("div", {
+    staticClass: "flex"
+  }, [_c("div", {
+    staticClass: "mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon",
+    "class": _vm.fieldDetails.media.bg
+  }, [_c("i", {
+    "class": _vm.fieldDetails.media.icon
+  })]), _vm._v(" "), _c("div", [_c("div", {
+    staticClass: "text-sm"
+  }, [_vm._v(_vm._s(_vm.fieldDetails.media.label))]), _vm._v(" "), _c("div", {
+    staticClass: "text-xs mt-1"
+  }, [_vm._v(_vm._s(_vm.fieldDetails.media.desc))])])])])]), _vm._v(" "), _c("li", {
+    staticClass: "mb-2"
+  }, [_c("a", {
+    staticClass: "block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm",
+    on: {
+      click: function click($event) {
+        return _vm.openNewFieldModal("relation");
+      }
+    }
+  }, [_c("div", {
+    staticClass: "flex"
+  }, [_c("div", {
+    staticClass: "mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon",
+    "class": _vm.fieldDetails.relation.bg
+  }, [_c("i", {
+    "class": _vm.fieldDetails.relation.icon
+  })]), _vm._v(" "), _c("div", [_c("div", {
+    staticClass: "text-sm"
+  }, [_vm._v(_vm._s(_vm.fieldDetails.relation.label))]), _vm._v(" "), _c("div", {
+    staticClass: "text-xs mt-1"
+  }, [_vm._v(_vm._s(_vm.fieldDetails.relation.desc))])])])])]), _vm._v(" "), _c("li", {
+    staticClass: "mb-2"
+  }, [_c("a", {
+    staticClass: "block w-full p-2 cursor-pointer hover:bg-gray-100 bg-gray-50 rounded-sm",
+    on: {
+      click: function click($event) {
+        return _vm.openNewFieldModal("json");
+      }
+    }
+  }, [_c("div", {
+    staticClass: "flex"
+  }, [_c("div", {
+    staticClass: "mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon",
+    "class": _vm.fieldDetails.json.bg
+  }, [_c("i", {
+    "class": _vm.fieldDetails.json.icon
+  })]), _vm._v(" "), _c("div", [_c("div", {
+    staticClass: "text-sm"
+  }, [_vm._v(_vm._s(_vm.fieldDetails.json.label))]), _vm._v(" "), _c("div", {
+    staticClass: "text-xs mt-1"
+  }, [_vm._v(_vm._s(_vm.fieldDetails.json.desc))])])])])])])]) : _vm._e()])]), _vm._v(" "), _c("ui-modal", {
+    attrs: {
+      show: _vm.openNewFieldModalStatus
+    },
+    on: {
+      close: _vm.closeNewFieldModal
+    },
+    scopedSlots: _vm._u([{
+      key: "title",
+      fn: function fn() {
+        return [_c("div", {
+          staticClass: "flex"
+        }, [_c("div", [_c("div", {
+          staticClass: "mr-2 text-gray-100 rounded-sm text-sm p-3 items-center text-center field_icon",
+          "class": _vm.fieldDetails[_vm.current_field_type].bg
+        }, [_c("i", {
+          "class": _vm.fieldDetails[_vm.current_field_type].icon
+        })])]), _vm._v(" "), _c("div", {
+          staticClass: "items-center h-auto flex w-64"
+        }, [!_vm.editStatus ? _c("span", [_vm._v("Add new Field")]) : _vm._e(), _vm._v(" "), _vm.editStatus ? _c("span", [_vm._v("Edit Field")]) : _vm._e()]), _vm._v(" "), _c("div", {
+          staticClass: "text-right float-right w-full"
+        }, [_c("div", [_vm._v(_vm._s(_vm.fieldDetails[_vm.current_field_type].label))]), _vm._v(" "), _c("div", {
+          staticClass: "text-sm mt-1"
+        }, [_vm._v(_vm._s(_vm.fieldDetails[_vm.current_field_type].desc))])])])];
+      },
+      proxy: true
+    }, {
+      key: "content",
+      fn: function fn() {
+        return [_c("div", [_c("form", {
+          on: {
+            submit: function submit($event) {
+              $event.preventDefault();
+              return _vm.addNewFieldSubmit.apply(null, arguments);
+            }
+          }
+        }, [_c("div", {
+          staticClass: "mt-2"
+        }, [_c("label", {
+          directives: [{
+            name: "formlabel",
+            rawName: "v-formlabel"
+          }]
+        }, [_vm._v("Label")]), _vm._v(" "), !_vm.editStatus ? _c("input", {
+          directives: [{
+            name: "model",
+            rawName: "v-model",
+            value: _vm.new_field.label,
+            expression: "new_field.label"
+          }, {
+            name: "forminput",
+            rawName: "v-forminput"
+          }],
+          attrs: {
+            type: "text",
+            autofocus: ""
+          },
+          domProps: {
+            value: _vm.new_field.label
+          },
+          on: {
+            input: [function ($event) {
+              if ($event.target.composing) return;
+              _vm.$set(_vm.new_field, "label", $event.target.value);
+            }, function ($event) {
+              _vm.new_field.name = _vm.$slugify(_vm.new_field.label);
+            }]
+          }
+        }) : _c("input", {
+          directives: [{
+            name: "model",
+            rawName: "v-model",
+            value: _vm.new_field.label,
+            expression: "new_field.label"
+          }, {
+            name: "forminput",
+            rawName: "v-forminput"
+          }],
+          attrs: {
+            type: "text",
+            autofocus: ""
+          },
+          domProps: {
+            value: _vm.new_field.label
+          },
+          on: {
+            input: function input($event) {
+              if ($event.target.composing) return;
+              _vm.$set(_vm.new_field, "label", $event.target.value);
+            }
+          }
+        }), _vm._v(" "), _vm.new_field.errors.label ? _c("p", {
+          staticClass: "text-sm text-red-600 mt-1"
+        }, [_vm._v(_vm._s(_vm.new_field.errors.label[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
+          staticClass: "mt-6"
+        }, [_c("label", {
+          directives: [{
+            name: "formlabel",
+            rawName: "v-formlabel"
+          }]
+        }, [_vm._v("Field Name")]), _vm._v(" "), _c("input", {
+          directives: [{
+            name: "model",
+            rawName: "v-model",
+            value: _vm.new_field.name,
+            expression: "new_field.name"
+          }, {
+            name: "forminput",
+            rawName: "v-forminput"
+          }],
+          attrs: {
+            type: "text"
+          },
+          domProps: {
+            value: _vm.new_field.name
+          },
+          on: {
+            input: function input($event) {
+              if ($event.target.composing) return;
+              _vm.$set(_vm.new_field, "name", $event.target.value);
+            }
+          }
+        }), _vm._v(" "), _vm.editStatus ? _c("p", {
+          staticClass: "text-sm text-yellow-600 mt-1"
+        }, [_c("i", {
+          staticClass: "fa fa-exclamation-triangle"
+        }), _vm._v(" Changing the field name can cause content data loss")]) : _vm._e(), _vm._v(" "), _vm.new_field.errors.name ? _c("p", {
+          staticClass: "text-sm text-red-600 mt-1"
+        }, [_vm._v(_vm._s(_vm.new_field.errors.name[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
+          staticClass: "mt-6"
+        }, [_c("label", {
+          directives: [{
+            name: "formlabel",
+            rawName: "v-formlabel"
+          }]
+        }, [_vm._v("Description (optional)")]), _vm._v(" "), _c("input", {
+          directives: [{
+            name: "model",
+            rawName: "v-model",
+            value: _vm.new_field.description,
+            expression: "new_field.description"
+          }, {
+            name: "forminput",
+            rawName: "v-forminput"
+          }],
+          attrs: {
+            type: "text"
+          },
+          domProps: {
+            value: _vm.new_field.description
+          },
+          on: {
+            input: function input($event) {
+              if ($event.target.composing) return;
+              _vm.$set(_vm.new_field, "description", $event.target.value);
+            }
+          }
+        }), _vm._v(" "), _c("p", {
+          staticClass: "text-xs text-gray-600 mt-1"
+        }, [_vm._v("Displays a hint for the field when creating or editing content")]), _vm._v(" "), _vm.new_field.errors.description ? _c("p", {
+          staticClass: "text-sm text-red-600 mt-1"
+        }, [_vm._v(_vm._s(_vm.new_field.errors.description[0]))]) : _vm._e()]), _vm._v(" "), _vm.current_field_type !== "password" && _vm.current_field_type !== "number" && _vm.current_field_type !== "enumeration" && _vm.current_field_type !== "boolean" && _vm.current_field_type != "color" && _vm.current_field_type !== "date" && _vm.current_field_type !== "time" && _vm.current_field_type !== "media" && _vm.current_field_type !== "relation" && _vm.current_field_type !== "json" ? _c("div", {
+          staticClass: "mt-6"
+        }, [_c("label", {
+          directives: [{
+            name: "formlabel",
+            rawName: "v-formlabel"
+          }]
+        }, [_vm._v("Placeholder (optional)")]), _vm._v(" "), _c("input", {
+          directives: [{
+            name: "model",
+            rawName: "v-model",
+            value: _vm.new_field.placeholder,
+            expression: "new_field.placeholder"
+          }, {
+            name: "forminput",
+            rawName: "v-forminput"
+          }],
+          attrs: {
+            type: "text"
+          },
+          domProps: {
+            value: _vm.new_field.placeholder
+          },
+          on: {
+            input: function input($event) {
+              if ($event.target.composing) return;
+              _vm.$set(_vm.new_field, "placeholder", $event.target.value);
+            }
+          }
+        }), _vm._v(" "), _vm.new_field.errors.placeholder ? _c("p", {
+          staticClass: "text-sm text-red-600 mt-1"
+        }, [_vm._v(_vm._s(_vm.new_field.errors.placeholder[0]))]) : _vm._e()]) : _vm._e(), _vm._v(" "), _vm.current_field_type == "slug" ? _c("div", {
+          staticClass: "mt-6"
+        }, [_c("div", [_c("label", {
+          directives: [{
+            name: "formlabel",
+            rawName: "v-formlabel"
+          }]
+        }, [_vm._v("Attach slug to a field (optional)")]), _vm._v(" "), _c("v-select", {
+          staticClass: "v-select",
+          attrs: {
+            options: _vm.collection.fields.filter(function (o) {
+              return o.type == "text";
+            }),
+            "get-option-label": function getOptionLabel(option) {
+              return option.name;
+            },
+            reduce: function reduce(option) {
+              return option.name;
+            },
+            placeholder: "Select Field"
+          },
+          model: {
+            value: _vm.slug.field,
+            callback: function callback($$v) {
+              _vm.$set(_vm.slug, "field", $$v);
+            },
+            expression: "slug.field"
+          }
+        }), _vm._v(" "), _c("p", {
+          staticClass: "text-xs text-gray-600 mt-1"
+        }, [_vm._v("Slug will be generated from selected field. Only "), _c("strong", [_vm._v("text fields")]), _vm._v(" can be selected")])], 1), _vm._v(" "), _vm.slug.field !== null ? _c("div", {
+          staticClass: "mt-6"
+        }, [_c("div", {
+          staticClass: "flex items-start"
+        }, [_c("div", {
+          staticClass: "flex items-center h-5"
+        }, [_c("input", {
+          directives: [{
+            name: "model",
+            rawName: "v-model",
+            value: _vm.new_field.options.slug.readonly,
+            expression: "new_field.options.slug.readonly"
+          }, {
+            name: "formcheckbox",
+            rawName: "v-formcheckbox"
+          }],
+          attrs: {
+            id: "readonly",
+            type: "checkbox"
+          },
+          domProps: {
+            checked: Array.isArray(_vm.new_field.options.slug.readonly) ? _vm._i(_vm.new_field.options.slug.readonly, null) > -1 : _vm.new_field.options.slug.readonly
+          },
+          on: {
+            change: function change($event) {
+              var $$a = _vm.new_field.options.slug.readonly,
+                $$el = $event.target,
+                $$c = $$el.checked ? true : false;
+              if (Array.isArray($$a)) {
+                var $$v = null,
+                  $$i = _vm._i($$a, $$v);
+                if ($$el.checked) {
+                  $$i < 0 && _vm.$set(_vm.new_field.options.slug, "readonly", $$a.concat([$$v]));
+                } else {
+                  $$i > -1 && _vm.$set(_vm.new_field.options.slug, "readonly", $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
+                }
+              } else {
+                _vm.$set(_vm.new_field.options.slug, "readonly", $$c);
+              }
+            }
+          }
+        })]), _vm._v(" "), _c("div", {
+          staticClass: "ml-3 text-sm"
+        }, [_c("label", {
+          staticClass: "font-medium text-gray-700",
+          attrs: {
+            "for": "readonly"
+          }
+        }, [_vm._v("Read Only")]), _vm._v(" "), _c("p", {
+          staticClass: "text-gray-500"
+        }, [_vm._v("Prevents editing slug field")])])])]) : _vm._e()]) : _vm._e(), _vm._v(" "), _vm.current_field_type == "enumeration" ? _c("div", {
+          staticClass: "mt-6"
+        }, [_c("h3", {
+          directives: [{
+            name: "formlabel",
+            rawName: "v-formlabel"
+          }]
+        }, [_vm._v("List of Values")]), _vm._v(" "), _c("div", {
+          staticClass: "grid grid-cols-8 w-6/12"
+        }, [_c("div", {
+          staticClass: "col-span-5"
+        }, [_c("input", {
+          directives: [{
+            name: "model",
+            rawName: "v-model",
+            value: _vm.enumeration.item,
+            expression: "enumeration.item"
+          }, {
+            name: "forminput",
+            rawName: "v-forminput"
+          }],
+          attrs: {
+            type: "text"
+          },
+          domProps: {
+            value: _vm.enumeration.item
+          },
+          on: {
+            input: function input($event) {
+              if ($event.target.composing) return;
+              _vm.$set(_vm.enumeration, "item", $event.target.value);
+            }
+          }
+        })]), _vm._v(" "), _c("div", {
+          staticClass: "col-span-3 pl-3"
+        }, [_c("ui-button", {
+          staticClass: "w-full h-full",
+          attrs: {
+            type: "button",
+            color: "indigo-500"
+          },
+          nativeOn: {
+            click: function click($event) {
+              return _vm.addToEnumList.apply(null, arguments);
+            }
+          }
+        }, [_vm._v("+ Add")])], 1)]), _vm._v(" "), _c("div", {
+          staticClass: "clear-both mt-3"
+        }, [_vm.new_field.errors["options.enumeration"] ? _c("p", {
+          staticClass: "text-sm text-red-600 mt-1"
+        }, [_vm._v(_vm._s(_vm.new_field.errors["options.enumeration"][0]))]) : _vm._e(), _vm._v(" "), !_vm.enumeration.itemvalid ? _c("span", {
+          staticClass: "text-red-300"
+        }, [_vm._v("! Enter a value")]) : _vm._e()]), _vm._v(" "), _c("div", {
+          staticClass: "clear-both mt-3"
+        }, _vm._l(_vm.enumeration.list, function (item, index) {
+          return _c("span", {
+            key: index,
+            staticClass: "text-gray-600 text-md rounded-sm bg-gray-100 py-2 px-3 mr-2"
+          }, [_vm._v(_vm._s(item) + " "), _c("span", {
+            staticClass: "fas fa-times-circle cursor-pointer ml-2 text-gray-300",
+            on: {
+              click: function click($event) {
+                return _vm.removeEnumItem(index);
+              }
+            }
+          })]);
+        }), 0), _vm._v(" "), _c("div", {
+          staticClass: "w-full mt-5"
+        }, [_c("div", {
+          staticClass: "flex items-start"
+        }, [_c("div", {
+          staticClass: "flex items-center h-5"
+        }, [_c("input", {
+          directives: [{
+            name: "model",
+            rawName: "v-model",
+            value: _vm.new_field.options.multiple,
+            expression: "new_field.options.multiple"
+          }, {
+            name: "formcheckbox",
+            rawName: "v-formcheckbox"
+          }],
+          attrs: {
+            id: "required",
+            type: "checkbox"
+          },
+          domProps: {
+            checked: Array.isArray(_vm.new_field.options.multiple) ? _vm._i(_vm.new_field.options.multiple, null) > -1 : _vm.new_field.options.multiple
+          },
+          on: {
+            change: function change($event) {
+              var $$a = _vm.new_field.options.multiple,
+                $$el = $event.target,
+                $$c = $$el.checked ? true : false;
+              if (Array.isArray($$a)) {
+                var $$v = null,
+                  $$i = _vm._i($$a, $$v);
+                if ($$el.checked) {
+                  $$i < 0 && _vm.$set(_vm.new_field.options, "multiple", $$a.concat([$$v]));
+                } else {
+                  $$i > -1 && _vm.$set(_vm.new_field.options, "multiple", $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
+                }
+              } else {
+                _vm.$set(_vm.new_field.options, "multiple", $$c);
+              }
+            }
+          }
+        })]), _vm._v(" "), _c("div", {
+          staticClass: "ml-3 text-sm"
+        }, [_c("label", {
+          staticClass: "font-medium text-gray-700",
+          attrs: {
+            "for": "required"
+          }
+        }, [_vm._v("Allow multiple")])])])])]) : _vm._e(), _vm._v(" "), _vm.current_field_type == "date" ? _c("div", {
+          staticClass: "mt-6"
+        }, [_c("div", {
+          staticClass: "w-full"
+        }, [_c("div", {
+          staticClass: "flex items-start"
+        }, [_c("div", {
+          staticClass: "flex items-center h-5"
+        }, [_c("input", {
+          directives: [{
+            name: "model",
+            rawName: "v-model",
+            value: _vm.new_field.options.timepicker,
+            expression: "new_field.options.timepicker"
+          }, {
+            name: "formcheckbox",
+            rawName: "v-formcheckbox"
+          }],
+          attrs: {
+            id: "required",
+            type: "checkbox"
+          },
+          domProps: {
+            checked: Array.isArray(_vm.new_field.options.timepicker) ? _vm._i(_vm.new_field.options.timepicker, null) > -1 : _vm.new_field.options.timepicker
+          },
+          on: {
+            change: function change($event) {
+              var $$a = _vm.new_field.options.timepicker,
+                $$el = $event.target,
+                $$c = $$el.checked ? true : false;
+              if (Array.isArray($$a)) {
+                var $$v = null,
+                  $$i = _vm._i($$a, $$v);
+                if ($$el.checked) {
+                  $$i < 0 && _vm.$set(_vm.new_field.options, "timepicker", $$a.concat([$$v]));
+                } else {
+                  $$i > -1 && _vm.$set(_vm.new_field.options, "timepicker", $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
+                }
+              } else {
+                _vm.$set(_vm.new_field.options, "timepicker", $$c);
+              }
+            }
+          }
+        })]), _vm._v(" "), _c("div", {
+          staticClass: "ml-3 text-sm"
+        }, [_c("label", {
+          staticClass: "font-medium text-gray-700",
+          attrs: {
+            "for": "required"
+          }
+        }, [_vm._v("Include time picker")])])])])]) : _vm._e(), _vm._v(" "), _vm.current_field_type == "media" ? _c("div", {
+          staticClass: "mt-6"
+        }, [_c("div", [_c("div", {
+          directives: [{
+            name: "formlabel",
+            rawName: "v-formlabel"
+          }]
+        }, [_vm._v("Media Type")]), _vm._v(" "), _c("div", {
+          staticClass: "block mt-2"
+        }, [_c("div", {
+          staticClass: "grid grid-cols-3 space-x-2"
+        }, [_c("div", {
+          staticClass: "col-span-1"
+        }, [_c("label", {
+          staticClass: "p-5 border border-gray-300 rounded-sm text-sm flex items-center space-x-2 cursor-pointer",
+          attrs: {
+            "for": "media_single_type"
+          }
+        }, [_c("input", {
+          directives: [{
+            name: "model",
+            rawName: "v-model",
+            value: _vm.media.type,
+            expression: "media.type"
+          }],
+          attrs: {
+            type: "radio",
+            id: "media_single_type",
+            value: "1"
+          },
+          domProps: {
+            checked: _vm._q(_vm.media.type, "1")
+          },
+          on: {
+            change: function change($event) {
+              return _vm.$set(_vm.media, "type", "1");
+            }
+          }
+        }), _vm._v(" "), _c("span", [_vm._v("Single File")])])]), _vm._v(" "), _c("div", {
+          staticClass: "col-span-1"
+        }, [_c("label", {
+          staticClass: "p-5 border border-gray-300 rounded-sm text-sm flex items-center space-x-2 cursor-pointer",
+          attrs: {
+            "for": "media_multiple_type"
+          }
+        }, [_c("input", {
+          directives: [{
+            name: "model",
+            rawName: "v-model",
+            value: _vm.media.type,
+            expression: "media.type"
+          }],
+          attrs: {
+            type: "radio",
+            id: "media_multiple_type",
+            value: "2"
+          },
+          domProps: {
+            checked: _vm._q(_vm.media.type, "2")
+          },
+          on: {
+            change: function change($event) {
+              return _vm.$set(_vm.media, "type", "2");
+            }
+          }
+        }), _vm._v(" "), _c("span", [_vm._v("Multiple Files")])])])])])])]) : _vm._e(), _vm._v(" "), _vm.current_field_type == "relation" ? _c("div", {
+          staticClass: "mt-6"
+        }, [_c("div", [_c("label", {
+          directives: [{
+            name: "formlabel",
+            rawName: "v-formlabel"
+          }]
+        }, [_vm._v("Relation Collection")]), _vm._v(" "), _c("v-select", {
+          staticClass: "v-select",
+          attrs: {
+            options: _vm.project.collections,
+            "get-option-label": function getOptionLabel(option) {
+              return option.name + " (" + option.slug + ")";
+            },
+            reduce: function reduce(option) {
+              return option.id;
+            },
+            placeholder: "Select Collection"
+          },
+          model: {
+            value: _vm.relation.collection,
+            callback: function callback($$v) {
+              _vm.$set(_vm.relation, "collection", $$v);
+            },
+            expression: "relation.collection"
+          }
+        }), _vm._v(" "), _vm.new_field.errors["options.relation.collection"] ? _c("p", {
+          staticClass: "text-sm text-red-600 mt-1"
+        }, [_vm._v(_vm._s(_vm.new_field.errors["options.relation.collection"][0]))]) : _vm._e()], 1), _vm._v(" "), _c("div", {
+          staticClass: "mt-6"
+        }, [_c("div", {
+          directives: [{
+            name: "formlabel",
+            rawName: "v-formlabel"
+          }]
+        }, [_vm._v("Relation Type")]), _vm._v(" "), _c("div", {
+          staticClass: "block mt-2"
+        }, [_c("div", {
+          staticClass: "grid grid-cols-3 space-x-2"
+        }, [_c("div", {
+          staticClass: "col-span-1"
+        }, [_c("label", {
+          staticClass: "p-5 border border-gray-300 rounded-sm text-sm flex items-center space-x-2 cursor-pointer",
+          attrs: {
+            "for": "relation_one_to_one"
+          }
+        }, [_c("input", {
+          directives: [{
+            name: "model",
+            rawName: "v-model",
+            value: _vm.relation.type,
+            expression: "relation.type"
+          }],
+          attrs: {
+            type: "radio",
+            id: "relation_one_to_one",
+            value: "1"
+          },
+          domProps: {
+            checked: _vm._q(_vm.relation.type, "1")
+          },
+          on: {
+            change: function change($event) {
+              return _vm.$set(_vm.relation, "type", "1");
+            }
+          }
+        }), _vm._v(" "), _c("span", [_vm._v("One to One")]), _vm._v(" "), _c("div", [_c("svg", {
+          attrs: {
+            width: "41",
+            height: "41",
+            xmlns: "http://www.w3.org/2000/svg"
+          }
+        }, [_c("g", {
+          attrs: {
+            fill: "none",
+            "fill-rule": "evenodd"
+          }
+        }, [_c("rect", {
+          attrs: {
+            width: "41",
+            height: "41",
+            rx: "2",
+            fill: "#FFF"
+          }
+        }), _vm._v(" "), _c("rect", {
+          attrs: {
+            stroke: _vm.relation.type == 1 ? "#1C5DE7" : "#101622",
+            x: ".5",
+            y: ".5",
+            width: "40",
+            height: "40",
+            rx: "2",
+            "stroke-opacity": _vm.relation.type == 1 ? "" : ".1"
+          }
+        }), _vm._v(" "), _c("path", {
+          attrs: {
+            stroke: _vm.relation.type == 1 ? "#1C5DE7" : "#919BAE",
+            d: "M14 21.25h14v1H14z"
+          }
+        }), _vm._v(" "), _c("rect", {
+          attrs: {
+            stroke: _vm.relation.type == 1 ? "#1C5DE7" : "#919BAE",
+            x: "7.5",
+            y: "18.5",
+            width: "6",
+            height: "6",
+            rx: "3"
+          }
+        }), _vm._v(" "), _c("path", {
+          attrs: {
+            stroke: _vm.relation.type == 1 ? "#1C5DE7" : "#919BAE",
+            d: "M33.5 21.5l-5 3v-6z"
+          }
+        })])])])])]), _vm._v(" "), _c("div", {
+          staticClass: "col-span-1"
+        }, [_c("label", {
+          staticClass: "p-5 border border-gray-300 rounded-sm text-sm flex items-center space-x-2 cursor-pointer",
+          attrs: {
+            "for": "relation_one_to_many"
+          }
+        }, [_c("input", {
+          directives: [{
+            name: "model",
+            rawName: "v-model",
+            value: _vm.relation.type,
+            expression: "relation.type"
+          }],
+          attrs: {
+            type: "radio",
+            id: "relation_one_to_many",
+            value: "2"
+          },
+          domProps: {
+            checked: _vm._q(_vm.relation.type, "2")
+          },
+          on: {
+            change: function change($event) {
+              return _vm.$set(_vm.relation, "type", "2");
+            }
+          }
+        }), _vm._v(" "), _c("span", [_vm._v("One to Many")]), _vm._v(" "), _c("div", [_c("svg", {
+          attrs: {
+            width: "41",
+            height: "41",
+            xmlns: "http://www.w3.org/2000/svg"
+          }
+        }, [_c("g", {
+          attrs: {
+            fill: "none",
+            "fill-rule": "evenodd"
+          }
+        }, [_c("rect", {
+          attrs: {
+            width: "41",
+            height: "41",
+            rx: "2",
+            fill: "#FFF"
+          }
+        }), _vm._v(" "), _c("rect", {
+          attrs: {
+            stroke: _vm.relation.type == 2 ? "#1C5DE7" : "#E3E9F3",
+            x: ".5",
+            y: ".5",
+            width: "40",
+            height: "40",
+            rx: "2"
+          }
+        }), _vm._v(" "), _c("g", {
+          attrs: {
+            transform: "translate(7.5 6)"
+          }
+        }, [_c("path", {
+          attrs: {
+            stroke: _vm.relation.type == 2 ? "#1C5DE7" : "#ABB3C2",
+            d: "M6.5 15.25h14v1h-14z"
+          }
+        }), _vm._v(" "), _c("rect", {
+          attrs: {
+            stroke: _vm.relation.type == 2 ? "#1C5DE7" : "#ABB3C2",
+            y: "12.5",
+            width: "6",
+            height: "6",
+            rx: "3"
+          }
+        }), _vm._v(" "), _c("path", {
+          attrs: {
+            stroke: _vm.relation.type == 2 ? "#1C5DE7" : "#ABB3C4",
+            d: "M26 15.5l-5 3v-6z"
+          }
+        }), _vm._v(" "), _c("path", {
+          attrs: {
+            stroke: _vm.relation.type == 2 ? "#1C5DE7" : "#ABB3C2",
+            d: "M5.965 17.283l12.124 7-.5.867-12.124-7z"
+          }
+        }), _vm._v(" "), _c("path", {
+          attrs: {
+            stroke: _vm.relation.type == 2 ? "#1C5DE7" : "#ABB3C4",
+            d: "M22.727 27.25l-5.83.098 3-5.196z"
+          }
+        }), _vm._v(" "), _c("path", {
+          attrs: {
+            stroke: _vm.relation.type == 2 ? "#1C5DE7" : "#ABB3C2",
+            d: "M5.965 13.717l12.124-7-.5-.867-12.124 7z"
+          }
+        }), _vm._v(" "), _c("path", {
+          attrs: {
+            stroke: _vm.relation.type == 2 ? "#1C5DE7" : "#ABB3C4",
+            d: "M22.727 3.75l-5.83-.098 3 5.196z"
+          }
+        })])])])])])])])])])]) : _vm._e(), _vm._v(" "), _c("div", {
+          staticClass: "mt-6"
+        }, [_c("h4", {
+          staticClass: "font-semibold mt-2 mb-2"
+        }, [_vm._v("VALIDATIONS")]), _vm._v(" "), _c("div", {
+          staticClass: "w-full"
+        }, [_c("div", {
+          staticClass: "flex items-start"
+        }, [_c("div", {
+          staticClass: "flex items-center h-5"
+        }, [_c("input", {
+          directives: [{
+            name: "model",
+            rawName: "v-model",
+            value: _vm.new_field.validations.required.status,
+            expression: "new_field.validations.required.status"
+          }, {
+            name: "formcheckbox",
+            rawName: "v-formcheckbox"
+          }],
+          attrs: {
+            id: "required",
+            type: "checkbox"
+          },
+          domProps: {
+            checked: Array.isArray(_vm.new_field.validations.required.status) ? _vm._i(_vm.new_field.validations.required.status, null) > -1 : _vm.new_field.validations.required.status
+          },
+          on: {
+            change: function change($event) {
+              var $$a = _vm.new_field.validations.required.status,
+                $$el = $event.target,
+                $$c = $$el.checked ? true : false;
+              if (Array.isArray($$a)) {
+                var $$v = null,
+                  $$i = _vm._i($$a, $$v);
+                if ($$el.checked) {
+                  $$i < 0 && _vm.$set(_vm.new_field.validations.required, "status", $$a.concat([$$v]));
+                } else {
+                  $$i > -1 && _vm.$set(_vm.new_field.validations.required, "status", $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
+                }
+              } else {
+                _vm.$set(_vm.new_field.validations.required, "status", $$c);
+              }
+            }
+          }
+        })]), _vm._v(" "), _c("div", {
+          staticClass: "ml-3 text-sm"
+        }, [_c("label", {
+          staticClass: "font-medium text-gray-700",
+          attrs: {
+            "for": "required"
+          }
+        }, [_vm._v("Required")]), _vm._v(" "), _c("p", {
+          staticClass: "text-gray-500"
+        }, [_vm._v("Prevents saving content if this field is empty")])])]), _vm._v(" "), _vm.new_field.validations.required.status ? _c("div", {
+          staticClass: "w-3/5 block mt-1 ml-7"
+        }, [_c("input", {
+          directives: [{
+            name: "model",
+            rawName: "v-model",
+            value: _vm.new_field.validations.required.message,
+            expression: "new_field.validations.required.message"
+          }, {
+            name: "forminput",
+            rawName: "v-forminput"
+          }],
+          attrs: {
+            type: "text",
+            placeholder: "Custom error message"
+          },
+          domProps: {
+            value: _vm.new_field.validations.required.message
+          },
+          on: {
+            input: function input($event) {
+              if ($event.target.composing) return;
+              _vm.$set(_vm.new_field.validations.required, "message", $event.target.value);
+            }
+          }
+        })]) : _vm._e()]), _vm._v(" "), _vm.current_field_type != "password" && _vm.current_field_type != "enumeration" && _vm.current_field_type != "boolean" && _vm.current_field_type != "color" && _vm.current_field_type != "date" && _vm.current_field_type != "time" && _vm.current_field_type != "media" && _vm.current_field_type != "relation" && _vm.current_field_type != "json" ? _c("div", {
+          staticClass: "w-full",
+          "class": {
+            "opacity-60": _vm.new_field.options.repeatable
+          }
+        }, [_c("div", {
+          staticClass: "flex items-start mt-2"
+        }, [_c("div", {
+          staticClass: "flex items-center h-5"
+        }, [_c("input", {
+          directives: [{
+            name: "model",
+            rawName: "v-model",
+            value: _vm.new_field.validations.unique.status,
+            expression: "new_field.validations.unique.status"
+          }, {
+            name: "formcheckbox",
+            rawName: "v-formcheckbox"
+          }],
+          attrs: {
+            id: "unique",
+            type: "checkbox",
+            disabled: _vm.new_field.options.repeatable
+          },
+          domProps: {
+            checked: Array.isArray(_vm.new_field.validations.unique.status) ? _vm._i(_vm.new_field.validations.unique.status, null) > -1 : _vm.new_field.validations.unique.status
+          },
+          on: {
+            change: function change($event) {
+              var $$a = _vm.new_field.validations.unique.status,
+                $$el = $event.target,
+                $$c = $$el.checked ? true : false;
+              if (Array.isArray($$a)) {
+                var $$v = null,
+                  $$i = _vm._i($$a, $$v);
+                if ($$el.checked) {
+                  $$i < 0 && _vm.$set(_vm.new_field.validations.unique, "status", $$a.concat([$$v]));
+                } else {
+                  $$i > -1 && _vm.$set(_vm.new_field.validations.unique, "status", $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
+                }
+              } else {
+                _vm.$set(_vm.new_field.validations.unique, "status", $$c);
+              }
+            }
+          }
+        })]), _vm._v(" "), _c("div", {
+          staticClass: "ml-3 text-sm"
+        }, [_c("label", {
+          staticClass: "font-medium text-gray-700",
+          attrs: {
+            "for": "unique"
+          }
+        }, [_vm._v("Unique")]), _vm._v(" "), _c("p", {
+          staticClass: "text-gray-500"
+        }, [_vm._v("Prevents saving content if there is a record with the same content.")])])]), _vm._v(" "), _vm.new_field.validations.unique.status ? _c("div", {
+          staticClass: "w-3/5 block mt-1 ml-7"
+        }, [_c("input", {
+          directives: [{
+            name: "model",
+            rawName: "v-model",
+            value: _vm.new_field.validations.unique.message,
+            expression: "new_field.validations.unique.message"
+          }, {
+            name: "forminput",
+            rawName: "v-forminput"
+          }],
+          attrs: {
+            type: "text",
+            placeholder: "Custom error message"
+          },
+          domProps: {
+            value: _vm.new_field.validations.unique.message
+          },
+          on: {
+            input: function input($event) {
+              if ($event.target.composing) return;
+              _vm.$set(_vm.new_field.validations.unique, "message", $event.target.value);
+            }
+          }
+        })]) : _vm._e()]) : _vm._e(), _vm._v(" "), _vm.current_field_type != "richtext" && _vm.current_field_type != "enumeration" && _vm.current_field_type != "boolean" && _vm.current_field_type != "color" && _vm.current_field_type != "date" && _vm.current_field_type != "time" && _vm.current_field_type != "media" && _vm.current_field_type != "relation" && _vm.current_field_type != "json" ? _c("div", {
+          staticClass: "w-full"
+        }, [_c("div", {
+          staticClass: "flex items-start mt-2"
+        }, [_c("div", {
+          staticClass: "flex items-center h-5"
+        }, [_c("input", {
+          directives: [{
+            name: "model",
+            rawName: "v-model",
+            value: _vm.new_field.validations.charcount.status,
+            expression: "new_field.validations.charcount.status"
+          }, {
+            name: "formcheckbox",
+            rawName: "v-formcheckbox"
+          }],
+          attrs: {
+            id: "charcount",
+            type: "checkbox"
+          },
+          domProps: {
+            checked: Array.isArray(_vm.new_field.validations.charcount.status) ? _vm._i(_vm.new_field.validations.charcount.status, null) > -1 : _vm.new_field.validations.charcount.status
+          },
+          on: {
+            change: function change($event) {
+              var $$a = _vm.new_field.validations.charcount.status,
+                $$el = $event.target,
+                $$c = $$el.checked ? true : false;
+              if (Array.isArray($$a)) {
+                var $$v = null,
+                  $$i = _vm._i($$a, $$v);
+                if ($$el.checked) {
+                  $$i < 0 && _vm.$set(_vm.new_field.validations.charcount, "status", $$a.concat([$$v]));
+                } else {
+                  $$i > -1 && _vm.$set(_vm.new_field.validations.charcount, "status", $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
+                }
+              } else {
+                _vm.$set(_vm.new_field.validations.charcount, "status", $$c);
+              }
+            }
+          }
+        })]), _vm._v(" "), _c("div", {
+          staticClass: "ml-3 text-sm"
+        }, [_c("label", {
+          staticClass: "font-medium text-gray-700",
+          attrs: {
+            "for": "charcount"
+          }
+        }, [_vm.current_field_type != "number" ? _c("span", [_vm._v("Character count")]) : _vm._e(), _vm._v(" "), _vm.current_field_type == "number" ? _c("span", [_vm._v("Integer limitations")]) : _vm._e()]), _vm._v(" "), _vm.current_field_type != "number" ? _c("p", {
+          staticClass: "text-gray-500"
+        }, [_vm._v("Specifies a minimum and/or maximum allowed number of characters")]) : _vm._e(), _vm._v(" "), _vm.current_field_type == "number" ? _c("p", {
+          staticClass: "text-gray-500"
+        }, [_vm._v("Specifies a minimum and/or maximum allowed numbers")]) : _vm._e()])]), _vm._v(" "), _vm.new_field.validations.charcount.status ? _c("div", {
+          staticClass: "w-3/5 block mt-1 ml-7"
+        }, [_c("div", {
+          staticClass: "grid grid-cols-5"
+        }, [_c("div", {
+          staticClass: "col-span-3"
+        }, [_c("v-select", {
+          staticClass: "v-select",
+          attrs: {
+            options: _vm.charcount.fields,
+            clearable: false
+          },
+          model: {
+            value: _vm.new_field.validations.charcount.type,
+            callback: function callback($$v) {
+              _vm.$set(_vm.new_field.validations.charcount, "type", $$v);
+            },
+            expression: "new_field.validations.charcount.type"
+          }
+        }), _vm._v(" "), _vm.new_field.errors["validations.charcount.type"] ? _c("p", {
+          staticClass: "text-sm text-red-600 mt-1"
+        }, [_vm._v(_vm._s(_vm.new_field.errors["validations.charcount.type"][0]))]) : _vm._e()], 1), _vm._v(" "), _vm.new_field.validations.charcount.type == "Between" || _vm.new_field.validations.charcount.type == "Min" ? _c("div", {
+          staticClass: "col-span-1 ml-1"
+        }, [_c("input", {
+          directives: [{
+            name: "model",
+            rawName: "v-model",
+            value: _vm.new_field.validations.charcount.min,
+            expression: "new_field.validations.charcount.min"
+          }, {
+            name: "forminput",
+            rawName: "v-forminput"
+          }],
+          attrs: {
+            type: "number",
+            min: "0",
+            onkeypress: "return event.charCode >= 48 && event.charCode <= 57",
+            placeholder: "Min"
+          },
+          domProps: {
+            value: _vm.new_field.validations.charcount.min
+          },
+          on: {
+            input: function input($event) {
+              if ($event.target.composing) return;
+              _vm.$set(_vm.new_field.validations.charcount, "min", $event.target.value);
+            }
+          }
+        }), _vm._v(" "), _vm.new_field.errors["validations.charcount.min"] ? _c("p", {
+          staticClass: "text-sm text-red-600 mt-1"
+        }, [_vm._v(_vm._s(_vm.new_field.errors["validations.charcount.min"][0]))]) : _vm._e()]) : _vm._e(), _vm._v(" "), _vm.new_field.validations.charcount.type == "Between" || _vm.new_field.validations.charcount.type == "Max" ? _c("div", {
+          staticClass: "col-span-1 ml-1"
+        }, [_c("input", {
+          directives: [{
+            name: "model",
+            rawName: "v-model",
+            value: _vm.new_field.validations.charcount.max,
+            expression: "new_field.validations.charcount.max"
+          }, {
+            name: "forminput",
+            rawName: "v-forminput"
+          }],
+          attrs: {
+            type: "number",
+            min: "0",
+            onkeypress: "return event.charCode >= 48 && event.charCode <= 57",
+            placeholder: "Max"
+          },
+          domProps: {
+            value: _vm.new_field.validations.charcount.max
+          },
+          on: {
+            input: function input($event) {
+              if ($event.target.composing) return;
+              _vm.$set(_vm.new_field.validations.charcount, "max", $event.target.value);
+            }
+          }
+        }), _vm._v(" "), _vm.new_field.errors["validations.charcount.max"] ? _c("p", {
+          staticClass: "text-sm text-red-600 mt-1"
+        }, [_vm._v(_vm._s(_vm.new_field.errors["validations.charcount.max"][0]))]) : _vm._e()]) : _vm._e()])]) : _vm._e(), _vm._v(" "), _vm.new_field.validations.charcount.status ? _c("div", {
+          staticClass: "w-3/5 block mt-1 ml-7"
+        }, [_c("input", {
+          directives: [{
+            name: "model",
+            rawName: "v-model",
+            value: _vm.new_field.validations.charcount.message,
+            expression: "new_field.validations.charcount.message"
+          }, {
+            name: "forminput",
+            rawName: "v-forminput"
+          }],
+          attrs: {
+            type: "text",
+            placeholder: "Custom error message"
+          },
+          domProps: {
+            value: _vm.new_field.validations.charcount.message
+          },
+          on: {
+            input: function input($event) {
+              if ($event.target.composing) return;
+              _vm.$set(_vm.new_field.validations.charcount, "message", $event.target.value);
+            }
+          }
+        })]) : _vm._e()]) : _vm._e()]), _vm._v(" "), _vm.current_field_type !== "password" ? _c("div", {
+          staticClass: "mt-6"
+        }, [_c("h4", {
+          staticClass: "font-semibold mt-2 mb-2"
+        }, [_vm._v("OTHER OPTIONS")]), _vm._v(" "), _c("div", {
+          staticClass: "w-full"
+        }, [_vm.current_field_type !== "richtext" && _vm.current_field_type !== "slug" && _vm.current_field_type !== "enumeration" && _vm.current_field_type !== "boolean" && _vm.current_field_type !== "media" && _vm.current_field_type !== "relation" && _vm.current_field_type !== "json" ? _c("div", {
+          staticClass: "flex items-start"
+        }, [_c("div", {
+          staticClass: "flex items-center h-5"
+        }, [_c("input", {
+          directives: [{
+            name: "model",
+            rawName: "v-model",
+            value: _vm.new_field.options.repeatable,
+            expression: "new_field.options.repeatable"
+          }, {
+            name: "formcheckbox",
+            rawName: "v-formcheckbox"
+          }],
+          attrs: {
+            id: "repeatable",
+            type: "checkbox"
+          },
+          domProps: {
+            checked: Array.isArray(_vm.new_field.options.repeatable) ? _vm._i(_vm.new_field.options.repeatable, null) > -1 : _vm.new_field.options.repeatable
+          },
+          on: {
+            change: function change($event) {
+              var $$a = _vm.new_field.options.repeatable,
+                $$el = $event.target,
+                $$c = $$el.checked ? true : false;
+              if (Array.isArray($$a)) {
+                var $$v = null,
+                  $$i = _vm._i($$a, $$v);
+                if ($$el.checked) {
+                  $$i < 0 && _vm.$set(_vm.new_field.options, "repeatable", $$a.concat([$$v]));
+                } else {
+                  $$i > -1 && _vm.$set(_vm.new_field.options, "repeatable", $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
+                }
+              } else {
+                _vm.$set(_vm.new_field.options, "repeatable", $$c);
+              }
+            }
+          }
+        })]), _vm._v(" "), _c("div", {
+          staticClass: "ml-3 text-sm"
+        }, [_c("label", {
+          staticClass: "font-medium text-gray-700",
+          attrs: {
+            "for": "repeatable"
+          }
+        }, [_vm._v("Repeatable Field")]), _vm._v(" "), _c("p", {
+          staticClass: "text-gray-500"
+        }, [_vm._v("Allow multiple entries for this field")])])]) : _vm._e(), _vm._v(" "), _c("div", {
+          staticClass: "mt-2 flex items-start"
+        }, [_c("div", {
+          staticClass: "flex items-center h-5"
+        }, [_c("input", {
+          directives: [{
+            name: "model",
+            rawName: "v-model",
+            value: _vm.new_field.options.hideInContentList,
+            expression: "new_field.options.hideInContentList"
+          }, {
+            name: "formcheckbox",
+            rawName: "v-formcheckbox"
+          }],
+          attrs: {
+            id: "hideInContentList",
+            type: "checkbox"
+          },
+          domProps: {
+            checked: Array.isArray(_vm.new_field.options.hideInContentList) ? _vm._i(_vm.new_field.options.hideInContentList, null) > -1 : _vm.new_field.options.hideInContentList
+          },
+          on: {
+            change: function change($event) {
+              var $$a = _vm.new_field.options.hideInContentList,
+                $$el = $event.target,
+                $$c = $$el.checked ? true : false;
+              if (Array.isArray($$a)) {
+                var $$v = null,
+                  $$i = _vm._i($$a, $$v);
+                if ($$el.checked) {
+                  $$i < 0 && _vm.$set(_vm.new_field.options, "hideInContentList", $$a.concat([$$v]));
+                } else {
+                  $$i > -1 && _vm.$set(_vm.new_field.options, "hideInContentList", $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
+                }
+              } else {
+                _vm.$set(_vm.new_field.options, "hideInContentList", $$c);
+              }
+            }
+          }
+        })]), _vm._v(" "), _c("div", {
+          staticClass: "ml-3 text-sm"
+        }, [_c("label", {
+          staticClass: "font-medium text-gray-700",
+          attrs: {
+            "for": "hideInContentList"
+          }
+        }, [_vm._v("Hide in content list")]), _vm._v(" "), _c("p", {
+          staticClass: "text-gray-500"
+        }, [_vm._v("Field will be invisible in content list table")])])]), _vm._v(" "), _c("div", {
+          staticClass: "mt-2 flex items-start"
+        }, [_c("div", {
+          staticClass: "flex items-center h-5"
+        }, [_c("input", {
+          directives: [{
+            name: "model",
+            rawName: "v-model",
+            value: _vm.new_field.options.hiddenInAPI,
+            expression: "new_field.options.hiddenInAPI"
+          }, {
+            name: "formcheckbox",
+            rawName: "v-formcheckbox"
+          }],
+          attrs: {
+            id: "hiddenInAPI",
+            type: "checkbox"
+          },
+          domProps: {
+            checked: Array.isArray(_vm.new_field.options.hiddenInAPI) ? _vm._i(_vm.new_field.options.hiddenInAPI, null) > -1 : _vm.new_field.options.hiddenInAPI
+          },
+          on: {
+            change: function change($event) {
+              var $$a = _vm.new_field.options.hiddenInAPI,
+                $$el = $event.target,
+                $$c = $$el.checked ? true : false;
+              if (Array.isArray($$a)) {
+                var $$v = null,
+                  $$i = _vm._i($$a, $$v);
+                if ($$el.checked) {
+                  $$i < 0 && _vm.$set(_vm.new_field.options, "hiddenInAPI", $$a.concat([$$v]));
+                } else {
+                  $$i > -1 && _vm.$set(_vm.new_field.options, "hiddenInAPI", $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
+                }
+              } else {
+                _vm.$set(_vm.new_field.options, "hiddenInAPI", $$c);
+              }
+            }
+          }
+        })]), _vm._v(" "), _c("div", {
+          staticClass: "ml-3 text-sm"
+        }, [_c("label", {
+          staticClass: "font-medium text-gray-700",
+          attrs: {
+            "for": "hiddenInAPI"
+          }
+        }, [_vm._v("Hidden in API")]), _vm._v(" "), _c("p", {
+          staticClass: "text-gray-500"
+        }, [_vm._v("Field will be invisible in API.")])])])])]) : _vm._e()])])];
+      },
+      proxy: true
+    }, {
+      key: "footer",
+      fn: function fn() {
+        return [_c("ui-button", {
+          attrs: {
+            color: "gray-50",
+            hover: "gray-200"
+          },
+          nativeOn: {
+            click: function click($event) {
+              return _vm.closeNewFieldModal.apply(null, arguments);
+            }
+          }
+        }, [_c("span", {
+          staticClass: "text-gray-800"
+        }, [_vm._v("Cancel")])]), _vm._v(" "), _c("ui-button", {
+          "class": {
+            "opacity-25": _vm.processingAddNewField
+          },
+          attrs: {
+            color: "indigo-500",
+            disabled: _vm.processingAddNewField
+          },
+          nativeOn: {
+            click: function click($event) {
+              return _vm.addNewFieldSubmit.apply(null, arguments);
+            }
+          }
+        }, [!_vm.editStatus ? _c("span", [_vm._v("Add new Field")]) : _vm._e(), _vm._v(" "), _vm.editStatus ? _c("span", [_vm._v("Save Changes")]) : _vm._e()])];
+      },
+      proxy: true
+    }])
+  }), _vm._v(" "), _c("ui-modal", {
+    attrs: {
+      show: _vm.openEditCollectionModal
+    },
+    on: {
+      close: _vm.closeEditCollectionModal
+    },
+    scopedSlots: _vm._u([{
+      key: "title",
+      fn: function fn() {
+        return [_vm._v("\n            Update Collection\n        ")];
+      },
+      proxy: true
+    }, {
+      key: "content",
+      fn: function fn() {
+        return [_c("div", {
+          staticClass: "mt-4"
+        }, [_c("form", {
+          on: {
+            submit: function submit($event) {
+              $event.preventDefault();
+              return _vm.editCollectionSubmit.apply(null, arguments);
+            }
+          }
+        }, [_c("div", {
+          staticClass: "grid grid-cols-1 gap-4"
+        }, [_c("div", {
+          staticClass: "col-span-12 sm:col-span-12"
+        }, [_c("label", {
+          directives: [{
+            name: "formlabel",
+            rawName: "v-formlabel"
+          }]
+        }, [_vm._v("Name")]), _vm._v(" "), _c("input", {
+          directives: [{
+            name: "model",
+            rawName: "v-model",
+            value: _vm.editCollectionData.name,
+            expression: "editCollectionData.name"
+          }, {
+            name: "forminput",
+            rawName: "v-forminput"
+          }],
+          attrs: {
+            type: "text"
+          },
+          domProps: {
+            value: _vm.editCollectionData.name
+          },
+          on: {
+            input: function input($event) {
+              if ($event.target.composing) return;
+              _vm.$set(_vm.editCollectionData, "name", $event.target.value);
+            }
+          }
+        }), _vm._v(" "), _vm.editCollectionData.errors.name ? _c("p", {
+          staticClass: "text-sm text-red-600 mt-2"
+        }, [_vm._v(_vm._s(_vm.editCollectionData.errors.name[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
+          staticClass: "col-span-12 sm:col-span-12"
+        }, [_c("label", {
+          directives: [{
+            name: "formlabel",
+            rawName: "v-formlabel"
+          }]
+        }, [_vm._v("Slug")]), _vm._v(" "), _c("input", {
+          directives: [{
+            name: "model",
+            rawName: "v-model",
+            value: _vm.editCollectionData.slug,
+            expression: "editCollectionData.slug"
+          }, {
+            name: "forminput",
+            rawName: "v-forminput"
+          }],
+          attrs: {
+            type: "text"
+          },
+          domProps: {
+            value: _vm.editCollectionData.slug
+          },
+          on: {
+            input: function input($event) {
+              if ($event.target.composing) return;
+              _vm.$set(_vm.editCollectionData, "slug", $event.target.value);
+            }
+          }
+        }), _vm._v(" "), _vm.editCollectionData.errors.slug ? _c("p", {
+          staticClass: "text-sm text-red-600 mt-2"
+        }, [_vm._v(_vm._s(_vm.editCollectionData.errors.slug[0]))]) : _vm._e()])])])])];
+      },
+      proxy: true
+    }, {
+      key: "footer",
+      fn: function fn() {
+        return [_c("ui-button", {
+          attrs: {
+            color: "gray-50",
+            hover: "gray-200"
+          },
+          nativeOn: {
+            click: function click($event) {
+              return _vm.closeEditCollectionModal.apply(null, arguments);
+            }
+          }
+        }, [_c("span", {
+          staticClass: "text-gray-800"
+        }, [_vm._v("Cancel")])]), _vm._v(" "), _c("ui-button", {
+          attrs: {
+            color: "indigo-500"
+          },
+          nativeOn: {
+            click: function click($event) {
+              return _vm.editCollectionSubmit.apply(null, arguments);
+            }
+          }
+        }, [_vm._v("\n                Save Collection\n            ")])];
+      },
+      proxy: true
+    }])
+  })], 1);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -4514,10 +6683,10 @@ component.options.__file = "resources/js/UI/Modal.vue"
 
 /***/ }),
 
-/***/ "./resources/js/pages/Projects/Collection/Collection.vue":
-/*!***************************************************************!*\
-  !*** ./resources/js/pages/Projects/Collection/Collection.vue ***!
-  \***************************************************************/
+/***/ "./resources/js/pages/Projects/Collection/CollectionDetail.vue":
+/*!*********************************************************************!*\
+  !*** ./resources/js/pages/Projects/Collection/CollectionDetail.vue ***!
+  \*********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -4525,8 +6694,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Collection_vue_vue_type_template_id_2b0874ba__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Collection.vue?vue&type=template&id=2b0874ba */ "./resources/js/pages/Projects/Collection/Collection.vue?vue&type=template&id=2b0874ba");
-/* harmony import */ var _Collection_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Collection.vue?vue&type=script&lang=js */ "./resources/js/pages/Projects/Collection/Collection.vue?vue&type=script&lang=js");
+/* harmony import */ var _CollectionDetail_vue_vue_type_template_id_5feb7554__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CollectionDetail.vue?vue&type=template&id=5feb7554 */ "./resources/js/pages/Projects/Collection/CollectionDetail.vue?vue&type=template&id=5feb7554");
+/* harmony import */ var _CollectionDetail_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CollectionDetail.vue?vue&type=script&lang=js */ "./resources/js/pages/Projects/Collection/CollectionDetail.vue?vue&type=script&lang=js");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -4536,9 +6705,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 ;
 var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _Collection_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
-  _Collection_vue_vue_type_template_id_2b0874ba__WEBPACK_IMPORTED_MODULE_0__.render,
-  _Collection_vue_vue_type_template_id_2b0874ba__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  _CollectionDetail_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CollectionDetail_vue_vue_type_template_id_5feb7554__WEBPACK_IMPORTED_MODULE_0__.render,
+  _CollectionDetail_vue_vue_type_template_id_5feb7554__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
   null,
   null,
@@ -4548,7 +6717,7 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/pages/Projects/Collection/Collection.vue"
+component.options.__file = "resources/js/pages/Projects/Collection/CollectionDetail.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
@@ -4663,10 +6832,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/pages/Projects/Collection/Collection.vue?vue&type=script&lang=js":
-/*!***************************************************************************************!*\
-  !*** ./resources/js/pages/Projects/Collection/Collection.vue?vue&type=script&lang=js ***!
-  \***************************************************************************************/
+/***/ "./resources/js/pages/Projects/Collection/CollectionDetail.vue?vue&type=script&lang=js":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/pages/Projects/Collection/CollectionDetail.vue?vue&type=script&lang=js ***!
+  \*********************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -4674,8 +6843,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Collection_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Collection.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/Projects/Collection/Collection.vue?vue&type=script&lang=js");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Collection_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CollectionDetail_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CollectionDetail.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/Projects/Collection/CollectionDetail.vue?vue&type=script&lang=js");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CollectionDetail_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -4745,19 +6914,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/pages/Projects/Collection/Collection.vue?vue&type=template&id=2b0874ba":
-/*!*********************************************************************************************!*\
-  !*** ./resources/js/pages/Projects/Collection/Collection.vue?vue&type=template&id=2b0874ba ***!
-  \*********************************************************************************************/
+/***/ "./resources/js/pages/Projects/Collection/CollectionDetail.vue?vue&type=template&id=5feb7554":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/pages/Projects/Collection/CollectionDetail.vue?vue&type=template&id=5feb7554 ***!
+  \***************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   render: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Collection_vue_vue_type_template_id_2b0874ba__WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Collection_vue_vue_type_template_id_2b0874ba__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CollectionDetail_vue_vue_type_template_id_5feb7554__WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CollectionDetail_vue_vue_type_template_id_5feb7554__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Collection_vue_vue_type_template_id_2b0874ba__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Collection.vue?vue&type=template&id=2b0874ba */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/Projects/Collection/Collection.vue?vue&type=template&id=2b0874ba");
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_CollectionDetail_vue_vue_type_template_id_5feb7554__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CollectionDetail.vue?vue&type=template&id=5feb7554 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/Projects/Collection/CollectionDetail.vue?vue&type=template&id=5feb7554");
 
 
 /***/ }),
