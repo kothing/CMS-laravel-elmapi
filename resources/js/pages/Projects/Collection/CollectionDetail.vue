@@ -67,8 +67,12 @@
                                             </div>
     
                                             <div class="flex justify-between space-x-1">
-                                                <a @click="openNewFieldModal(field.type, true, field)" class="inline-block text-white text-sm rounded-md bg-indigo-500 px-2 cursor-pointer hover:bg-indigo-600 whitespace-nowrap"><i class="fa fa-edit text-xs"></i> Edit</a>
-                                                <a @click="deleteField(field)" class="inline-block text-white text-sm rounded-md bg-red-500 px-3 cursor-pointer hover:bg-red-600 whitespace-nowrap"><i class="fa fa-trash-alt text-xs"></i> Delete</a>
+                                                <a @click="openNewFieldModal(field.type, true, field)" class="inline-block text-white text-sm rounded-md bg-indigo-500 px-3 cursor-pointer hover:bg-indigo-600 whitespace-nowrap">
+                                                    <i class="fa fa-edit text-xs"></i>
+                                                </a>
+                                                <a @click="deleteField(field)" class="inline-block text-white text-sm rounded-md bg-red-500 px-3 cursor-pointer hover:bg-red-600 whitespace-nowrap">
+                                                    <i class="fa fa-trash-alt text-xs"></i>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
