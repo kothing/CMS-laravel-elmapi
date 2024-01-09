@@ -16,13 +16,13 @@
         <div v-if="!showUploader">
             <div class="flex w-full mt-4 clear-both">
                 <div class="w-full">
-                    <span class="leading-snug font-normal absolute text-center text-gray-400 absolute bg-transparent rounded-sm text-base items-center justify-center w-8 pl-3 py-3">
+                    <span class="leading-snug font-normal absolute text-center text-gray-400 absolute bg-transparent rounded-md text-base items-center justify-center w-8 pl-3 py-3">
                         <i class="fas fa-search"></i>
                     </span>
-                    <input type="text" v-model="search" @keyup="getMedia()" placeholder="Search for files..." class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded-sm text-sm w-full pl-10 border-gray-200 focus:border-gray-300">
+                    <input type="text" v-model="search" @keyup="getMedia()" placeholder="Search for files..." class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded-md text-sm w-full pl-10 border-gray-200 focus:border-gray-300">
                 </div>
 
-                <div class="bg-white rounded-sm text-sm px-3 flex items-center text-center border border-gray-200 ml-2">
+                <div class="bg-white rounded-md text-sm px-3 flex items-center text-center border border-gray-200 ml-2">
                     <input type="checkbox" class="flex" v-model="selectAll" @click="selectAllFiles()">
                 </div>
             </div>
@@ -31,7 +31,7 @@
                 <div class="col-span-6">
                     <div>
                         <div class="my-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 gap-4">
-                            <div v-for="(file, index) in media.data" :key="file.id" class="relative rounded-sm bg-white border-4" :class="{'border-indigo-500': selectedFile && selectedFile.id == file.id}">
+                            <div v-for="(file, index) in media.data" :key="file.id" class="relative rounded-md bg-white border-4" :class="{'border-indigo-500': selectedFile && selectedFile.id == file.id}">
 
                                 <input type="checkbox" class="absolute inset-0 m-3" :checked="checkIfSelected(file)" v-show="checkIfSelected(file)">
 
@@ -78,17 +78,17 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-span-2 m-4 mt-5 p-4 border border-gray-200 rounded-sm bg-gray-100">
+                <div class="col-span-2 m-4 mt-5 p-4 border border-gray-200 rounded-md bg-gray-100">
                     <div v-if="selectedFile !== null">
                         <h3 class="font-semibold text-sm mb-4">FILE DETAILS</h3>
 
                         <div>
                             <div class="float-left mr-2 w-28 bg-white">
                                 <span v-if="selectedFile.type == 'jpg' || selectedFile.type == 'jpeg' || selectedFile.type == 'png' || selectedFile.type == 'gif' || selectedFile.type == 'webp'">
-                                    <img class="w-full h-28 object-cover rounded-sm border rounded-sm"  :src="selectedFile.full_url_thumb" />
+                                    <img class="w-full h-28 object-cover rounded-md border rounded-md"  :src="selectedFile.full_url_thumb" />
                                 </span>
                                         
-                                <div class="w-full h-28 object-cover flex items-center text-center border rounded-sm" v-else>
+                                <div class="w-full h-28 object-cover flex items-center text-center border rounded-md" v-else>
                                     <div class="w-full">
                                         <i v-if="selectedFile.type == 'pdf'" class="far fa-file-pdf text-5xl text-red-500"></i>
                                         <i v-else-if="selectedFile.type == 'avi' || selectedFile.type == 'mp4' || selectedFile.type == 'mov' || selectedFile.type == 'webm'" class="far fa-file-video text-5xl text-blue-500"></i>
@@ -115,17 +115,17 @@
                         <div class="mt-6 clear-both">
                             <div>
                                 <label v-formlabel>File Name</label>
-                                <input type="text" v-model="fileUpdateData.name" class="text-sm w-full rounded-sm border-gray-300">
+                                <input type="text" v-model="fileUpdateData.name" class="text-sm w-full rounded-md border-gray-300">
                             </div>
                             <div class="mt-4">
                                 <label v-formlabel>Caption</label>
-                                <input type="text" v-model="fileUpdateData.caption" class="text-sm w-full rounded-sm border-gray-300">
+                                <input type="text" v-model="fileUpdateData.caption" class="text-sm w-full rounded-md border-gray-300">
                             </div>
                             <div class="mt-4">
                                 <label v-formlabel>File Path</label>
-                                <div class="flex rounded-sm cursor-pointer" @click="copyToClipboard(selectedFile.full_url)">
+                                <div class="flex rounded-md cursor-pointer" @click="copyToClipboard(selectedFile.full_url)">
                                     <span class="inline-flex items-center px-3 rounded-l-sm border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm cursor-pointer"><i class="far fa-copy"></i></span>
-                                    <input type="text" readonly disabled :value="selectedFile.full_url" class="text-sm w-full rounded-sm border-gray-300 rounded-l-none cursor-pointer">
+                                    <input type="text" readonly disabled :value="selectedFile.full_url" class="text-sm w-full rounded-md border-gray-300 rounded-l-none cursor-pointer">
                                 </div>
                             </div>
                             <div class="mt-4">
@@ -199,7 +199,7 @@
                             <div class="relative pt-1 w-full">
                                 <div class="flex mb-2 items-center justify-between">
                                     <div>
-                                        <span class="text-xs font-semibold inline-block py-1 rounded-sm" :class="{ 'text-green-500': file.success, 'text-red-500': file.error, 'text-blue-500': file.active }">
+                                        <span class="text-xs font-semibold inline-block py-1 rounded-md" :class="{ 'text-green-500': file.success, 'text-red-500': file.error, 'text-blue-500': file.active }">
                                             <span v-if="file.error">{{file.error}}</span>
                                             <span v-else-if="file.success">done</span>
                                             <span v-else-if="file.active">uploading</span>

@@ -13,7 +13,7 @@
                     <div class="w-full bg-white mt-2 rounded-md p-4">
                         <div>
                             <div class="text-lg font-bold">Project ID</div>
-                            <div class="mt-1 flex rounded-sm cursor-pointer" @click="copyToClipboard(project.uuid)">
+                            <div class="mt-1 flex rounded-md cursor-pointer" @click="copyToClipboard(project.uuid)">
                                 <span class="inline-flex items-center px-3 rounded-l-sm border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm cursor-pointer"><i class="far fa-copy"></i></span>
                                 <input type="text" readonly disabled :value="project.uuid" v-forminput class="rounded-l-none cursor-pointer">
                             </div>
@@ -21,14 +21,14 @@
     
                         <div class="mt-5">
                             <div class="text-lg font-bold">Content API Endpoint</div>
-                            <div class="mt-1 flex rounded-sm cursor-pointer" @click="copyToClipboard(endpointUrl)">
+                            <div class="mt-1 flex rounded-md cursor-pointer" @click="copyToClipboard(endpointUrl)">
                                 <span class="inline-flex items-center px-3 rounded-l-sm border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm cursor-pointer"><i class="far fa-copy"></i></span>
                                 <input type="text" readonly disabled :value="endpointUrl" v-forminput class="rounded-l-none cursor-pointer">
                             </div>
                         </div>
     
                         <div class="mt-10">
-                            <label for="togglePublic" class="p-5 border border-gray-300 rounded-sm text-sm flex items-center space-x-2 cursor-pointer" v-if="project.public_api">
+                            <label for="togglePublic" class="p-5 border border-gray-300 rounded-md text-sm flex items-center space-x-2 cursor-pointer" v-if="project.public_api">
                                 <div class="relative">
                                     <input type="checkbox" id="togglePublic" class="sr-only" v-model="enable_public_access" @click.prevent="disablePublicAccess">
                                     <div class="block bg-gray-600 w-14 h-8 rounded-full"></div>
@@ -36,7 +36,7 @@
                                 </div>
                                 <span>Disable Public API Access</span>
                             </label>
-                            <label for="togglePublic" class="p-5 border border-gray-300 rounded-sm text-sm flex items-center space-x-2 cursor-pointer" v-else-if="!project.public_api">
+                            <label for="togglePublic" class="p-5 border border-gray-300 rounded-md text-sm flex items-center space-x-2 cursor-pointer" v-else-if="!project.public_api">
                                 <div class="relative">
                                     <input type="checkbox" id="togglePublic" class="sr-only" v-model="enable_public_access" @click.prevent="enablePublicAccess">
                                     <div class="block bg-gray-600 w-14 h-8 rounded-full"></div>
@@ -54,7 +54,7 @@
                                     <div class="cursor-pointer text-indigo-700" @click="openNewTokenModal = true">Create New Token</div>
                                 </div>
                             </div>
-                            <div class="overflow-x-auto mt-1 flex rounded-sm">
+                            <div class="overflow-x-auto mt-1 flex rounded-md">
                                 <table class="min-w-full divide-y divide-gray-200 border">
                                     <thead class="bg-gray-100">
                                         <tr>
@@ -70,7 +70,7 @@
                                         <tr v-for="token in tokens" :key="token.id">
                                             <td class="px-6 py-3 text-sm whitespace-nowrap">{{ token.name }}</td>
                                             <td class="px-6 py-3 text-sm whitespace-nowrap">
-                                                <span class="text-gray-500 text-sm rounded-sm bg-gray-100 py-1 px-3 mr-2" v-for="perm in token.abilities" :key="perm">
+                                                <span class="text-gray-500 text-sm rounded-md bg-gray-100 py-1 px-3 mr-2" v-for="perm in token.abilities" :key="perm">
                                                     {{ perm }}
                                                 </span>
                                             </td>
@@ -110,7 +110,7 @@
                                 Please copy your new API token. For your security, it won't be shown again. If you lose this token you can generate a new one.
                             </span>
                         </div>
-                        <div class="mt-5 flex rounded-sm cursor-pointer" @click="copyToClipboard(createdToken)">
+                        <div class="mt-5 flex rounded-md cursor-pointer" @click="copyToClipboard(createdToken)">
                             <span class="inline-flex items-center px-3 rounded-l-sm border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm cursor-pointer"><i class="far fa-copy"></i></span>
                             <input type="text" readonly disabled :value="createdToken" v-forminput class="rounded-l-none cursor-pointer">
                         </div>

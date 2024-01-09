@@ -21,7 +21,7 @@
                             Create a New Form
                         </div>
     
-                        <router-link :to="{ name: 'projects.content.forms.detail', params: { project_id: $route.params.project_id, col_id: $route.params.col_id, form_id: form.id } }" v-for="form in forms" :key="form.id" class="bg-white hover:bg-gray-100 px-10 py-6 text-gray-900 border border-gray-100 cursor-pointer items-center rounded-sm relative">
+                        <router-link :to="{ name: 'projects.content.forms.detail', params: { project_id: $route.params.project_id, col_id: $route.params.col_id, form_id: form.id } }" v-for="form in forms" :key="form.id" class="bg-white hover:bg-gray-100 px-10 py-6 text-gray-900 border border-gray-100 cursor-pointer items-center rounded-md relative">
                             <span class="font-bold mt-3 block text-lg">{{ form.name }}</span>
                             <span class="text-sm block">{{ form.description }}</span>
                         </router-link>

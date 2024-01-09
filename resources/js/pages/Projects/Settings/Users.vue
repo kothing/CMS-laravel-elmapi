@@ -147,7 +147,7 @@
                             </div>
                             <div class="mt-2">
                                 <label v-formlabel>E-mail</label>
-                                <div class="mt-1 flex rounded-sm">
+                                <div class="mt-1 flex rounded-md">
                                     <span class="inline-flex items-center px-3 rounded-l-sm border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm  "><i class="fa fa-at"></i></span>
                                     <input type="email" v-model="new_user.email" v-forminput class="rounded-l-none">
                                 </div>
@@ -156,7 +156,7 @@
                             <div class="mt-2">
                                 <label v-formlabel>Password</label>
 
-                                <div class="mt-1 flex rounded-sm">
+                                <div class="mt-1 flex rounded-md">
                                     <span class="inline-flex items-center px-3 rounded-l-sm border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm  "><i class="fa fa-lock"></i></span>
                                     <input :type="passwordShow ? 'text' : 'password'" v-model="new_user.password" v-forminput class="rounded-l-none">
                                     <span class="inline-flex items-center px-3 rounded-r-sm border border-l-0 border-gray-300 bg-gray-50 text-gray-500 text-sm cursor-pointer" @click="showPassword()"><i class="fa fa-eye"></i></span>

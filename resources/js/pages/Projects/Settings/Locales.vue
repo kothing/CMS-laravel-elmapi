@@ -15,7 +15,7 @@
                             <div class="w-full flex justify-between">
                                 <div class="text-lg font-bold">Available Locales</div>
                             </div>
-                            <div class="overflow-x-auto mt-1 flex rounded-sm">
+                            <div class="overflow-x-auto mt-1 flex rounded-md">
                                 <table class="min-w-full divide-y divide-gray-200 border">
                                     <tbody class="bg-white divide-y divide-gray-200">
                                         <tr v-for="locale in project.locales" :key="locale">
@@ -27,10 +27,10 @@
                                             </td>
                                             <td class="px-6 py-3 text-sm w-px text-center font-bold whitespace-nowrap">
                                                 <div v-if="locale == project.default_locale">Default</div>
-                                                <div v-else class="ml-2 cursor-pointer text-indigo-500 py-1 px-3 rounded-sm hover:bg-gray-100" @click="setDefaultLocale(locale)">Set as default</div>
+                                                <div v-else class="ml-2 cursor-pointer text-indigo-500 py-1 px-3 rounded-md hover:bg-gray-100" @click="setDefaultLocale(locale)">Set as default</div>
                                             </td>
                                             <td class="px-6 py-3 text-sm w-px text-center">
-                                                <div v-if="locale != project.default_locale" class="ml-2 cursor-pointer text-red-500 py-1 px-3 rounded-sm hover:bg-gray-100" @click="deleteLocale(locale)">
+                                                <div v-if="locale != project.default_locale" class="ml-2 cursor-pointer text-red-500 py-1 px-3 rounded-md hover:bg-gray-100" @click="deleteLocale(locale)">
                                                     <i class="fa fa-trash-alt"></i>
                                                 </div>
                                             </td>

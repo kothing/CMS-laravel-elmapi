@@ -16,7 +16,7 @@
     
                     <div class="w-full bg-white mt-2 rounded-md p-4">
                         <div class="mt-2">
-                            <div class="overflow-x-auto mt-2 flex rounded-sm">
+                            <div class="overflow-x-auto mt-2 flex rounded-md">
                                 <table v-if="logs != undefined" class="w-full divide-y divide-gray-200 border">
                                     <thead class="bg-gray-100">
                                         <tr>
@@ -38,7 +38,7 @@
                                                 <span v-else-if="log.status == 'failed'" class="text-red-600">{{ log.status }}</span>
                                             </td>
                                             <td class="px-6 py-3 text-sm whitespace-nowrap text-center">
-                                                <span class="text-indigo-500 cursor-pointer hover:bg-gray-100 rounded-sm p-2" @click="showText(log)"><i class="fas fa-align-center"></i></span>
+                                                <span class="text-indigo-500 cursor-pointer hover:bg-gray-100 rounded-md p-2" @click="showText(log)"><i class="fas fa-align-center"></i></span>
                                             </td>
                                         </tr>
                                     </tbody>

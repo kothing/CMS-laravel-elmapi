@@ -1,5 +1,5 @@
 <template>
-    <button :type="type" :class="bgColor" :disabled="disabled" class="items-center border border-transparent rounded-sm text-sm text-white focus:outline-none transition ease-in-out duration-150">
+    <button :type="type" :class="bgColor" :disabled="disabled" class="items-center border border-transparent rounded-md text-sm text-white focus:outline-none transition ease-in-out duration-150">
         <slot></slot>
     </button>
 </template>

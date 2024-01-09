@@ -31,13 +31,13 @@
                                 <label v-formlabel>Default Upload Disk</label>
                                 <div class="grid grid-cols-4 space-x-2">
                                     <div class="col-span-1">
-                                        <label for="default_disk_local" class="p-5 border border-gray-300 rounded-sm text-sm flex items-center space-x-2 cursor-pointer">
+                                        <label for="default_disk_local" class="p-5 border border-gray-300 rounded-md text-sm flex items-center space-x-2 cursor-pointer">
                                             <input name="default_disk" id="default_disk_local" type="radio" v-model="editProjectData.disk" value="local">
                                             <span>Local (storage folder)</span>
                                         </label>
                                     </div>
                                     <div class="col-span-1">
-                                        <label for="default_disk_s3" class="p-5 border border-gray-300 rounded-sm text-sm flex items-center space-x-2 cursor-pointer">
+                                        <label for="default_disk_s3" class="p-5 border border-gray-300 rounded-md text-sm flex items-center space-x-2 cursor-pointer">
                                             <input name="default_disk" id="default_disk_s3" type="radio" v-model="editProjectData.disk" value="s3">
                                             <span>AWS S3</span>
                                         </label>

@@ -12,11 +12,12 @@
             leave-class="transform opacity-100 scale-100"
             leave-to-class="transform opacity-0 scale-95">
             <div v-show="open"
-                    class="absolute z-50 rounded-sm shadow-lg"
-                    :class="[widthClass, alignmentClasses]"
-                    style="display: none;"
-                    @click="close">
-                <div class="rounded-sm shadow-xs" :class="contentClasses">
+                class="absolute z-50 rounded-md shadow-lg"
+                :class="[widthClass, alignmentClasses]"
+                style="display: none;"
+                @click="close"
+            >
+                <div class="rounded-md shadow-xs" :class="contentClasses">
                     <slot name="content"></slot>
                 </div>
             </div>

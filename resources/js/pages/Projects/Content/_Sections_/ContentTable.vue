@@ -3,11 +3,11 @@
         <h4 class="mb-2 font-bold text-lg flex justify-end items-center h-10">
             <div class="flex-1">{{ collection.name }} <small class="text-gray-400 ml-1">#{{ collection.slug }}</small></div>
 
-            <router-link v-if="$route.params.col_id !== undefined && !relationSelect" :to="{name: 'projects.content.forms', params: { project_id: $route.params.project_id, col_id: $route.params.col_id } }" class="bg-green-500 items-center px-4 py-2 border border-transparent rounded-sm text-sm text-white focus:outline-none transition ease-in-out duration-150 mr-2">
+            <router-link v-if="$route.params.col_id !== undefined && !relationSelect" :to="{name: 'projects.content.forms', params: { project_id: $route.params.project_id, col_id: $route.params.col_id } }" class="bg-green-500 items-center px-4 py-2 border border-transparent rounded-md text-sm text-white focus:outline-none transition ease-in-out duration-150 mr-2">
                 <i class="fab fa-wpforms"></i> Forms ({{form_count}})
             </router-link>
 
-            <router-link v-if="!relationSelect && collection_id !== undefined" :to="{name: 'projects.content.new', params: { project_id: $route.params.project_id, col_id: collection_id } }" class="bg-indigo-500 items-center px-4 py-2 border border-transparent rounded-sm text-sm text-white focus:outline-none transition ease-in-out duration-150">
+            <router-link v-if="!relationSelect && collection_id !== undefined" :to="{name: 'projects.content.new', params: { project_id: $route.params.project_id, col_id: collection_id } }" class="bg-indigo-500 items-center px-4 py-2 border border-transparent rounded-md text-sm text-white focus:outline-none transition ease-in-out duration-150">
                 + Create New
             </router-link>
 
@@ -16,13 +16,13 @@
 
         <div class="flex space-between">
             <div class="relative flex w-full flex-wrap items-stretch mb-2">
-                <span class="z-9 h-full leading-snug font-normal absolute text-center text-gray-400 absolute bg-transparent rounded-sm text-base items-center justify-center w-8 pl-3 py-3">
+                <span class="z-9 h-full leading-snug font-normal absolute text-center text-gray-400 absolute bg-transparent rounded-md text-base items-center justify-center w-8 pl-3 py-3">
                     <i class="fas fa-search"></i>
                 </span>
                 <form  class="w-full">
-                    <input type="text" v-model="search" @input="getContent()" placeholder="Type something and press enter" class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded-sm text-sm w-full pl-10 border-gray-200 focus:border-gray-300">
+                    <input type="text" v-model="search" @input="getContent()" placeholder="Type something and press enter" class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded-md text-sm w-full pl-10 border-gray-200 focus:border-gray-300">
                 </form>
-                <span v-show="search != ''" class="z-9 h-full leading-snug font-normal absolute text-center text-gray-400 absolute bg-transparent rounded-sm text-base items-center justify-center w-8 py-3 right-0 pr-3 cursor-pointer" @click="search = '', getContent()">
+                <span v-show="search != ''" class="z-9 h-full leading-snug font-normal absolute text-center text-gray-400 absolute bg-transparent rounded-md text-base items-center justify-center w-8 py-3 right-0 pr-3 cursor-pointer" @click="search = '', getContent()">
                     <i class="fas fa-times-circle"></i>
                 </span>
             </div>
@@ -105,24 +105,24 @@
             <div class="flex">
                 <div class="py-1">{{ selected.length }} items selected</div>
 
-                <div v-if="selected.length !== 0 && listOptions.getItems !== 'trashed'" class="ml-2 cursor-pointer text-green-500 font-bold py-1 px-3 rounded-sm hover:bg-gray-100" @click="publishSelected"><i class="fa fa-cloud-upload-alt"></i> publish</div>
-                <div v-if="selected.length !== 0 && listOptions.getItems !== 'trashed'" class="ml-2 cursor-pointer text-gray-500 font-bold py-1 px-3 rounded-sm hover:bg-gray-100" @click="unPublishSelected"><i class="fa fa-cloud-download-alt"></i> unpublish</div>
-                <div v-if="selected.length !== 0 && listOptions.getItems !== 'trashed'" class="ml-2 cursor-pointer text-orange-500 font-bold py-1 px-3 rounded-sm hover:bg-gray-100" @click="moveToTrashSelected"><i class="fa fa-trash-restore"></i> move to trash</div>
-                <div v-if="selected.length !== 0 && listOptions.getItems === 'trashed'" class="ml-2 cursor-pointer text-orange-500 font-bold py-1 px-3 rounded-sm hover:bg-gray-100" @click="restoreSelected"><i class="fa fa-recycle"></i> restore</div>
-                <div v-if="selected.length !== 0" class="ml-2 cursor-pointer text-red-500 font-bold py-1 px-3 rounded-sm hover:bg-gray-100" @click="deleteSelected"><i class="fa fa-trash-alt"></i> delete</div>
+                <div v-if="selected.length !== 0 && listOptions.getItems !== 'trashed'" class="ml-2 cursor-pointer text-green-500 font-bold py-1 px-3 rounded-md hover:bg-gray-100" @click="publishSelected"><i class="fa fa-cloud-upload-alt"></i> publish</div>
+                <div v-if="selected.length !== 0 && listOptions.getItems !== 'trashed'" class="ml-2 cursor-pointer text-gray-500 font-bold py-1 px-3 rounded-md hover:bg-gray-100" @click="unPublishSelected"><i class="fa fa-cloud-download-alt"></i> unpublish</div>
+                <div v-if="selected.length !== 0 && listOptions.getItems !== 'trashed'" class="ml-2 cursor-pointer text-orange-500 font-bold py-1 px-3 rounded-md hover:bg-gray-100" @click="moveToTrashSelected"><i class="fa fa-trash-restore"></i> move to trash</div>
+                <div v-if="selected.length !== 0 && listOptions.getItems === 'trashed'" class="ml-2 cursor-pointer text-orange-500 font-bold py-1 px-3 rounded-md hover:bg-gray-100" @click="restoreSelected"><i class="fa fa-recycle"></i> restore</div>
+                <div v-if="selected.length !== 0" class="ml-2 cursor-pointer text-red-500 font-bold py-1 px-3 rounded-md hover:bg-gray-100" @click="deleteSelected"><i class="fa fa-trash-alt"></i> delete</div>
             </div>
 
             <div class="flex">
-                <div class="ml-1 cursor-pointer text-blue-500 py-1 px-1 rounded-sm hover:bg-gray-100" @click="changeGetItems('all')" :class="{'bg-gray-200' : listOptions.getItems == 'all'}">All({{ totalCount }})</div>
-                <div class="ml-1 cursor-pointer text-blue-500 py-1 px-1 rounded-sm hover:bg-gray-100"  @click="changeGetItems('published')" :class="{'bg-gray-200' : listOptions.getItems == 'published'}">Published({{publishedCount}})</div>
-                <div class="ml-1 cursor-pointer text-blue-500 py-1 px-1 rounded-sm hover:bg-gray-100" @click="changeGetItems('draft')" :class="{'bg-gray-200' : listOptions.getItems == 'draft'}">Draft({{draftCount}})</div>
-                <div v-if="!hasAddSelectedListener" class="ml-1 cursor-pointer text-blue-500 py-1 px-1 rounded-sm hover:bg-gray-100" @click="changeGetItems('trashed')" :class="{'bg-gray-200' : listOptions.getItems == 'trashed'}">Trashed({{trashedCount}})</div>
+                <div class="ml-1 cursor-pointer text-blue-500 py-1 px-1 rounded-md hover:bg-gray-100" @click="changeGetItems('all')" :class="{'bg-gray-200' : listOptions.getItems == 'all'}">All({{ totalCount }})</div>
+                <div class="ml-1 cursor-pointer text-blue-500 py-1 px-1 rounded-md hover:bg-gray-100"  @click="changeGetItems('published')" :class="{'bg-gray-200' : listOptions.getItems == 'published'}">Published({{publishedCount}})</div>
+                <div class="ml-1 cursor-pointer text-blue-500 py-1 px-1 rounded-md hover:bg-gray-100" @click="changeGetItems('draft')" :class="{'bg-gray-200' : listOptions.getItems == 'draft'}">Draft({{draftCount}})</div>
+                <div v-if="!hasAddSelectedListener" class="ml-1 cursor-pointer text-blue-500 py-1 px-1 rounded-md hover:bg-gray-100" @click="changeGetItems('trashed')" :class="{'bg-gray-200' : listOptions.getItems == 'trashed'}">Trashed({{trashedCount}})</div>
             </div>
         </div>
 
         <div class="clear-both">
             <div class="w-full border">
-                <div class="overflow-x-auto sm:rounded-sm">
+                <div class="overflow-x-auto sm:rounded-md">
                     <table class="min-w-full divide-y divide-gray-200 ">
                         <thead class="bg-gray-100">
                             <tr>
@@ -206,13 +206,13 @@
                                                 <span v-if="meta.value.length > 20">...</span>
                                             </span>
                                             <span v-else-if="field.type == 'richtext'">
-                                                <span v-if="meta.value !== ''" class="text-indigo-500 cursor-pointer hover:bg-gray-100 rounded-sm p-2" @click="showText(field, meta.value)"><i class="fas fa-align-center"></i></span>
+                                                <span v-if="meta.value !== ''" class="text-indigo-500 cursor-pointer hover:bg-gray-100 rounded-md p-2" @click="showText(field, meta.value)"><i class="fas fa-align-center"></i></span>
                                             </span>
                                             <span v-else-if="field.type == 'media'">
-                                                <span v-if="meta.value !== ''" class="text-indigo-500 cursor-pointer hover:bg-gray-100 rounded-sm p-2" @click="showMedia(field, meta.value)"><i class="fa fa-photo-video"></i></span>
+                                                <span v-if="meta.value !== ''" class="text-indigo-500 cursor-pointer hover:bg-gray-100 rounded-md p-2" @click="showMedia(field, meta.value)"><i class="fa fa-photo-video"></i></span>
                                             </span>
                                             <span v-else-if="field.type == 'relation'">
-                                                <span v-if="meta.value !== ''" class="text-indigo-500 cursor-pointer hover:bg-gray-100 rounded-sm p-2" @click="showRelationlist(field, meta.value)"><i class="fa fa-link"></i></span>
+                                                <span v-if="meta.value !== ''" class="text-indigo-500 cursor-pointer hover:bg-gray-100 rounded-md p-2" @click="showRelationlist(field, meta.value)"><i class="fa fa-link"></i></span>
                                             </span>
                                             <span v-else>
                                                 <span :class="{'rounded-md bg-gray-100 p-1 mr-1' : field.options.repeatable && meta.value !== null}">{{ meta.value }}</span>
@@ -239,19 +239,19 @@
                                     <div v-if="item.published_by !== null" class="bg-green-500 text-white p-2 text-md rounded-full text-center mr-2 w-9" v-tooltip="item.published_by.name"><div class="w-full text-center">{{ getUserNameInitials(item.published_by.name) }}</div></div>
                                 </td>
                                 <td v-if="listOptions.getItems != 'trashed'" class="pl-2 py-4 text-sm text-center w-px">
-                                    <router-link :to="{name: 'projects.content.edit', params: { project_id: $route.params.project_id, col_id: collection_id, content_id: item.id } }" class="text-indigo-500 p-2 px-3 rounded-sm hover:bg-gray-100 cursor-pointer bg-gray-50"><i class="fa fa-pencil-alt"></i></router-link>
+                                    <router-link :to="{name: 'projects.content.edit', params: { project_id: $route.params.project_id, col_id: collection_id, content_id: item.id } }" class="text-indigo-500 p-2 px-3 rounded-md hover:bg-gray-100 cursor-pointer bg-gray-50"><i class="fa fa-pencil-alt"></i></router-link>
                                 </td>
                                 <td v-if="listOptions.getItems != 'trashed'" class="pl-2 py-4 text-sm text-center w-px">
-                                    <a class="text-orange-500 p-2 px-3 rounded-sm hover:bg-gray-100 cursor-pointer bg-gray-50" @click="moveToTrashContent(item)"><i class="fa fa-trash-restore"></i></a>
+                                    <a class="text-orange-500 p-2 px-3 rounded-md hover:bg-gray-100 cursor-pointer bg-gray-50" @click="moveToTrashContent(item)"><i class="fa fa-trash-restore"></i></a>
                                 </td>
                                 <td class="pl-2 py-4 text-sm text-center w-px">
                                     <div v-if="item.form_id === null">
-                                        <span v-if="item.published_at !== null" class="text-gray-500  rounded-sm bg-green-200 px-3 py-1">published</span>
-                                        <span v-else class="text-gray-500 rounded-sm bg-gray-200 px-3 py-1">draft</span>
+                                        <span v-if="item.published_at !== null" class="text-gray-500  rounded-md bg-green-200 px-3 py-1">published</span>
+                                        <span v-else class="text-gray-500 rounded-md bg-gray-200 px-3 py-1">draft</span>
                                     </div>
                                     <div v-else>
-                                        <span v-if="item.published_at !== null" class="text-gray-200 rounded-sm bg-blue-400 px-3 py-1" v-tooltip="'Submitted at '+dateFormat(item.form.created_at)+'. Form name: '+item.form.name">published</span>
-                                        <span v-else class="text-gray-500 rounded-sm bg-blue-200 px-3 py-1" v-tooltip="'Submitted at '+dateFormat(item.form.created_at)+'. Form name: '+item.form.name">draft</span>
+                                        <span v-if="item.published_at !== null" class="text-gray-200 rounded-md bg-blue-400 px-3 py-1" v-tooltip="'Submitted at '+dateFormat(item.form.created_at)+'. Form name: '+item.form.name">published</span>
+                                        <span v-else class="text-gray-500 rounded-md bg-blue-200 px-3 py-1" v-tooltip="'Submitted at '+dateFormat(item.form.created_at)+'. Form name: '+item.form.name">draft</span>
                                     </div>
                                 </td>
                             </tr>
@@ -308,8 +308,8 @@
             <template #content>
                 <div class="my-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
                     <div v-for="file in mediaRecords" :key="file.id" class="relative">
-                        <div class="rounded-sm bg-white">
-                            <div class="w-full h-48 absolute top-0 rounded-sm left-0 bg-black bg-opacity-70 items-center text-center flex opacity-0 hover:opacity-100 z-10">
+                        <div class="rounded-md bg-white">
+                            <div class="w-full h-48 absolute top-0 rounded-md left-0 bg-black bg-opacity-70 items-center text-center flex opacity-0 hover:opacity-100 z-10">
                                 <div class="w-full z-20">
                                     <div class="text-sm text-white w-full mb-3" :title="file.name">
                                         {{ file.name.substring(0,20) }}
@@ -324,9 +324,9 @@
                                 </div>
                             </div>
 
-                            <img class="w-full h-48 object-cover rounded-sm border rounded-sm" v-if="file.type == 'jpg' || file.type == 'jpeg' || file.type == 'png' || file.type == 'gif' || file.type == 'webp'" :src="file.full_url_thumb" />
+                            <img class="w-full h-48 object-cover rounded-md border rounded-md" v-if="file.type == 'jpg' || file.type == 'jpeg' || file.type == 'png' || file.type == 'gif' || file.type == 'webp'" :src="file.full_url_thumb" />
 
-                            <div class="w-full h-48 object-cover flex items-center text-center border rounded-sm" v-else>
+                            <div class="w-full h-48 object-cover flex items-center text-center border rounded-md" v-else>
                                 <div class="w-full">
                                     <i v-if="file.type == 'pdf'" class="far fa-file-pdf text-5xl text-red-500"></i>
                                     <i v-else-if="file.type == 'avi' || file.type == 'mp4' || file.type == 'mov' || file.type == 'webm'" class="far fa-file-video text-5xl text-blue-500"></i>
@@ -355,7 +355,7 @@
             </template>
 
             <template #content>
-                <div class="overflow-x-auto sm:rounded-sm" v-if="relationRecords.length > 0">
+                <div class="overflow-x-auto sm:rounded-md" v-if="relationRecords.length > 0">
                     <table class="min-w-full divide-y divide-gray-200 ">
                         <thead>
                             <tr>
@@ -377,13 +377,13 @@
 
                         <tr v-for="item in relationRecords" :key="item.id">
                             <td class="pl-2 py-4 text-sm text-center w-px">
-                                <span class="text-gray-500 text-sm rounded-sm bg-gray-200 px-3 py-1 whitespace-nowrap">
+                                <span class="text-gray-500 text-sm rounded-md bg-gray-200 px-3 py-1 whitespace-nowrap">
                                     {{ relationRecords.collection.name }}
                                 </span>
                             </td>
                             <td class="pl-2 py-4 text-sm text-center w-px">
-                                <span v-if="item.published_at !== null" class="text-gray-500 text-sm rounded-sm bg-green-200 px-3 py-1">published</span>
-                                <span v-else class="text-gray-500 text-sm rounded-sm bg-gray-200 px-3 py-1">draft</span>
+                                <span v-if="item.published_at !== null" class="text-gray-500 text-sm rounded-md bg-green-200 px-3 py-1">published</span>
+                                <span v-else class="text-gray-500 text-sm rounded-md bg-gray-200 px-3 py-1">draft</span>
                             </td>
                             <td class="px-6 py-3 text-sm w-px whitespace-nowrap text-gray-600">
                                 {{ item.created_at | date('D MMM YYYY, H:mm') }}

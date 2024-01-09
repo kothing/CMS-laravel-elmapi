@@ -21,7 +21,7 @@
                         <div class="flex border-indigo-600 border border-l-1 border-t-0 border-b-0  border-r-0">
                             <ui-dropdown align="right">
                                 <template #trigger>
-                                    <button class="bg-indigo-500 hover:bg-indigo-600 items-center px-2 py-3 border border-transparent rounded-sm text-sm text-white focus:outline-none transition ease-in-out duration-150 rounded-l-none"><i class="fa fa-sort-down"></i></button>
+                                    <button class="bg-indigo-500 hover:bg-indigo-600 items-center px-2 py-3 border border-transparent rounded-md text-sm text-white focus:outline-none transition ease-in-out duration-150 rounded-l-none"><i class="fa fa-sort-down"></i></button>
                                 </template>
     
                                 <template #content>
@@ -39,7 +39,7 @@
                         <div class="flex border-green-600 border border-l-1 border-t-0 border-b-0  border-r-0">
                             <ui-dropdown align="right" width="60">
                                 <template #trigger>
-                                    <button class="bg-green-500 hover:bg-green-600 items-center px-2 py-3 border border-transparent rounded-sm text-sm text-white focus:outline-none transition ease-in-out duration-150 rounded-l-none"><i class="fa fa-sort-down"></i></button>
+                                    <button class="bg-green-500 hover:bg-green-600 items-center px-2 py-3 border border-transparent rounded-md text-sm text-white focus:outline-none transition ease-in-out duration-150 rounded-l-none"><i class="fa fa-sort-down"></i></button>
                                 </template>
     
                                 <template #content>
@@ -56,7 +56,7 @@
                 </div>
     
                 <div class="grid grid-cols-6 space-x-4 h-full overflow-hidden">
-                    <div class="col-span-4 p-5 bg-white mt-2 rounded-sm overflow-x-hidden">
+                    <div class="col-span-4 p-5 bg-white mt-2 rounded-md overflow-x-hidden">
                         <form class="space-y-6">
                             <div v-for="field in collection.fields" :key="field.id" :class="`field-${field.type}`">
                                 <label v-formlabel>
@@ -71,12 +71,12 @@
                                                         <input type="text" v-model="input.value" :placeholder="field.placeholder" class="mb-1" v-forminput>
                                                     </div>
                                                     <div class="w-auto h-auto text-right" v-if="(index !== 0)">
-                                                        <div class="cursor-pointer text-sm border border-red-500 rounded-sm text-white bg-red-500 p-3 ml-2 text-center hover:bg-red-400" @click="removeLineFromRepeatableField(field, index)"><i class="fas fa-trash-alt"></i></div>
+                                                        <div class="cursor-pointer text-sm border border-red-500 rounded-md text-white bg-red-500 p-3 ml-2 text-center hover:bg-red-400" @click="removeLineFromRepeatableField(field, index)"><i class="fas fa-trash-alt"></i></div>
                                                     </div>
                                                 </div>
                                                 <p class="text-sm text-red-600 mt-1 mb-1" v-if="newData.errors['data.'+field.name+'.'+index+'.value']">{{ newData.errors['data.'+field.name+'.'+index+'.value'][0] }}</p>
                                             </div>
-                                            <div class="cursor-pointer text-xs rounded-sm text-white bg-indigo-500 p-1  w-32 text-center mt-1 hover:bg-indigo-400" @click="addNewLineToRepeatableField(field)">+ Add a new line</div>
+                                            <div class="cursor-pointer text-xs rounded-md text-white bg-indigo-500 p-1  w-32 text-center mt-1 hover:bg-indigo-400" @click="addNewLineToRepeatableField(field)">+ Add a new line</div>
                                         </div>
                                         <div v-else>
                                             <input v-if="field.slug_field === undefined" type="text" v-model="newData.data[field.name]" :placeholder="field.placeholder" v-forminput>
@@ -91,12 +91,12 @@
                                                         <textarea v-model="input.value" :placeholder="field.placeholder" class="mb-1" v-forminput></textarea>
                                                     </div>
                                                     <div class="w-auto h-auto text-right" v-if="(index !== 0)">
-                                                        <div class="cursor-pointer text-sm border border-red-500 rounded-sm text-white bg-red-500 p-3 ml-2 text-center hover:bg-red-400" @click="removeLineFromRepeatableField(field, index)"><i class="fas fa-trash-alt"></i></div>
+                                                        <div class="cursor-pointer text-sm border border-red-500 rounded-md text-white bg-red-500 p-3 ml-2 text-center hover:bg-red-400" @click="removeLineFromRepeatableField(field, index)"><i class="fas fa-trash-alt"></i></div>
                                                     </div>
                                                 </div>
                                                 <p class="text-sm text-red-600 mt-1 mb-1" v-if="newData.errors['data.'+field.name+'.'+index+'.value']">{{ newData.errors['data.'+field.name+'.'+index+'.value'][0] }}</p>
                                             </div>
-                                            <div class="cursor-pointer text-xs rounded-sm text-white bg-indigo-500 p-1  w-32 text-center mt-1 hover:bg-indigo-400" @click="addNewLineToRepeatableField(field)">+ Add a new line</div>
+                                            <div class="cursor-pointer text-xs rounded-md text-white bg-indigo-500 p-1  w-32 text-center mt-1 hover:bg-indigo-400" @click="addNewLineToRepeatableField(field)">+ Add a new line</div>
                                         </div>
                                         <div v-else>
                                             <textarea v-model="newData.data[field.name]" :placeholder="field.placeholder" v-forminput></textarea>
@@ -113,7 +113,7 @@
                                                 placeholder: field.placeholder 
                                             }"
                                             v-model="newData.data[field.name]"
-                                            class="content-richtext-editor h-80 rounded-sm border-gray-200"
+                                            class="content-richtext-editor h-80 rounded-md border-gray-200"
                                         >
                                             <div :id="'toolbar_'+field.name" slot="toolbar">
                                                 <span class="ql-formats">
@@ -193,28 +193,28 @@
                                             <div v-for="(input,index) in newData.data[field.name]" :key="index">
                                                 <div class="flex space-between">
                                                     <div class="relative flex w-full flex-wrap items-stretch mb-1">
-                                                        <div class="flex rounded-sm shadow-sm w-full">
+                                                        <div class="flex rounded-md shadow-sm w-full">
                                                             <span class="inline-flex items-center px-3 rounded-l-sm border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm"><i class="fa fa-at"></i></span>
                                                             <input type="email" v-model="input.value" :placeholder="field.placeholder" v-forminput class="rounded-l-none">
                                                         </div>
                                                     </div>
                                                     <div class="w-auto h-auto text-right" v-if="(index !== 0)">
-                                                        <div class="cursor-pointer text-sm border border-red-500 rounded-sm text-white bg-red-500 p-3 ml-2 text-center hover:bg-red-400" @click="removeLineFromRepeatableField(field, index)"><i class="fas fa-trash-alt"></i></div>
+                                                        <div class="cursor-pointer text-sm border border-red-500 rounded-md text-white bg-red-500 p-3 ml-2 text-center hover:bg-red-400" @click="removeLineFromRepeatableField(field, index)"><i class="fas fa-trash-alt"></i></div>
                                                     </div>
                                                 </div>
                                                 <p class="text-sm text-red-600 mt-1 mb-1" v-if="newData.errors['data.'+field.name+'.'+index+'.value']">{{ newData.errors['data.'+field.name+'.'+index+'.value'][0] }}</p>
                                             </div>
-                                            <div class="cursor-pointer text-xs rounded-sm text-white bg-indigo-500 p-1  w-32 text-center mt-1 hover:bg-indigo-400" @click="addNewLineToRepeatableField(field)">+ Add a new line</div>
+                                            <div class="cursor-pointer text-xs rounded-md text-white bg-indigo-500 p-1  w-32 text-center mt-1 hover:bg-indigo-400" @click="addNewLineToRepeatableField(field)">+ Add a new line</div>
                                         </div>
                                         <div v-else>
-                                            <div class="mt-1 flex rounded-sm shadow-sm">
+                                            <div class="mt-1 flex rounded-md shadow-sm">
                                                 <span class="inline-flex items-center px-3 rounded-l-sm border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm"><i class="fa fa-at"></i></span>
                                                 <input type="email" v-model="newData.data[field.name]" :placeholder="field.placeholder" v-forminput class="rounded-l-none">
                                             </div>
                                         </div>
                                     </div>
                                     <div v-if="field.type == 'password'">
-                                        <div class="mt-1 flex rounded-sm shadow-sm">
+                                        <div class="mt-1 flex rounded-md shadow-sm">
                                             <span class="inline-flex items-center px-3 rounded-l-sm border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm"><i class="fa fa-lock"></i></span>
                                             <input :type="passwordShow[field.name] ? 'text' : 'password'" v-model="newData.data[field.name]" v-forminput class="rounded-l-none">
                                             <span class="inline-flex items-center px-3 rounded-r-sm border border-l-0 border-gray-300 bg-gray-50 text-gray-500 text-sm cursor-pointer" @click="showPassword(field.name)"><i class="fa fa-eye"></i></span>
@@ -230,12 +230,12 @@
                                                         <input type="number" step="any" v-model="input.value" v-forminput>
                                                     </div>
                                                     <div class="w-auto h-auto text-right" v-if="(index !== 0)">
-                                                        <div class="cursor-pointer text-sm border border-red-500 rounded-sm text-white bg-red-500 p-3 ml-2 text-center hover:bg-red-400" @click="removeLineFromRepeatableField(field, index)"><i class="fas fa-trash-alt"></i></div>
+                                                        <div class="cursor-pointer text-sm border border-red-500 rounded-md text-white bg-red-500 p-3 ml-2 text-center hover:bg-red-400" @click="removeLineFromRepeatableField(field, index)"><i class="fas fa-trash-alt"></i></div>
                                                     </div>
                                                 </div>
                                                 <p class="text-sm text-red-600 mt-1 mb-1" v-if="newData.errors['data.'+field.name+'.'+index+'.value']">{{ newData.errors['data.'+field.name+'.'+index+'.value'][0] }}</p>
                                             </div>
-                                            <div class="cursor-pointer text-xs rounded-sm text-white bg-indigo-500 p-1  w-32 text-center mt-1 hover:bg-indigo-400" @click="addNewLineToRepeatableField(field)">+ Add a new line</div>
+                                            <div class="cursor-pointer text-xs rounded-md text-white bg-indigo-500 p-1  w-32 text-center mt-1 hover:bg-indigo-400" @click="addNewLineToRepeatableField(field)">+ Add a new line</div>
                                         </div>
                                         <div v-else>
                                             <input type="number" step="any" v-model="newData.data[field.name]" v-forminput>
@@ -261,12 +261,12 @@
                                                         <colorpicker v-model="input.value" />
                                                     </div>
                                                     <div class="w-auto h-auto text-right" v-if="(index !== 0)">
-                                                        <div class="cursor-pointer text-sm border border-red-500 rounded-sm text-white bg-red-500 px-3 py-3 pb-2 ml-2 text-center hover:bg-red-400" @click="removeLineFromRepeatableField(field, index)"><i class="fas fa-trash-alt"></i></div>
+                                                        <div class="cursor-pointer text-sm border border-red-500 rounded-md text-white bg-red-500 px-3 py-3 pb-2 ml-2 text-center hover:bg-red-400" @click="removeLineFromRepeatableField(field, index)"><i class="fas fa-trash-alt"></i></div>
                                                     </div>
                                                 </div>
                                                 <p class="text-sm text-red-600 mt-1 mb-1" v-if="newData.errors['data.'+field.name+'.'+index+'.value']">{{ newData.errors['data.'+field.name+'.'+index+'.value'][0] }}</p>
                                             </div>
-                                            <div class="cursor-pointer text-xs rounded-sm text-white bg-indigo-500 p-1  w-32 text-center mt-1 hover:bg-indigo-400" @click="addNewLineToRepeatableField(field)">+ Add a new line</div>
+                                            <div class="cursor-pointer text-xs rounded-md text-white bg-indigo-500 p-1  w-32 text-center mt-1 hover:bg-indigo-400" @click="addNewLineToRepeatableField(field)">+ Add a new line</div>
                                         </div>
                                         <div v-else>
                                             <colorpicker v-model="newData.data[field.name]" />
@@ -279,7 +279,7 @@
                                                     <div class="relative flex w-full flex-wrap items-stretch mb-1">
                                                         <v-date-picker v-model="input.value" :mode="field.options.timepicker ? 'dateTime' : 'date'">
                                                             <template v-slot="{ inputValue, togglePopover }">
-                                                                <div class="mt-1 flex rounded-sm shadow-sm">
+                                                                <div class="mt-1 flex rounded-md shadow-sm">
                                                                     <span class="inline-flex items-center px-3 rounded-l-sm border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm cursor-pointer" @click="togglePopover"><i class="fa fa-calendar-alt"></i></span>
                                                                     <input type="text" v-forminput :value="inputValue" @click="togglePopover"/>
                                                                 </div>
@@ -287,17 +287,17 @@
                                                         </v-date-picker>
                                                     </div>
                                                     <div class="w-auto h-auto text-right" v-if="(index !== 0)">
-                                                        <div class="cursor-pointer text-sm border border-red-500 rounded-sm text-white bg-red-500 p-3 ml-2 text-center hover:bg-red-400" @click="removeLineFromRepeatableField(field, index)"><i class="fas fa-trash-alt"></i></div>
+                                                        <div class="cursor-pointer text-sm border border-red-500 rounded-md text-white bg-red-500 p-3 ml-2 text-center hover:bg-red-400" @click="removeLineFromRepeatableField(field, index)"><i class="fas fa-trash-alt"></i></div>
                                                     </div>
                                                 </div>
                                                 <p class="text-sm text-red-600 mt-1 mb-1" v-if="newData.errors['data.'+field.name+'.'+index+'.value']">{{ newData.errors['data.'+field.name+'.'+index+'.value'][0] }}</p>
                                             </div>
-                                            <div class="cursor-pointer text-xs rounded-sm text-white bg-indigo-500 p-1  w-32 text-center mt-1 hover:bg-indigo-400" @click="addNewLineToRepeatableField(field)">+ Add a new line</div>
+                                            <div class="cursor-pointer text-xs rounded-md text-white bg-indigo-500 p-1  w-32 text-center mt-1 hover:bg-indigo-400" @click="addNewLineToRepeatableField(field)">+ Add a new line</div>
                                         </div>
                                         <div v-else>
                                             <v-date-picker v-model="newData.data[field.name]" :mode="field.options.timepicker ? 'dateTime' : 'date'">
                                                 <template v-slot="{ inputValue, togglePopover }">
-                                                    <div class="mt-1 flex rounded-sm shadow-sm">
+                                                    <div class="mt-1 flex rounded-md shadow-sm">
                                                         <span class="inline-flex items-center px-3 rounded-l-sm border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm cursor-pointer" @click="togglePopover"><i class="fa fa-calendar-alt"></i></span>
                                                         <input type="text" v-forminput :value="inputValue" @click="togglePopover"/>
                                                     </div>
@@ -313,19 +313,19 @@
                                                         <input type="time" v-model="input.value" v-forminput>
                                                     </div>
                                                     <div class="w-auto h-auto text-right" v-if="(index !== 0)">
-                                                        <div class="cursor-pointer text-sm border border-red-500 rounded-sm text-white bg-red-500 p-3 ml-2 text-center hover:bg-red-400" @click="removeLineFromRepeatableField(field, index)"><i class="fas fa-trash-alt"></i></div>
+                                                        <div class="cursor-pointer text-sm border border-red-500 rounded-md text-white bg-red-500 p-3 ml-2 text-center hover:bg-red-400" @click="removeLineFromRepeatableField(field, index)"><i class="fas fa-trash-alt"></i></div>
                                                     </div>
                                                 </div>
                                                 <p class="text-sm text-red-600 mt-1 mb-1" v-if="newData.errors['data.'+field.name+'.'+index+'.value']">{{ newData.errors['data.'+field.name+'.'+index+'.value'][0] }}</p>
                                             </div>
-                                            <div class="cursor-pointer text-xs rounded-sm text-white bg-indigo-500 p-1  w-32 text-center mt-1 hover:bg-indigo-400" @click="addNewLineToRepeatableField(field)">+ Add a new line</div>
+                                            <div class="cursor-pointer text-xs rounded-md text-white bg-indigo-500 p-1  w-32 text-center mt-1 hover:bg-indigo-400" @click="addNewLineToRepeatableField(field)">+ Add a new line</div>
                                         </div>
                                         <div v-else>
                                             <input type="time" v-model="newData.data[field.name]" v-forminput>
                                         </div>
                                     </div>
                                     <div v-if="field.type == 'media'" class="w-full">
-                                        <div class="w-32 h-32 float-left my-1 mr-2 p-3 bg-gray-200 rounded-sm flex items-center text-center cursor-pointer hover:bg-gray-300" @click="openMediaLibraryModalFn(field.name, false, field.options.media.type)">
+                                        <div class="w-32 h-32 float-left my-1 mr-2 p-3 bg-gray-200 rounded-md flex items-center text-center cursor-pointer hover:bg-gray-300" @click="openMediaLibraryModalFn(field.name, false, field.options.media.type)">
                                             <div class="w-full">
                                                 <i class="fa fa-plus text-2xl text-gray-400"></i>
                                                 <div class="block text-sm text-gray-500">
@@ -336,7 +336,7 @@
                                         </div>
     
                                         <div v-for="file in newData.files[field.name]" :key="file.id" class="relative float-left w-32 h-32 my-1 mr-2">
-                                            <div class="absolute inset-0 rounded-sm bg-black bg-opacity-70 items-center text-center flex opacity-0 hover:opacity-100 z-10"
+                                            <div class="absolute inset-0 rounded-md bg-black bg-opacity-70 items-center text-center flex opacity-0 hover:opacity-100 z-10"
                                             >
                                                 <div class="w-full">
                                                     <div class="text-xs text-white w-full mb-3" :title="file.name">
@@ -354,9 +354,9 @@
                                                 </div>
                                             </div>
     
-                                            <img class="rounded-sm w-full h-full object-cover border border-gray-200" v-if="file.type == 'jpg' || file.type == 'jpeg' || file.type == 'png' || file.type == 'gif' || file.type == 'webp'" :src="file.full_url_thumb" />
+                                            <img class="rounded-md w-full h-full object-cover border border-gray-200" v-if="file.type == 'jpg' || file.type == 'jpeg' || file.type == 'png' || file.type == 'gif' || file.type == 'webp'" :src="file.full_url_thumb" />
     
-                                            <div class="w-full h-full flex items-center text-center border rounded-sm border border-gray-200" v-else>
+                                            <div class="w-full h-full flex items-center text-center border rounded-md border border-gray-200" v-else>
                                                 <div class="w-full">
                                                     <i v-if="file.type == 'pdf'" class="far fa-file-pdf text-5xl text-red-500"></i>
                                                     <i v-else-if="file.type == 'avi' || file.type == 'mp4' || file.type == 'mov' || file.type == 'webm'" class="far fa-file-video text-5xl text-blue-500"></i>
@@ -371,12 +371,12 @@
     
                                     </div>
                                     <div v-if="field.type == 'relation'" class="w-full">
-                                        <div class="w-full border rounded-sm p-2">
-                                            <div class="text-indigo-500 text-sm cursor-pointer p-2 hover:bg-indigo-50 rounded-sm w-full lg:w-1/3 xl:1/4" @click="openRelationModalFn(field.name, field.options.relation.collection, field.options.relation.type)">
+                                        <div class="w-full border rounded-md p-2">
+                                            <div class="text-indigo-500 text-sm cursor-pointer p-2 hover:bg-indigo-50 rounded-md w-full lg:w-1/3 xl:1/4" @click="openRelationModalFn(field.name, field.options.relation.collection, field.options.relation.type)">
                                                 <i class="fa fa-link"></i> Select relation ({{ field.options.relation.type == 1 ? 'One to One' : 'One to Many'}})
                                             </div>
     
-                                            <div class="overflow-x-auto sm:rounded-sm" v-if="relationRecords[field.name] !== undefined && relationRecords[field.name].length !== 0">
+                                            <div class="overflow-x-auto sm:rounded-md" v-if="relationRecords[field.name] !== undefined && relationRecords[field.name].length !== 0">
                                                 <table class="min-w-full divide-y divide-gray-200 ">
                                                     <thead>
                                                         <tr>
@@ -400,16 +400,16 @@
                                                     <tbody>
                                                         <tr v-for="item in relationRecords[field.name]" :key="item.id">
                                                             <td class="pl-2 py-4 text-sm text-center w-px">
-                                                                <a class="text-red-500 px-3 py-1 rounded-sm hover:bg-gray-100 cursor-pointer bg-gray-50" @click="removeRelation(item, field.name)"><i class="fa fa-minus-circle"></i></a>
+                                                                <a class="text-red-500 px-3 py-1 rounded-md hover:bg-gray-100 cursor-pointer bg-gray-50" @click="removeRelation(item, field.name)"><i class="fa fa-minus-circle"></i></a>
                                                             </td>
                                                             <td class="pl-2 py-4 text-sm text-center w-px whitespace-nowrap">
-                                                                <span class="text-gray-500 text-sm rounded-sm bg-gray-200 px-3 py-1">
+                                                                <span class="text-gray-500 text-sm rounded-md bg-gray-200 px-3 py-1">
                                                                     {{ relationRecords[field.name].collection.name }}
                                                                 </span>
                                                             </td>
                                                             <td class="pl-2 py-4 text-sm text-center w-px">
-                                                                <span v-if="item.published_at !== null" class="text-gray-500 text-sm rounded-sm bg-green-200 px-3 py-1">published</span>
-                                                                <span v-else class="text-gray-500 text-sm rounded-sm bg-gray-200 px-3 py-1">draft</span>
+                                                                <span v-if="item.published_at !== null" class="text-gray-500 text-sm rounded-md bg-green-200 px-3 py-1">published</span>
+                                                                <span v-else class="text-gray-500 text-sm rounded-md bg-gray-200 px-3 py-1">draft</span>
                                                             </td>
                                                             <td class="px-6 py-3 text-sm w-px whitespace-nowrap text-gray-600">
                                                                 {{ item.created_at | date('D MMM YYYY, H:mm') }}
@@ -433,7 +433,7 @@
                                         </div>
                                     </div>
                                     <div v-if="field.type == 'json'">
-                                        <div class="w-full rounded-sm border border-gray-300">
+                                        <div class="w-full rounded-md border border-gray-300">
                                             <codemirror ref="cmEditor" v-model="newData.data[field.name]" :options="cmOptions" />
                                         </div>
                                     </div>
@@ -450,7 +450,7 @@
                     </div>
     
                     <div class="col-span-2 mt-2 ml-2">
-                        <div class="bg-white mb-2 rounded-sm" v-if="Object.keys(newData.errors).length !== 0">
+                        <div class="bg-white mb-2 rounded-md" v-if="Object.keys(newData.errors).length !== 0">
                             <div class="p-5">
                                 <p class="text-sm text-red-600 mt-1">
                                     <span v-if="Object.keys(newData.errors).length === 1">
@@ -462,7 +462,7 @@
                                 </p>
                             </div>
                         </div>
-                        <div class="bg-white mb-2 rounded-sm">
+                        <div class="bg-white mb-2 rounded-md">
                             <div class="p-4 text-sm text-gray-700">
                                 <div class="text-md font-semibold">Locale</div>
     
@@ -480,8 +480,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="bg-white mb-2 rounded-sm">
-                            <router-link :to="{name: 'projects.content.list', params: { project_id: $route.params.project_id, col_id: $route.params.col_id } }" class="bg-gray-200 text-gray-700 hover:bg-gray-300 hover:text-gray-800 items-center px-4 py-2 rounded-sm text-sm text-center focus:outline-none transition ease-in-out duration-150 block"><i class="fa fa-angle-double-left">
+                        <div class="bg-white mb-2 rounded-md">
+                            <router-link :to="{name: 'projects.content.list', params: { project_id: $route.params.project_id, col_id: $route.params.col_id } }" class="bg-gray-200 text-gray-700 hover:bg-gray-300 hover:text-gray-800 items-center px-4 py-2 rounded-md text-sm text-center focus:outline-none transition ease-in-out duration-150 block"><i class="fa fa-angle-double-left">
                                 </i> Back to content list
                             </router-link>
                         </div>

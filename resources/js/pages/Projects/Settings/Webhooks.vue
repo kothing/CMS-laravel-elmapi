@@ -17,7 +17,7 @@
     
                     <div class="bg-white mt-2 rounded-md p-4 w-full">
                         <div class="mt-2">
-                            <div class="overflow-x-auto mt-1 flex rounded-sm">
+                            <div class="overflow-x-auto mt-1 flex rounded-md">
                                 <table v-if="webhooks != undefined" class="w-full divide-y divide-gray-200 border">
                                     <thead class="bg-gray-100">
                                         <tr>
@@ -38,17 +38,17 @@
                                             <td class="px-6 py-3 text-sm whitespace-nowrap">{{ wh.name }}</td>
                                             <td class="px-6 py-3 text-sm whitespace-nowrap">{{ wh.url }}</td>
                                             <td class="px-6 py-3 text-sm">
-                                                <div class="text-gray-500 text-sm rounded-sm bg-gray-100 py-1 px-3 mb-1" v-for="(col, i) in wh.collections" :key="i">
+                                                <div class="text-gray-500 text-sm rounded-md bg-gray-100 py-1 px-3 mb-1" v-for="(col, i) in wh.collections" :key="i">
                                                     {{ col.name }}
                                                 </div>
                                             </td>
                                             <td class="px-6 py-3 text-sm">
-                                                <div class="text-gray-500 text-sm rounded-sm bg-gray-100 py-1 px-3 mb-1" v-for="ev in wh.events" :key="ev">
+                                                <div class="text-gray-500 text-sm rounded-md bg-gray-100 py-1 px-3 mb-1" v-for="ev in wh.events" :key="ev">
                                                     {{ ev }}
                                                 </div>
                                             </td>
                                             <td class="px-6 py-3 text-sm">
-                                                <div class="text-gray-500 text-sm rounded-sm bg-gray-100 py-1 px-3 mb-1" v-for="src in wh.sources" :key="src">
+                                                <div class="text-gray-500 text-sm rounded-md bg-gray-100 py-1 px-3 mb-1" v-for="src in wh.sources" :key="src">
                                                     {{ src }}
                                                 </div>
                                             </td>
@@ -101,7 +101,7 @@
                             </div>
                             <div class="mt-5">
                                 <label v-formlabel>Secret</label>
-                                <div class="mt-1 flex rounded-sm">
+                                <div class="mt-1 flex rounded-md">
 
                                     <span class="inline-flex items-center px-3 rounded-l-sm border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm  "><i class="fa fa-lock"></i></span>
                                     <input :type="secretShow ? 'text' : 'password'" v-model="new_webhook.data.secret" v-forminput class="rounded-l-none">

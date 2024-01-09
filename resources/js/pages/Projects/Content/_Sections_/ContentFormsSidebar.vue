@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white mb-2 rounded-sm p-4 pb-2">
+    <div class="bg-white mb-2 rounded-md p-4 pb-2">
         <h4 class="mb-2 font-bold text-lg flex justify-between items-center h-10">
             <div>Forms</div>
         </h4>

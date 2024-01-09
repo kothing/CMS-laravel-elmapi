@@ -18,12 +18,12 @@
                                             <input type="text" v-model="input.value" :placeholder="field.placeholder" class="mb-1" v-forminput>
                                         </div>
                                         <div class="w-auto h-auto text-right" v-if="(index !== 0)">
-                                            <div class="cursor-pointer text-sm border border-red-500 rounded-sm text-white bg-red-500 p-3 ml-2 text-center hover:bg-red-400" @click="removeLineFromRepeatableField(field, index)"><i class="fas fa-trash-alt"></i></div>
+                                            <div class="cursor-pointer text-sm border border-red-500 rounded-md text-white bg-red-500 p-3 ml-2 text-center hover:bg-red-400" @click="removeLineFromRepeatableField(field, index)"><i class="fas fa-trash-alt"></i></div>
                                         </div>
                                     </div>
                                     <p class="text-sm text-red-600 mt-1 mb-1" v-if="newData.errors['data.'+field.name+'.'+index+'.value']">{{ newData.errors['data.'+field.name+'.'+index+'.value'][0] }}</p>
                                 </div>
-                                <div class="cursor-pointer text-xs rounded-sm text-white bg-indigo-500 p-1  w-32 text-center mt-1 hover:bg-indigo-400" @click="addNewLineToRepeatableField(field)">+ Add a new line</div>
+                                <div class="cursor-pointer text-xs rounded-md text-white bg-indigo-500 p-1  w-32 text-center mt-1 hover:bg-indigo-400" @click="addNewLineToRepeatableField(field)">+ Add a new line</div>
                             </div>
                             <div v-else>
                                 <input v-if="field.slug_field === undefined" type="text" v-model="newData.data[field.name]" :placeholder="field.placeholder" v-forminput>
@@ -38,12 +38,12 @@
                                             <textarea v-model="input.value" :placeholder="field.placeholder" class="mb-1" v-forminput></textarea>
                                         </div>
                                         <div class="w-auto h-auto text-right" v-if="(index !== 0)">
-                                            <div class="cursor-pointer text-sm border border-red-500 rounded-sm text-white bg-red-500 p-3 ml-2 text-center hover:bg-red-400" @click="removeLineFromRepeatableField(field, index)"><i class="fas fa-trash-alt"></i></div>
+                                            <div class="cursor-pointer text-sm border border-red-500 rounded-md text-white bg-red-500 p-3 ml-2 text-center hover:bg-red-400" @click="removeLineFromRepeatableField(field, index)"><i class="fas fa-trash-alt"></i></div>
                                         </div>
                                     </div>
                                     <p class="text-sm text-red-600 mt-1 mb-1" v-if="newData.errors['data.'+field.name+'.'+index+'.value']">{{ newData.errors['data.'+field.name+'.'+index+'.value'][0] }}</p>
                                 </div>
-                                <div class="cursor-pointer text-xs rounded-sm text-white bg-indigo-500 p-1  w-32 text-center mt-1 hover:bg-indigo-400" @click="addNewLineToRepeatableField(field)">+ Add a new line</div>
+                                <div class="cursor-pointer text-xs rounded-md text-white bg-indigo-500 p-1  w-32 text-center mt-1 hover:bg-indigo-400" @click="addNewLineToRepeatableField(field)">+ Add a new line</div>
                             </div>
                             <div v-else>
                                 <textarea v-model="newData.data[field.name]" :placeholder="field.placeholder" v-forminput></textarea>
@@ -54,7 +54,7 @@
                                 :ref="'quillEditor_'+field.name"
                                 :options="{ modules: { toolbar: '#toolbar_'+field.name, imageResize: {} }, placeholder: field.placeholder }"
                                  v-model="newData.data[field.name]"
-                                class="h-24 mb-2 rounded-sm border-gray-200"
+                                class="h-24 mb-2 rounded-md border-gray-200"
                             >
                                 <div :id="'toolbar_'+field.name" slot="toolbar">
                                     <span class="ql-formats">
@@ -123,28 +123,28 @@
                                 <div v-for="(input,index) in newData.data[field.name]" :key="index">
                                     <div class="flex space-between">
                                         <div class="relative flex w-full flex-wrap items-stretch mb-1">
-                                            <div class="flex rounded-sm shadow-sm w-full">
+                                            <div class="flex rounded-md shadow-sm w-full">
                                                 <span class="inline-flex items-center px-3 rounded-l-sm border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm"><i class="fa fa-at"></i></span>
                                                 <input type="email" v-model="input.value" :placeholder="field.placeholder" v-forminput class="rounded-l-none">
                                             </div>
                                         </div>
                                         <div class="w-auto h-auto text-right" v-if="(index !== 0)">
-                                            <div class="cursor-pointer text-sm border border-red-500 rounded-sm text-white bg-red-500 p-3 ml-2 text-center hover:bg-red-400" @click="removeLineFromRepeatableField(field, index)"><i class="fas fa-trash-alt"></i></div>
+                                            <div class="cursor-pointer text-sm border border-red-500 rounded-md text-white bg-red-500 p-3 ml-2 text-center hover:bg-red-400" @click="removeLineFromRepeatableField(field, index)"><i class="fas fa-trash-alt"></i></div>
                                         </div>
                                     </div>
                                     <p class="text-sm text-red-600 mt-1 mb-1" v-if="newData.errors['data.'+field.name+'.'+index+'.value']">{{ newData.errors['data.'+field.name+'.'+index+'.value'][0] }}</p>
                                 </div>
-                                <div class="cursor-pointer text-xs rounded-sm text-white bg-indigo-500 p-1  w-32 text-center mt-1 hover:bg-indigo-400" @click="addNewLineToRepeatableField(field)">+ Add a new line</div>
+                                <div class="cursor-pointer text-xs rounded-md text-white bg-indigo-500 p-1  w-32 text-center mt-1 hover:bg-indigo-400" @click="addNewLineToRepeatableField(field)">+ Add a new line</div>
                             </div>
                             <div v-else>
-                                <div class="mt-1 flex rounded-sm shadow-sm">
+                                <div class="mt-1 flex rounded-md shadow-sm">
                                     <span class="inline-flex items-center px-3 rounded-l-sm border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm"><i class="fa fa-at"></i></span>
                                     <input type="email" v-model="newData.data[field.name]" :placeholder="field.placeholder" v-forminput class="rounded-l-none">
                                 </div>
                             </div>
                         </div>
                         <div v-if="field.type == 'password'">
-                            <div class="mt-1 flex rounded-sm shadow-sm">
+                            <div class="mt-1 flex rounded-md shadow-sm">
                                 <span class="inline-flex items-center px-3 rounded-l-sm border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm"><i class="fa fa-lock"></i></span>
                                 <input type="password" v-model="newData.data[field.name]" v-forminput class="rounded-l-none">
                             </div>
@@ -157,12 +157,12 @@
                                             <input type="number" step="any" v-model="input.value" v-forminput>
                                         </div>
                                         <div class="w-auto h-auto text-right" v-if="(index !== 0)">
-                                            <div class="cursor-pointer text-sm border border-red-500 rounded-sm text-white bg-red-500 p-3 ml-2 text-center hover:bg-red-400" @click="removeLineFromRepeatableField(field, index)"><i class="fas fa-trash-alt"></i></div>
+                                            <div class="cursor-pointer text-sm border border-red-500 rounded-md text-white bg-red-500 p-3 ml-2 text-center hover:bg-red-400" @click="removeLineFromRepeatableField(field, index)"><i class="fas fa-trash-alt"></i></div>
                                         </div>
                                     </div>
                                     <p class="text-sm text-red-600 mt-1 mb-1" v-if="newData.errors['data.'+field.name+'.'+index+'.value']">{{ newData.errors['data.'+field.name+'.'+index+'.value'][0] }}</p>
                                 </div>
-                                <div class="cursor-pointer text-xs rounded-sm text-white bg-indigo-500 p-1  w-32 text-center mt-1 hover:bg-indigo-400" @click="addNewLineToRepeatableField(field)">+ Add a new line</div>
+                                <div class="cursor-pointer text-xs rounded-md text-white bg-indigo-500 p-1  w-32 text-center mt-1 hover:bg-indigo-400" @click="addNewLineToRepeatableField(field)">+ Add a new line</div>
                             </div>
                             <div v-else>
                                 <input type="number" step="any" v-model="newData.data[field.name]" v-forminput>
@@ -188,12 +188,12 @@
                                             <colorpicker v-model="input.value" />
                                         </div>
                                         <div class="w-auto h-auto text-right" v-if="(index !== 0)">
-                                            <div class="cursor-pointer text-sm border border-red-500 rounded-sm text-white bg-red-500 px-3 py-3 pb-2 ml-2 text-center hover:bg-red-400" @click="removeLineFromRepeatableField(field, index)"><i class="fas fa-trash-alt"></i></div>
+                                            <div class="cursor-pointer text-sm border border-red-500 rounded-md text-white bg-red-500 px-3 py-3 pb-2 ml-2 text-center hover:bg-red-400" @click="removeLineFromRepeatableField(field, index)"><i class="fas fa-trash-alt"></i></div>
                                         </div>
                                     </div>
                                     <p class="text-sm text-red-600 mt-1 mb-1" v-if="newData.errors['data.'+field.name+'.'+index+'.value']">{{ newData.errors['data.'+field.name+'.'+index+'.value'][0] }}</p>
                                 </div>
-                                <div class="cursor-pointer text-xs rounded-sm text-white bg-indigo-500 p-1  w-32 text-center mt-1 hover:bg-indigo-400" @click="addNewLineToRepeatableField(field)">+ Add a new line</div>
+                                <div class="cursor-pointer text-xs rounded-md text-white bg-indigo-500 p-1  w-32 text-center mt-1 hover:bg-indigo-400" @click="addNewLineToRepeatableField(field)">+ Add a new line</div>
                             </div>
                             <div v-else>
                                 <colorpicker v-model="newData.data[field.name]" />
@@ -206,7 +206,7 @@
                                         <div class="relative flex w-full flex-wrap items-stretch mb-1">
                                             <v-date-picker v-model="input.value" :mode="field.options.timepicker ? 'dateTime' : 'date'">
                                                 <template v-slot="{ inputValue, togglePopover }">
-                                                    <div class="mt-1 flex rounded-sm shadow-sm">
+                                                    <div class="mt-1 flex rounded-md shadow-sm">
                                                         <span class="inline-flex items-center px-3 rounded-l-sm border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm cursor-pointer" @click="togglePopover"><i class="fa fa-calendar-alt"></i></span>
                                                         <input type="text" v-forminput :value="inputValue" @click="togglePopover"/>
                                                     </div>
@@ -214,17 +214,17 @@
                                             </v-date-picker>
                                         </div>
                                         <div class="w-auto h-auto text-right" v-if="(index !== 0)">
-                                            <div class="cursor-pointer text-sm border border-red-500 rounded-sm text-white bg-red-500 p-3 ml-2 text-center hover:bg-red-400" @click="removeLineFromRepeatableField(field, index)"><i class="fas fa-trash-alt"></i></div>
+                                            <div class="cursor-pointer text-sm border border-red-500 rounded-md text-white bg-red-500 p-3 ml-2 text-center hover:bg-red-400" @click="removeLineFromRepeatableField(field, index)"><i class="fas fa-trash-alt"></i></div>
                                         </div>
                                     </div>
                                     <p class="text-sm text-red-600 mt-1 mb-1" v-if="newData.errors['data.'+field.name+'.'+index+'.value']">{{ newData.errors['data.'+field.name+'.'+index+'.value'][0] }}</p>
                                 </div>
-                                <div class="cursor-pointer text-xs rounded-sm text-white bg-indigo-500 p-1  w-32 text-center mt-1 hover:bg-indigo-400" @click="addNewLineToRepeatableField(field)">+ Add a new line</div>
+                                <div class="cursor-pointer text-xs rounded-md text-white bg-indigo-500 p-1  w-32 text-center mt-1 hover:bg-indigo-400" @click="addNewLineToRepeatableField(field)">+ Add a new line</div>
                             </div>
                             <div v-else>
                                 <v-date-picker v-model="newData.data[field.name]" :mode="field.options.timepicker ? 'dateTime' : 'date'">
                                     <template v-slot="{ inputValue, togglePopover }">
-                                        <div class="mt-1 flex rounded-sm shadow-sm">
+                                        <div class="mt-1 flex rounded-md shadow-sm">
                                             <span class="inline-flex items-center px-3 rounded-l-sm border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm cursor-pointer" @click="togglePopover"><i class="fa fa-calendar-alt"></i></span>
                                             <input type="text" v-forminput :value="inputValue" @click="togglePopover"/>
                                         </div>
@@ -240,12 +240,12 @@
                                             <input type="time" v-model="input.value" v-forminput>
                                         </div>
                                         <div class="w-auto h-auto text-right" v-if="(index !== 0)">
-                                            <div class="cursor-pointer text-sm border border-red-500 rounded-sm text-white bg-red-500 p-3 ml-2 text-center hover:bg-red-400" @click="removeLineFromRepeatableField(field, index)"><i class="fas fa-trash-alt"></i></div>
+                                            <div class="cursor-pointer text-sm border border-red-500 rounded-md text-white bg-red-500 p-3 ml-2 text-center hover:bg-red-400" @click="removeLineFromRepeatableField(field, index)"><i class="fas fa-trash-alt"></i></div>
                                         </div>
                                     </div>
                                     <p class="text-sm text-red-600 mt-1 mb-1" v-if="newData.errors['data.'+field.name+'.'+index+'.value']">{{ newData.errors['data.'+field.name+'.'+index+'.value'][0] }}</p>
                                 </div>
-                                <div class="cursor-pointer text-xs rounded-sm text-white bg-indigo-500 p-1  w-32 text-center mt-1 hover:bg-indigo-400" @click="addNewLineToRepeatableField(field)">+ Add a new line</div>
+                                <div class="cursor-pointer text-xs rounded-md text-white bg-indigo-500 p-1  w-32 text-center mt-1 hover:bg-indigo-400" @click="addNewLineToRepeatableField(field)">+ Add a new line</div>
                             </div>
                             <div v-else>
                                 <input type="time" v-model="newData.data[field.name]" v-forminput>
@@ -307,7 +307,7 @@
                                         <div class="relative pt-1 w-full">
                                             <div class="flex mb-2 items-center justify-between">
                                                 <div>
-                                                    <span class="text-xs font-semibold inline-block py-1 rounded-sm" :class="{ 'text-green-500': file.success, 'text-red-500': file.error, 'text-blue-500': file.active }">
+                                                    <span class="text-xs font-semibold inline-block py-1 rounded-md" :class="{ 'text-green-500': file.success, 'text-red-500': file.error, 'text-blue-500': file.active }">
                                                         <span v-if="file.error">{{file.error}}</span>
                                                         <span v-else-if="file.success">done</span>
                                                         <span v-else-if="file.active">uploading</span>

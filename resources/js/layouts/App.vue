@@ -15,7 +15,7 @@
                         <router-link 
                             :to="{name: 'dashboard'}" 
                             :exact-active-class="'bg-gray-700'" 
-                            class="app__main-menu-item flex flex-nowrap items-center my-2 px-8 py-4 block hover:bg-gray-700 rounded-sm"
+                            class="app__main-menu-item flex flex-nowrap items-center my-2 px-8 py-4 block hover:bg-gray-700"
                         >
                             <i class="app__menu-item-icon pr-4 fas fa-tv"></i>
                             <span class="text-xs">Dashboard</span>
@@ -23,7 +23,7 @@
                         <router-link 
                             :to="{name: 'projects'}" 
                             :active-class="'bg-gray-700'"
-                            class="app__main-menu-item flex flex-nowrap items-center my-2 px-8 py-4 block hover:bg-gray-700 rounded-sm"
+                            class="app__main-menu-item flex flex-nowrap items-center my-2 px-8 py-4 block hover:bg-gray-700"
                         >
                             <i class="app__menu-item-icon pr-4 fas fa-list"></i>
                             <span class="text-xs">Projects</span>
@@ -33,7 +33,7 @@
                                 v-if="checkRole(['admin'+$route.params.project_id])" 
                                 :to="{name: 'projects.collections', params: { project_id: $route.params.project_id }}"
                                 :active-class="'bg-gray-700'" 
-                                class="app__sub-menu-item flex flex-nowrap items-center px-6 py-4 block hover:bg-gray-700 rounded-sm"
+                                class="app__sub-menu-item flex flex-nowrap items-center px-6 py-4 block hover:bg-gray-700"
                             >
                                 <i class="app__menu-item-icon pr-4 fas fa-table"></i>
                                 <span class="text-xs">Collections</span>
@@ -41,7 +41,7 @@
                             <router-link 
                                 :to="{ name: 'projects.content', params: { project_id: $route.params.project_id }}"
                                 :active-class="'bg-gray-700'"
-                                class="app__sub-menu-item flex flex-nowrap items-center px-6 py-4 block hover:bg-gray-700 rounded-sm"
+                                class="app__sub-menu-item flex flex-nowrap items-center px-6 py-4 block hover:bg-gray-700"
                             >
                                 <i class="app__menu-item-icon pr-4 fas fa-edit"></i>
                                 <span class="text-xs">Content</span>
@@ -50,7 +50,7 @@
                                 v-if="checkRole(['super_admin'])"
                                 :to="{name: 'projects.settings', params: { project_id: $route.params.project_id }}"
                                 :active-class="'bg-gray-700'"
-                                class="app__sub-menu-item flex flex-nowrap items-center px-6 py-4 block hover:bg-gray-700 rounded-sm"
+                                class="app__sub-menu-item flex flex-nowrap items-center px-6 py-4 block hover:bg-gray-700"
                             >
                                 <i class="app__menu-item-icon pr-4 fas fa-cog"></i>
                                 <span class="text-xs">Settings</span>
@@ -62,14 +62,14 @@
                     <router-link 
                         :to="{ name: 'profile' }" 
                         :active-class="'bg-gray-700'" 
-                        class="app__footer-menu-item flex flex-nowrap items-center my-2 px-8 py-4 block hover:bg-gray-700 rounded-sm cursor-pointer"
+                        class="app__footer-menu-item flex flex-nowrap items-center my-2 px-8 py-4 block hover:bg-gray-700 cursor-pointer"
                     >
                         <i class="app__menu-item-icon pr-4 fas fa-user"></i>
                         <span class="text-xs">My Profile</span>
                     </router-link>
                     <div 
                         @click="logout()" 
-                        class="app__footer-menu-item flex flex-nowrap items-center my-2 px-8 py-4 block hover:bg-gray-700 rounded-sm cursor-pointer"
+                        class="app__footer-menu-item flex flex-nowrap items-center my-2 px-8 py-4 block hover:bg-gray-700 cursor-pointer"
                     >
                         <i class="app__menu-item-icon pr-4 fas fa-sign-out-alt"></i>
                         <span class="text-xs">Logout</span>

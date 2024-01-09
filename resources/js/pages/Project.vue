@@ -2,19 +2,19 @@
     <div class="app__projects-list m-3 p-3">
         <div clsss="app__projects-search">
             <div class="relative flex w-full flex-wrap items-stretch mb-4">
-                <span class="z-9 h-full leading-snug font-normal absolute text-center text-gray-400 absolute bg-transparent rounded-sm text-base items-center justify-center w-8 pl-3 py-3">
+                <span class="z-9 h-full leading-snug font-normal absolute text-center text-gray-400 absolute bg-transparent rounded-md text-base items-center justify-center w-8 pl-3 py-3">
                     <i class="fas fa-search"></i>
                 </span>
-                <input type="text" v-model="search" @keyup="getProjects()" placeholder="Search projects..." class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded-sm text-sm w-full pl-10 border-gray-200 focus:border-gray-300">
+                <input type="text" v-model="search" @keyup="getProjects()" placeholder="Search projects..." class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded-md text-sm w-full pl-10 border-gray-200 focus:border-gray-300">
             </div>
         </div>
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-            <div v-if="checkRole(['super_admin'])" @click="openNewProjectModal = true" class="bg-gray-100 hover:bg-gray-200 p-10 text-gray-900 cursor-pointer items-center">
+            <div v-if="checkRole(['super_admin'])" @click="openNewProjectModal = true" class="bg-gray-100 hover:bg-gray-200 p-10 text-gray-900 rounded-md cursor-pointer items-center">
                 <i class="fas fa-plus-circle md:mr-4 text-sm md:text-2xl"></i>
                 Create New Project
             </div>
 
-            <router-link v-for="project in projects" :key="project.id" :to="{name: 'projects.index', params: { project_id: project.id }}" class="bg-white hover:bg-gray-100 p-10 text-gray-900 border border-gray-100 cursor-pointer items-center rounded-sm">
+            <router-link v-for="project in projects" :key="project.id" :to="{name: 'projects.index', params: { project_id: project.id }}" class="bg-white hover:bg-gray-100 p-10 text-gray-900 border border-gray-100 cursor-pointer items-center rounded-md">
                 <span class="font-bold">{{ project.name }}</span>
                 <span class="text-sm block">{{ project.description }}</span>
             </router-link>
@@ -44,7 +44,7 @@
                         <div class="mt-6">
                             <div class="grid grid-cols-3 gap-4">
                                 <div class="col-span-1">
-                                    <div class="p-5 border border-gray-300 rounded-sm text-sm space-x-2 h-32 relative">
+                                    <div class="p-5 border border-gray-300 rounded-md text-sm space-x-2 h-32 relative">
                                         <label for="blank_project" class="absolute inset-0 w-full h-full cursor-pointer"></label>
                                         <div class="flex">
                                             <input type="radio" id="blank_project" v-model="new_project.type" value="1">
@@ -53,7 +53,7 @@
                                     </div>
                                 </div>
                                 <div class="col-span-1">
-                                    <div class="p-5 border border-gray-300 rounded-sm text-sm space-x-2 h-32 relative">
+                                    <div class="p-5 border border-gray-300 rounded-md text-sm space-x-2 h-32 relative">
                                         <label for="blog_template" class="absolute inset-0 w-full h-full cursor-pointer"></label>
                                         <div class="flex mb-2">
                                             <input type="radio" id="blog_template" v-model="new_project.type" value="2">

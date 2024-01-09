@@ -20,7 +20,7 @@
                 </div>
     
                 <div class="grid grid-cols-6 space-x-4 h-full overflow-hidden">
-                    <div class="col-span-4 p-5 bg-white mt-2 rounded-sm overflow-x-hidden">
+                    <div class="col-span-4 p-5 bg-white mt-2 rounded-md overflow-x-hidden">
                         <div class="flex justify-end">
                             <div class="flex-1 border p-4">
                                 <input type="text" v-model="form.name" placeholder="Form Name" class="text-lg border-0 mb-2 pl-0" v-forminput>
@@ -44,7 +44,7 @@
                                                         <quill-editor
                                                             :ref="'quillEditor_'+field.name"
                                                             :options="{ modules: { toolbar: '#toolbar_'+field.name, imageResize: {} }, placeholder: field.placeholder }"
-                                                            class="h-24 mb-2 rounded-sm border-gray-200"
+                                                            class="h-24 mb-2 rounded-md border-gray-200"
                                                         >
                                                             <div :id="'toolbar_'+field.name" slot="toolbar">
                                                                 <span class="ql-formats">
@@ -109,13 +109,13 @@
                                                         <div class="clear-both h-16"></div>
                                                     </div>
                                                     <div v-if="field.type == 'email'">
-                                                        <div class="mt-1 flex rounded-sm shadow-sm">
+                                                        <div class="mt-1 flex rounded-md shadow-sm">
                                                             <span class="inline-flex items-center px-3 rounded-l-sm border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm"><i class="fa fa-at"></i></span>
                                                             <input type="email" :placeholder="field.placeholder" v-forminput class="rounded-l-none" disabled>
                                                         </div>
                                                     </div>
                                                     <div v-if="field.type == 'password'">
-                                                        <div class="mt-1 flex rounded-sm shadow-sm">
+                                                        <div class="mt-1 flex rounded-md shadow-sm">
                                                             <span class="inline-flex items-center px-3 rounded-l-sm border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm"><i class="fa fa-lock"></i></span>
                                                             <input type="password" v-forminput class="rounded-l-none" disabled>
                                                         </div>
@@ -141,7 +141,7 @@
                                                     <div v-if="field.type == 'date'" class="w-full xl:w-1/3">
                                                         <v-date-picker v-model="field.value" :mode="field.options.timepicker ? 'dateTime' : 'date'">
                                                             <template v-slot="{ inputValue }">
-                                                                <div class="mt-1 flex rounded-sm shadow-sm">
+                                                                <div class="mt-1 flex rounded-md shadow-sm">
                                                                     <span class="inline-flex items-center px-3 rounded-l-sm border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm cursor-pointer"><i class="fa fa-calendar-alt"></i></span>
                                                                     <input type="text" v-forminput :value="inputValue"  disabled/>
                                                                 </div>
@@ -180,7 +180,7 @@
                                     <i class="fas fa-save"></i>
                                     Save Changes
                                 </ui-button>
-                                <a :href="'/forms/preview/'+form.uuid" target="_blank" class="p-3 block items-center border border-transparent rounded-sm text-sm text-white focus:outline-none transition ease-in-out duration-150 bg-green-500 w-full text-center mt-2">
+                                <a :href="'/forms/preview/'+form.uuid" target="_blank" class="p-3 block items-center border border-transparent rounded-md text-sm text-white focus:outline-none transition ease-in-out duration-150 bg-green-500 w-full text-center mt-2">
                                     <i class="fas fa-code"></i>
                                     Preview & Embed
                                     <i class="fas fa-external-link-alt text-xs ml-2"></i>
@@ -199,8 +199,8 @@
                     <div class="col-span-2 mt-2 ml-2">
                         <content-forms-sidebar :forms="forms"></content-forms-sidebar>
     
-                        <div class="bg-white mb-2 rounded-sm">
-                            <router-link :to="{name: 'projects.content.list', params: { project_id: $route.params.project_id, col_id: $route.params.col_id}}" class="bg-gray-200 text-gray-700 hover:bg-gray-300 hover:text-gray-800 items-center px-4 py-2 rounded-sm text-sm text-center focus:outline-none transition ease-in-out duration-150 block"><i class="fa fa-angle-double-left">
+                        <div class="bg-white mb-2 rounded-md">
+                            <router-link :to="{name: 'projects.content.list', params: { project_id: $route.params.project_id, col_id: $route.params.col_id}}" class="bg-gray-200 text-gray-700 hover:bg-gray-300 hover:text-gray-800 items-center px-4 py-2 rounded-md text-sm text-center focus:outline-none transition ease-in-out duration-150 block"><i class="fa fa-angle-double-left">
                                 </i> Back to content list
                             </router-link>
                         </div>
@@ -248,15 +248,15 @@
             <template #content>
                 <ul>
                     <li class="w-full mb-2" v-for="field in collection.fields" :key="field.id">
-                        <div v-if="field.type !== 'slug' && field.type !== 'relation' && field.type !== 'json' && form.fields.find(element => element.id == field.id) == undefined" class="flex items-center w-full bg-gray-50 rounded-sm p-4">
-                            <div :class="fieldDetails[field.type].bg" class="mr-4 text-gray-100 rounded-sm text-xl items-center text-center flex field_icon_xl"><i :class="fieldDetails[field.type].icon" class="w-full"></i></div>
+                        <div v-if="field.type !== 'slug' && field.type !== 'relation' && field.type !== 'json' && form.fields.find(element => element.id == field.id) == undefined" class="flex items-center w-full bg-gray-50 rounded-md p-4">
+                            <div :class="fieldDetails[field.type].bg" class="mr-4 text-gray-100 rounded-md text-xl items-center text-center flex field_icon_xl"><i :class="fieldDetails[field.type].icon" class="w-full"></i></div>
                             <div class="items-center w-full">
                                 <div class="text-lg">{{ field.label }}</div>
 
                                 <div class="w-full flex justify-between">
                                     <div class="flex space-x-1 items-center">
-                                        <span class="text-blue-900 text-sm rounded-sm bg-gray-200 px-3">#{{ field.name }}</span>
-                                        <span class="text-blue-900 text-sm rounded-sm bg-indigo-200 px-3">
+                                        <span class="text-blue-900 text-sm rounded-md bg-gray-200 px-3">#{{ field.name }}</span>
+                                        <span class="text-blue-900 text-sm rounded-md bg-indigo-200 px-3">
                                             {{ field.type }}
                                             <span v-if="field.type == 'enumeration'">
                                                 <span v-if="field.options.multiple">: multiple</span>
@@ -273,15 +273,15 @@
                                                 <span v-else-if="field.options.relation.type == 2">: one-to-many</span>
                                             </span>
                                         </span>
-                                        <span class="text-blue-900 text-sm rounded-sm bg-gray-100 px-3" v-if="field.validations.required.status"><i class="fas fa-star-of-life text-xs"></i> required</span>
-                                        <span class="text-blue-900 text-sm rounded-sm bg-gray-100 px-3" v-if="field.validations.unique.status"><i class="fas fa-fingerprint text-xs"></i> unique</span>
-                                        <span class="text-blue-900 text-sm rounded-sm bg-gray-100 px-3" v-if="field.options.repeatable"><i class="fas fa-redo text-xs"></i> repeatable</span>
-                                        <span class="text-blue-900 text-sm rounded-sm bg-gray-100 px-3" v-if="field.options.hideInContentList">hide in content list</span>
-                                        <span class="text-blue-900 text-sm rounded-sm bg-gray-100 px-3" v-if="field.options.hiddenInAPI">hidden in api</span>
+                                        <span class="text-blue-900 text-sm rounded-md bg-gray-100 px-3" v-if="field.validations.required.status"><i class="fas fa-star-of-life text-xs"></i> required</span>
+                                        <span class="text-blue-900 text-sm rounded-md bg-gray-100 px-3" v-if="field.validations.unique.status"><i class="fas fa-fingerprint text-xs"></i> unique</span>
+                                        <span class="text-blue-900 text-sm rounded-md bg-gray-100 px-3" v-if="field.options.repeatable"><i class="fas fa-redo text-xs"></i> repeatable</span>
+                                        <span class="text-blue-900 text-sm rounded-md bg-gray-100 px-3" v-if="field.options.hideInContentList">hide in content list</span>
+                                        <span class="text-blue-900 text-sm rounded-md bg-gray-100 px-3" v-if="field.options.hiddenInAPI">hidden in api</span>
                                     </div>
 
                                     <div>
-                                        <a @click="addField(field)" class="text-white text-sm rounded-sm bg-indigo-500 px-3 cursor-pointer hover:bg-indigo-600 whitespace-nowrap">+ Add This Field</a>
+                                        <a @click="addField(field)" class="text-white text-sm rounded-md bg-indigo-500 px-3 cursor-pointer hover:bg-indigo-600 whitespace-nowrap">+ Add This Field</a>
                                     </div>
                                 </div>
                             </div>
