@@ -9,12 +9,12 @@
             </div>
         </div>
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-            <div v-if="checkRole(['super_admin'])" @click="openNewProjectModal = true" class="bg-gray-100 hover:bg-gray-200 p-10 text-gray-900 rounded-md cursor-pointer items-center">
+            <div v-if="checkRole(['super_admin'])" @click="openNewProjectModal = true" class="bg-gray-100 hover:bg-gray-200 p-10 text-gray-900 rounded-md cursor-pointer items-center shadow-sm">
                 <i class="fas fa-plus-circle md:mr-4 text-sm md:text-2xl"></i>
                 Create New Project
             </div>
 
-            <router-link v-for="project in projects" :key="project.id" :to="{name: 'projects.index', params: { project_id: project.id }}" class="bg-white hover:bg-gray-100 p-10 text-gray-900 border border-gray-100 cursor-pointer items-center rounded-md">
+            <router-link v-for="project in projects" :key="project.id" :to="{name: 'projects.index', params: { project_id: project.id }}" class="bg-white hover:bg-gray-100 p-10 text-gray-900 border border-gray-100 cursor-pointer items-center rounded-md shadow-sm">
                 <span class="font-bold">{{ project.name }}</span>
                 <span class="text-sm block">{{ project.description }}</span>
             </router-link>
