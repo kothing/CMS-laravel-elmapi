@@ -131,62 +131,59 @@
                                         <input type="checkbox" v-if="relation_type != 1" v-model="selectAll" @click="selectAllFn()" v-formcheckbox>
                                     </div>
                                 </th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap cursor-pointer" v-for="field in collection.fields" :key="field.id" v-show="field.type != 'password' && field.type != 'json' && columns[field.name]" @click="sortBy(field.name, 1)">
+                                <th scope="col" v-for="field in collection.fields" :key="field.id" v-show="field.type != 'password' && field.type != 'json' && columns[field.name]" @click="sortBy(field.name, 1)" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap cursor-pointer">
                                     <div class="w-full flex justify-between item-center">
-                                        {{ field.label }}
+                                        {{ field.label }}<!--Title-->
                                         <i v-if="listOptions.orderBy == field.name && listOptions.criteria == 'ASC'" class="fa fa-sort-amount-up-alt text-indigo-500 ml-2"></i>
                                         <i v-if="listOptions.orderBy == field.name && listOptions.criteria == 'DESC'" class="fa fa-sort-amount-down-alt text-indigo-500 ml-2"></i>
                                     </div>
                                 </th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap cursor-pointer" v-if="columns.created_at" @click="sortBy('created_at')">
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th scope="col" v-if="columns.created_at" @click="sortBy('created_at')" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap cursor-pointer">
                                     <div class="w-full flex justify-between item-center">
                                         Created At
                                         <i v-if="listOptions.orderBy == 'created_at' && listOptions.criteria == 'ASC'" class="fa fa-sort-amount-up-alt text-indigo-500 ml-2"></i>
                                         <i v-if="listOptions.orderBy == 'created_at' && listOptions.criteria == 'DESC'" class="fa fa-sort-amount-down-alt text-indigo-500 ml-2"></i>
                                     </div>
                                 </th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap cursor-pointer" v-if="columns.created_by" @click="sortBy('created_by')">
+                                <th scope="col" v-if="columns.created_by" @click="sortBy('created_by')" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap cursor-pointer">
                                     <div class="w-full flex justify-between item-center">
                                         Created By
                                         <i v-if="listOptions.orderBy == 'created_by' && listOptions.criteria == 'ASC'" class="fa fa-sort-amount-up-alt text-indigo-500 ml-2"></i>
                                         <i v-if="listOptions.orderBy == 'created_by' && listOptions.criteria == 'DESC'" class="fa fa-sort-amount-down-alt text-indigo-500 ml-2"></i>
                                     </div>
                                 </th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap cursor-pointer" v-if="columns.updated_at" @click="sortBy('updated_at')">
+                                <th scope="col" v-if="columns.updated_at" @click="sortBy('updated_at')" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap cursor-pointer">
                                     <div class="w-full flex justify-between item-center">
                                         Updated At
                                         <i v-if="listOptions.orderBy == 'updated_at' && listOptions.criteria == 'ASC'" class="fa fa-sort-amount-up-alt text-indigo-500 ml-2"></i>
                                         <i v-if="listOptions.orderBy == 'updated_at' && listOptions.criteria == 'DESC'" class="fa fa-sort-amount-down-alt text-indigo-500 ml-2"></i>
                                     </div>
                                 </th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap cursor-pointer" v-if="columns.updated_by" @click="sortBy('updated_by')">
+                                <th scope="col" v-if="columns.updated_by" @click="sortBy('updated_by')" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap cursor-pointer">
                                     <div class="w-full flex justify-between item-center">
                                         Updated By
                                         <i v-if="listOptions.orderBy == 'updated_by' && listOptions.criteria == 'ASC'" class="fa fa-sort-amount-up-alt text-indigo-500 ml-2"></i>
                                         <i v-if="listOptions.orderBy == 'updated_by' && listOptions.criteria == 'DESC'" class="fa fa-sort-amount-down-alt text-indigo-500 ml-2"></i>
                                     </div>
                                 </th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap cursor-pointer" v-if="columns.published_at" @click="sortBy('published_at')">
+                                <th scope="col" v-if="columns.published_at" @click="sortBy('published_at')" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap cursor-pointer">
                                     <div class="w-full flex justify-between item-center">
                                         Published At
                                         <i v-if="listOptions.orderBy == 'published_at' && listOptions.criteria == 'ASC'" class="fa fa-sort-amount-up-alt text-indigo-500 ml-2"></i>
                                         <i v-if="listOptions.orderBy == 'published_at' && listOptions.criteria == 'DESC'" class="fa fa-sort-amount-down-alt text-indigo-500 ml-2"></i>
                                     </div>
                                 </th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap cursor-pointer" v-if="columns.published_by" @click="sortBy('published_by')">
+                                <th scope="col" v-if="columns.published_by" @click="sortBy('published_by')" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap cursor-pointer">
                                     <div class="w-full flex justify-between item-center">
                                         Published By
                                         <i v-if="listOptions.orderBy == 'published_by' && listOptions.criteria == 'ASC'" class="fa fa-sort-amount-up-alt text-indigo-500 ml-2"></i>
                                         <i v-if="listOptions.orderBy == 'published_by' && listOptions.criteria == 'DESC'" class="fa fa-sort-amount-down-alt text-indigo-500 ml-2"></i>
                                     </div>
                                 </th>
-                                <th  v-if="listOptions.getItems !== 'trashed'" scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    <span class="sr-only">Edit</span>
+                                <th v-if="listOptions.getItems !== 'trashed'" scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <span class="inline-block">Action</span>
                                 </th>
-                                <th  v-if="listOptions.getItems !== 'trashed'" scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    <span class="sr-only">Delete</span>
-                                </th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
@@ -194,7 +191,7 @@
                                 <td class="pl-2 py-4 text-sm text-center w-px">
                                     <input type="checkbox" :checked="checkIfSelected(item.id)" @click="selectRecord(item.id)" v-formcheckbox>
                                 </td>
-                                <td class="px-6 py-3 text-sm min-w-full whitespace-nowrap"  v-for="field in collection.fields" :key="field.id" v-show="field.type != 'password' && field.type != 'json' && columns[field.name]">
+                                <td v-for="field in collection.fields" :key="field.id" v-show="field.type != 'password' && field.type != 'json' && columns[field.name]" class="px-6 py-3 text-sm min-w-full whitespace-nowrap">
                                     <span v-for="meta in item.meta" :key="meta.id">
                                         <span v-if="meta.field_name == field.name">
                                             <span v-if="field.type == 'date'" :class="{'rounded-md bg-gray-100 p-1 mr-1' : field.options.repeatable && meta.value !== null}">
@@ -220,30 +217,6 @@
                                         </span>
                                     </span>
                                 </td>
-                                <td class="px-6 py-3 text-sm w-px whitespace-nowrap text-gray-600" v-if="columns.created_at">
-                                    {{ item.created_at | date('D MMM YYYY, H:mm') }}
-                                </td>
-                                <td class="px-6 py-3 text-sm w-px whitespace-nowrap text-gray-600 text-center" v-if="columns.created_by">
-                                    <div class="bg-green-500 text-white p-2 text-md rounded-full text-center mr-2 w-9" v-tooltip="item.created_by.name"><div class="w-full text-center">{{ getUserNameInitials(item.created_by.name) }}</div></div>
-                                </td>
-                                <td class="px-6 py-3 text-sm w-px whitespace-nowrap text-gray-600" v-if="columns.updated_at">
-                                    {{ item.updated_at | date('D MMM YYYY, H:mm') }}
-                                </td>
-                                <td class="px-6 py-3 text-sm w-px whitespace-nowrap text-gray-600" v-if="columns.updated_by">
-                                    <div v-if="item.updated_by !== null" class="bg-green-500 text-white p-2 text-md rounded-full text-center mr-2 w-9" v-tooltip="item.updated_by.name"><div class="w-full text-center">{{ getUserNameInitials(item.updated_by.name) }}</div></div>
-                                </td>
-                                <td class="px-6 py-3 text-sm w-px whitespace-nowrap text-gray-600" v-if="columns.published_at">
-                                    {{ item.published_at | date('D MMM YYYY, H:mm') }}
-                                </td>
-                                <td class="px-6 py-3 text-sm w-px whitespace-nowrap text-gray-600" v-if="columns.published_by">
-                                    <div v-if="item.published_by !== null" class="bg-green-500 text-white p-2 text-md rounded-full text-center mr-2 w-9" v-tooltip="item.published_by.name"><div class="w-full text-center">{{ getUserNameInitials(item.published_by.name) }}</div></div>
-                                </td>
-                                <td v-if="listOptions.getItems != 'trashed'" class="pl-2 py-4 text-sm text-center w-px">
-                                    <router-link :to="{name: 'projects.content.edit', params: { project_id: $route.params.project_id, col_id: collection_id, content_id: item.id } }" class="text-indigo-500 p-2 px-3 rounded-md hover:bg-gray-100 cursor-pointer bg-gray-50"><i class="fa fa-pencil-alt"></i></router-link>
-                                </td>
-                                <td v-if="listOptions.getItems != 'trashed'" class="pl-2 py-4 text-sm text-center w-px">
-                                    <a class="text-orange-500 p-2 px-3 rounded-md hover:bg-gray-100 cursor-pointer bg-gray-50" @click="moveToTrashContent(item)"><i class="fa fa-trash-restore"></i></a>
-                                </td>
                                 <td class="pl-2 py-4 text-sm text-center w-px">
                                     <div v-if="item.form_id === null">
                                         <span v-if="item.published_at !== null" class="text-gray-500  rounded-md bg-green-200 px-3 py-1">published</span>
@@ -253,6 +226,32 @@
                                         <span v-if="item.published_at !== null" class="text-gray-200 rounded-md bg-blue-400 px-3 py-1" v-tooltip="'Submitted at '+dateFormat(item.form.created_at)+'. Form name: '+item.form.name">published</span>
                                         <span v-else class="text-gray-500 rounded-md bg-blue-200 px-3 py-1" v-tooltip="'Submitted at '+dateFormat(item.form.created_at)+'. Form name: '+item.form.name">draft</span>
                                     </div>
+                                </td>
+                                <td v-if="columns.created_at" class="px-6 py-3 text-sm w-px whitespace-nowrap text-gray-600">
+                                    {{ item.created_at | date('D MMM YYYY, H:mm') }}
+                                </td>
+                                <td v-if="columns.created_by" class="px-6 py-3 text-sm w-px whitespace-nowrap text-gray-600 text-center">
+                                    <div class="bg-green-500 text-white p-2 text-md rounded-full text-center mr-2 w-9" v-tooltip="item.created_by.name"><div class="w-full text-center">{{ getUserNameInitials(item.created_by.name) }}</div></div>
+                                </td>
+                                <td v-if="columns.updated_at" class="px-6 py-3 text-sm w-px whitespace-nowrap text-gray-600">
+                                    {{ item.updated_at | date('D MMM YYYY, H:mm') }}
+                                </td>
+                                <td v-if="columns.updated_by" class="px-6 py-3 text-sm w-px whitespace-nowrap text-gray-600">
+                                    <div v-if="item.updated_by !== null" class="bg-green-500 text-white p-2 text-md rounded-full text-center mr-2 w-9" v-tooltip="item.updated_by.name"><div class="w-full text-center">{{ getUserNameInitials(item.updated_by.name) }}</div></div>
+                                </td>
+                                <td v-if="columns.published_at" class="px-6 py-3 text-sm w-px whitespace-nowrap text-gray-600">
+                                    {{ item.published_at | date('D MMM YYYY, H:mm') }}
+                                </td>
+                                <td v-if="columns.published_by" class="px-6 py-3 text-sm w-px whitespace-nowrap text-gray-600">
+                                    <div v-if="item.published_by !== null" class="bg-green-500 text-white p-2 text-md rounded-full text-center mr-2 w-9" v-tooltip="item.published_by.name"><div class="w-full text-center">{{ getUserNameInitials(item.published_by.name) }}</div></div>
+                                </td>
+                                <td v-if="listOptions.getItems != 'trashed'" class="pl-2 py-4 text-sm min-w-full whitespace-nowrap text-center w-px">
+                                    <router-link :to="{name: 'projects.content.edit', params: { project_id: $route.params.project_id, col_id: collection_id, content_id: item.id } }" class="text-indigo-500 p-2 px-3 rounded-md hover:bg-gray-100 cursor-pointer bg-gray-50">
+                                        <i class="fa fa-pencil-alt"></i>
+                                    </router-link>
+                                    <a class="text-orange-500 p-2 px-3 rounded-md hover:bg-gray-100 cursor-pointer bg-gray-50" @click="moveToTrashContent(item)">
+                                        <i class="fa fa-trash-restore"></i>
+                                    </a>
                                 </td>
                             </tr>
 
