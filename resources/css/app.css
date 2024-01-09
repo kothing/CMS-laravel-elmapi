@@ -26,7 +26,7 @@
     position: absolute;
     top: 0;
     left: 2.5rem;
-    width: 0.075rem;
+    width: 0.5px;
     height: 100%;
     content: "";
     background-color: rgba(231,234,243,.6);
@@ -316,4 +316,30 @@ input:checked ~ .dot {
 	height: 16px;
 	background-color: #000;
 	cursor: pointer;
+}
+
+.v-select .vs--open .vs__dropdown-toggle, 
+.v-select .vs__dropdown-toggle {
+    border-radius: .375rem;
+}
+
+.v-select .vs__selected {
+    margin: 6px 6px!important;
+}
+
+.v-select .vs--open input, 
+.v-select .vs__search, 
+.v-select .vs__search:focus, 
+.v-select input {
+    line-height: 1;
+}
+
+.rounded-t-none {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0
+}
+
+.rounded-b-none {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0
 }

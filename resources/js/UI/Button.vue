@@ -45,7 +45,7 @@
                 }
 
                 if(this.padding === null)
-                    cls += ' p-3 ';
+                    cls += ' p-2 ';
                 else {
                     cls += ' '+this.padding+' ';
                 }

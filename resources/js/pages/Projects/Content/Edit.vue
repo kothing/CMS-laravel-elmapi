@@ -19,15 +19,15 @@
                         <div class="flex border border-l-1 border-t-0 border-b-0  border-r-0" :class="{'border-indigo-600' : isSavingEnable, 'border-indigo-100' : !isSavingEnable,}">
                             <ui-dropdown align="right">
                                 <template #trigger>
-                                    <ui-button :color="'indigo-500'" :disabled="!isSavingEnable" class="rounded-l-none" :padding="'px-2 py-3'"><i class="fa fa-sort-down"></i></ui-button>
+                                    <ui-button :color="'indigo-500'" :disabled="!isSavingEnable" class="rounded-l-none" :padding="'px-2 py-2'"><i class="fa fa-sort-down"></i></ui-button>
                                 </template>
     
                                 <template #content>
                                     <div v-if="isSavingEnable">
-                                        <ui-button type="button" color="white" hover="gray-200" class="w-full h-full" @click.native="saveEdit(false, 'close')">
+                                        <ui-button type="button" color="white" hover="gray-200" class="w-full h-full rounded-b-none" @click.native="saveEdit(false, 'close')">
                                             <div class="text-gray-600 text-sm text-left">Save and close</div>
                                         </ui-button>
-                                        <ui-button type="button" color="white" hover="gray-200" class="w-full h-full" @click.native="saveEdit(false, 'new')">
+                                        <ui-button type="button" color="white" hover="gray-200" class="w-full h-full rounded-t-none" @click.native="saveEdit(false, 'new')">
                                             <div class="text-gray-600 text-sm text-left">Save and create new</div>
                                         </ui-button>
                                     </div>
@@ -39,14 +39,14 @@
                         <div v-if="content.published_at === null" class="flex border-green-600 border border-l-1 border-t-0 border-b-0  border-r-0">
                             <ui-dropdown align="right" width="60">
                                 <template #trigger>
-                                    <button class="bg-green-500 hover:bg-green-600 items-center px-2 py-3 border border-transparent rounded-md text-sm text-white focus:outline-none transition ease-in-out duration-150 rounded-l-none"><i class="fa fa-sort-down"></i></button>
+                                    <button class="bg-green-500 hover:bg-green-600 items-center px-2 py-2 border border-transparent rounded-md text-sm text-white focus:outline-none transition ease-in-out duration-150 rounded-l-none"><i class="fa fa-sort-down"></i></button>
                                 </template>
     
                                 <template #content>
-                                    <ui-button type="button" color="white" hover="gray-200" class="w-full h-full" @click.native="saveEdit(true, 'close')">
+                                    <ui-button type="button" color="white" hover="gray-200" class="w-full h-full rounded-b-none" @click.native="saveEdit(true, 'close')">
                                         <div class="text-gray-600 text-sm text-left">Save, publish and close</div>
                                     </ui-button>
-                                    <ui-button type="button" color="white" hover="gray-200" class="w-full h-full" @click.native="saveEdit(true, 'new')">
+                                    <ui-button type="button" color="white" hover="gray-200" class="w-full h-full rounded-t-none" @click.native="saveEdit(true, 'new')">
                                         <div class="text-gray-600 text-sm text-left">Save, publish and create new</div>
                                     </ui-button>
                                 </template>
@@ -268,7 +268,7 @@
                                                         <colorpicker :color="input.value" v-model="input.value" />
                                                     </div>
                                                     <div class="w-auto h-auto text-right" v-if="(index !== 0)">
-                                                        <div class="cursor-pointer text-sm border border-red-500 rounded-md text-white bg-red-500 px-3 py-3 pb-2 ml-2 text-center hover:bg-red-400" @click="removeLineFromRepeatableField(field, index)"><i class="fas fa-trash-alt"></i></div>
+                                                        <div class="cursor-pointer text-sm border border-red-500 rounded-md text-white bg-red-500 px-3 py-2 pb-2 ml-2 text-center hover:bg-red-400" @click="removeLineFromRepeatableField(field, index)"><i class="fas fa-trash-alt"></i></div>
                                                     </div>
                                                 </div>
                                                 <p class="text-sm text-red-600 mt-1 mb-1" v-if="newData.errors['data.'+field.name+'.'+index+'.value']">{{ newData.errors['data.'+field.name+'.'+index+'.value'][0] }}</p>
@@ -387,16 +387,16 @@
                                                 <table class="min-w-full divide-y divide-gray-200 ">
                                                     <thead class="">
                                                         <tr>
-                                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
-                                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
-                                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
+                                                            <th scope="col" class="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
+                                                            <th scope="col" class="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
+                                                            <th scope="col" class="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
     
-                                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                                                            <th scope="col" class="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
                                                                 <div class="w-full flex justify-between item-center">
                                                                     Created At
                                                                 </div>
                                                             </th>
-                                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap" v-for="field in relationRecords[field.name].collection.fields" :key="field.id" v-show="field.type != 'richtext' && field.type != 'password' && field.type != 'media' && field.type != 'json' && field.type != 'relation' && !JSON.parse(field.options).hideInContentList">
+                                                            <th scope="col" class="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap" v-for="field in relationRecords[field.name].collection.fields" :key="field.id" v-show="field.type != 'richtext' && field.type != 'password' && field.type != 'media' && field.type != 'json' && field.type != 'relation' && !JSON.parse(field.options).hideInContentList">
                                                                 <div class="w-full flex justify-between item-center">
                                                                     {{ field.label }}
                                                                 </div>
@@ -418,10 +418,10 @@
                                                                 <span v-if="item.published_at !== null" class="text-gray-500 text-sm rounded-md bg-green-200 px-3 py-1">published</span>
                                                                 <span v-else class="text-gray-500 text-sm rounded-md bg-gray-200 px-3 py-1">draft</span>
                                                             </td>
-                                                            <td class="px-6 py-3 text-sm w-px whitespace-nowrap text-gray-600">
+                                                            <td class="px-6 py-2 text-sm w-px whitespace-nowrap text-gray-600">
                                                                 {{ item.created_at | date('D MMM YYYY, H:mm') }}
                                                             </td>
-                                                            <td class="px-6 py-3 text-sm min-w-full whitespace-nowrap"  v-for="field in relationRecords[field.name].collection.fields" :key="field.id" v-show="field.type != 'richtext' && field.type != 'password' && field.type != 'media' && field.type != 'json' && field.type != 'relation' && !JSON.parse(field.options).hideInContentList">
+                                                            <td class="px-6 py-2 text-sm min-w-full whitespace-nowrap"  v-for="field in relationRecords[field.name].collection.fields" :key="field.id" v-show="field.type != 'richtext' && field.type != 'password' && field.type != 'media' && field.type != 'json' && field.type != 'relation' && !JSON.parse(field.options).hideInContentList">
                                                                 <span v-for="meta in item.meta" :key="meta.id">
                                                                     <span v-if="meta.field_name == field.name">
                                                                         <span v-if="field.type == 'date'">{{ meta.value | date }}</span>

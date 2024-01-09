@@ -1,7 +1,7 @@
 <template>
     <div class="app__profile">
-        <div class="w-full lg:w-3/4 m-auto mt-5">
-            <div class="p-4 flex border-b">
+        <div class="w-full lg:w-3/4 m-auto mt-5 px-4">
+            <div class="w-full p-4 flex border-b">
                 <div class="w-full">
                     <div class="text-xl font-bold">
                         My Profile
@@ -9,7 +9,7 @@
                 </div>
             </div>
 
-            <div class="bg-white mt-2 rounded-md p-4 w-full">
+            <div class="w-full bg-white mt-5 rounded-md p-4">
                 <form class="space-y-6">
                     <div>
                         <label v-formlabel>Name</label>
@@ -27,7 +27,7 @@
                 </form>
             </div>
 
-            <div class="bg-white mt-2 rounded-md p-4 w-full">
+            <div class="w-full bg-white mt-5 rounded-md p-4">
                 <form class="space-y-6">
                     <div>
                         <label v-formlabel>E-mail</label>
@@ -45,7 +45,7 @@
                 </form>
             </div>
 
-            <div class="bg-white mt-2 rounded-md p-4">
+            <div class="w-full bg-white mt-5 rounded-md p-4">
                 <div>
                     <label v-formlabel>Password</label>
                     <div class="mt-1 relative">

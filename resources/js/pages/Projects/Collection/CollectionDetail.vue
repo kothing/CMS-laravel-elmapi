@@ -40,7 +40,7 @@
                                         <div class="text-lg">{{ field.label }}</div>
     
                                         <div class="w-full flex justify-between">
-                                            <div class="flex space-x-1 items-center">
+                                            <div class="flex items-center space-x-1">
                                                 <span class="text-blue-900 text-sm rounded-md bg-gray-200 px-3">#{{ field.name }}</span>
                                                 <span class="text-blue-900 text-sm rounded-md bg-indigo-200 px-3">
                                                     {{ field.type }}
@@ -66,9 +66,9 @@
                                                 <span class="text-blue-900 text-sm rounded-md bg-gray-100 px-3" v-if="field.options.hiddenInAPI">hidden in api</span>
                                             </div>
     
-                                            <div>
-                                                <a @click="openNewFieldModal(field.type, true, field)" class="text-white text-sm rounded-md bg-indigo-500 px-3 cursor-pointer hover:bg-indigo-600 whitespace-nowrap"><i class="fa fa-edit text-xs"></i> Edit</a>
-                                                <a @click="deleteField(field)" class="text-white text-sm rounded-md bg-red-500 px-3 cursor-pointer hover:bg-red-600 whitespace-nowrap"><i class="fa fa-trash-alt text-xs"></i> Delete</a>
+                                            <div class="flex justify-between space-x-1">
+                                                <a @click="openNewFieldModal(field.type, true, field)" class="inline-block text-white text-sm rounded-md bg-indigo-500 px-3 cursor-pointer hover:bg-indigo-600 whitespace-nowrap"><i class="fa fa-edit text-xs"></i> Edit</a>
+                                                <a @click="deleteField(field)" class="inline-block text-white text-sm rounded-md bg-red-500 px-3 cursor-pointer hover:bg-red-600 whitespace-nowrap"><i class="fa fa-trash-alt text-xs"></i> Delete</a>
                                             </div>
                                         </div>
                                     </div>

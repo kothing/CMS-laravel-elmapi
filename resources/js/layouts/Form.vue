@@ -361,182 +361,182 @@
 </template>
 
 <script>
-import UiButton from '../UI/Button.vue'
+    import { codemirror } from 'vue-codemirror';
+    import 'codemirror/lib/codemirror.css';
+    import 'codemirror/mode/javascript/javascript.js';
+    import 'codemirror/addon/edit/closebrackets.js';
+    import 'codemirror/addon/edit/matchbrackets.js';
+    import 'codemirror/theme/solarized.css';
+    import "codemirror/addon/display/autorefresh.js";
 
-import { codemirror } from 'vue-codemirror'
-import 'codemirror/lib/codemirror.css'
-import 'codemirror/mode/javascript/javascript.js'
-import 'codemirror/addon/edit/closebrackets.js'
-import 'codemirror/addon/edit/matchbrackets.js'
-import 'codemirror/theme/solarized.css'
-import "codemirror/addon/display/autorefresh.js";
+    import { quillEditor } from 'vue-quill-editor';
+    import imageResize from "quill-image-resize-module";
+    import 'quill/dist/quill.core.css';
+    import 'quill/dist/quill.snow.css';
+    import 'quill/dist/quill.bubble.css';
 
-import { quillEditor } from 'vue-quill-editor'
-import imageResize from "quill-image-resize-module";
-import 'quill/dist/quill.core.css'
-import 'quill/dist/quill.snow.css'
-import 'quill/dist/quill.bubble.css'
+    import FileUpload from 'vue-upload-component';
 
-import FileUpload from 'vue-upload-component'
+    import UiButton from '../UI/Button.vue';
 
-export default {
-    props: ['uuid'],
+    export default {
+        props: ['uuid'],
 
-    components: {
-        UiButton,
-        codemirror,
-        quillEditor,
-        FileUpload
-    },
+        components: {
+            UiButton,
+            codemirror,
+            quillEditor,
+            FileUpload
+        },
 
-    data(){
-        return {
-            form: {},
-            newData: {
-                data: {},
-                errors: {}
-            },
-            processing: false,
-            submitSuccess: false,
+        data(){
+            return {
+                form: {},
+                newData: {
+                    data: {},
+                    errors: {}
+                },
+                processing: false,
+                submitSuccess: false,
 
-            files: [],
-            headers: {
-                'X-Csrf-Token': document.head.querySelector('meta[name="csrf-token"]').content,
-            },
-            uploadData: {},
-            upload_max_filesize: null,
+                files: [],
+                headers: {
+                    'X-Csrf-Token': document.head.querySelector('meta[name="csrf-token"]').content,
+                },
+                uploadData: {},
+                upload_max_filesize: null,
 
-            interval: null,
-        }
-    },
+                interval: null,
+            }
+        },
 
-    methods: {
-        getForm(){
-            axios.post('/forms/' + this.uuid).then((response) => {
-                this.form = response.data.form;
-                this.form.fields = JSON.parse(this.form.fields);
-                this.upload_max_filesize = response.data.upload_max_filesize;
+        methods: {
+            getForm(){
+                axios.post('/forms/' + this.uuid).then((response) => {
+                    this.form = response.data.form;
+                    this.form.fields = JSON.parse(this.form.fields);
+                    this.upload_max_filesize = response.data.upload_max_filesize;
 
-                this.form.fields.forEach(field => {
-                    if(field.options.repeatable){
-                        this.newData.data[field.name] = [{
-                            value: null,
-                        }];
-                    }
+                    this.form.fields.forEach(field => {
+                        if(field.options.repeatable){
+                            this.newData.data[field.name] = [{
+                                value: null,
+                            }];
+                        }
+                    });
                 });
-            });
-        },
+            },
 
-        addNewLineToRepeatableField(field){
-            this.newData.data[field.name].push({ value: null });
-            this.$forceUpdate();
-        },
-        removeLineFromRepeatableField(field, index){
-            this.newData.data[field.name].splice(index, 1);
-            this.$forceUpdate();
-        },
+            addNewLineToRepeatableField(field){
+                this.newData.data[field.name].push({ value: null });
+                this.$forceUpdate();
+            },
+            removeLineFromRepeatableField(field, index){
+                this.newData.data[field.name].splice(index, 1);
+                this.$forceUpdate();
+            },
 
-        inputFilter(newFile, oldFile, prevent) {
-            if (newFile && !oldFile) {
-                if (/(\/|^)(Thumbs\.db|desktop\.ini|\..+)$/.test(newFile.name)) {
-                    return prevent()
-                }
-                if (/\.(php5?|html?|jsx?)$/i.test(newFile.name)) {
-                    return prevent()
-                }
-            }
-
-            if (newFile && newFile.error === "" && newFile.file && (!oldFile || newFile.file !== oldFile.file)) {
-                newFile.blob = ''
-                let URL = (window.URL || window.webkitURL)
-                if (URL) {
-                    newFile.blob = URL.createObjectURL(newFile.file)
-                }
-                newFile.thumb = ''
-                if (newFile.blob && newFile.type.substr(0, 6) === 'image/') {
-                    newFile.thumb = newFile.blob
-                }
-            }
-        },
-
-        removeFile(file, field_name) {
-            this.files[field_name] = this.files[field_name].filter(f => f !== file)
-        },
-
-        checkuploadstatus(){
-            let check = true;
-
-            this.form.fields.forEach((field) => {
-                if (field.type === 'media') {
-                    if(this.$refs['upload'+field.name] && this.$refs['upload'+field.name][0].active){
-                        check = false;
+            inputFilter(newFile, oldFile, prevent) {
+                if (newFile && !oldFile) {
+                    if (/(\/|^)(Thumbs\.db|desktop\.ini|\..+)$/.test(newFile.name)) {
+                        return prevent()
+                    }
+                    if (/\.(php5?|html?|jsx?)$/i.test(newFile.name)) {
+                        return prevent()
                     }
                 }
-            })
 
-            if(check){
-                this.submitFormData();
-                clearInterval(this.interval);
-            }
-        },
-
-        submitForm(){
-            this.processing = true;
-
-            let countMediaFields = 0;
-            this.form.fields.forEach((field) => {
-                if (field.type === 'media') {
-                    countMediaFields++;
+                if (newFile && newFile.error === "" && newFile.file && (!oldFile || newFile.file !== oldFile.file)) {
+                    newFile.blob = ''
+                    let URL = (window.URL || window.webkitURL)
+                    if (URL) {
+                        newFile.blob = URL.createObjectURL(newFile.file)
+                    }
+                    newFile.thumb = ''
+                    if (newFile.blob && newFile.type.substr(0, 6) === 'image/') {
+                        newFile.thumb = newFile.blob
+                    }
                 }
-            })
+            },
 
-            if(countMediaFields > 0){
+            removeFile(file, field_name) {
+                this.files[field_name] = this.files[field_name].filter(f => f !== file)
+            },
+
+            checkuploadstatus(){
+                let check = true;
+
                 this.form.fields.forEach((field) => {
                     if (field.type === 'media') {
-                        if(this.$refs['upload'+field.name]){
-                            this.$refs['upload'+field.name][0].active = true;
+                        if(this.$refs['upload'+field.name] && this.$refs['upload'+field.name][0].active){
+                            check = false;
                         }
                     }
                 })
 
-                this.interval = setInterval(this.checkuploadstatus, 1000);
-            } else{
-                this.submitFormData();
-            }
-        },
+                if(check){
+                    this.submitFormData();
+                    clearInterval(this.interval);
+                }
+            },
 
-        submitFormData(){
-            let uploadedFiles = [];
-            this.form.fields.forEach((field) => {
-                if (field.type === 'media') {
-                    if(this.$refs['upload'+field.name]){
-                        this.$refs['upload'+field.name][0].files.forEach((file) => {
-                            uploadedFiles.push(file.response.id)
-                        })
-                        this.newData.data[field.name] = uploadedFiles;
-                        uploadedFiles = [];
+            submitForm(){
+                this.processing = true;
+
+                let countMediaFields = 0;
+                this.form.fields.forEach((field) => {
+                    if (field.type === 'media') {
+                        countMediaFields++;
                     }
-                }
-            })
+                })
 
-            axios.post('/forms/submit/'+this.form.uuid, this.newData).then(response => {
-                this.newData = {
-                    data: {},
-                    errors: {}
+                if(countMediaFields > 0){
+                    this.form.fields.forEach((field) => {
+                        if (field.type === 'media') {
+                            if(this.$refs['upload'+field.name]){
+                                this.$refs['upload'+field.name][0].active = true;
+                            }
+                        }
+                    })
+
+                    this.interval = setInterval(this.checkuploadstatus, 1000);
+                } else{
+                    this.submitFormData();
                 }
-                this.submitSuccess = true;
-                this.processing = false;
-            }).catch(error => {
-                this.processing = false;
-                if(error.response.status == 422){
-                    this.newData.errors = error.response.data.errors;
-                }
-            });
+            },
+
+            submitFormData(){
+                let uploadedFiles = [];
+                this.form.fields.forEach((field) => {
+                    if (field.type === 'media') {
+                        if(this.$refs['upload'+field.name]){
+                            this.$refs['upload'+field.name][0].files.forEach((file) => {
+                                uploadedFiles.push(file.response.id)
+                            })
+                            this.newData.data[field.name] = uploadedFiles;
+                            uploadedFiles = [];
+                        }
+                    }
+                })
+
+                axios.post('/forms/submit/'+this.form.uuid, this.newData).then(response => {
+                    this.newData = {
+                        data: {},
+                        errors: {}
+                    }
+                    this.submitSuccess = true;
+                    this.processing = false;
+                }).catch(error => {
+                    this.processing = false;
+                    if(error.response.status == 422){
+                        this.newData.errors = error.response.data.errors;
+                    }
+                });
+            },
         },
-    },
 
-    mounted() {
-        this.getForm();
-    },
-}
+        mounted() {
+            this.getForm();
+        },
+    }
 </script>

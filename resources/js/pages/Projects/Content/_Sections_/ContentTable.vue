@@ -16,13 +16,13 @@
 
         <div class="flex space-between">
             <div class="relative flex w-full flex-wrap items-stretch mb-2">
-                <span class="z-9 h-full leading-snug font-normal absolute text-center text-gray-400 absolute bg-transparent rounded-md text-base items-center justify-center w-8 pl-3 py-3">
+                <span class="z-9 h-full leading-snug font-normal absolute text-center text-gray-400 absolute bg-transparent rounded-md text-base items-center justify-center w-8 pl-3 py-2">
                     <i class="fas fa-search"></i>
                 </span>
                 <form  class="w-full">
-                    <input type="text" v-model="search" @input="getContent()" placeholder="Type something and press enter" class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded-md text-sm w-full pl-10 border-gray-200 focus:border-gray-300">
+                    <input type="text" v-model="search" @input="getContent()" placeholder="Type something and press enter" class="px-3 py-2 placeholder-gray-400 text-gray-700 bg-white rounded-md text-sm w-full pl-10 border-gray-200 focus:border-gray-300">
                 </form>
-                <span v-show="search != ''" class="z-9 h-full leading-snug font-normal absolute text-center text-gray-400 absolute bg-transparent rounded-md text-base items-center justify-center w-8 py-3 right-0 pr-3 cursor-pointer" @click="search = '', getContent()">
+                <span v-show="search != ''" class="z-9 h-full leading-snug font-normal absolute text-center text-gray-400 absolute bg-transparent rounded-md text-base items-center justify-center w-8 py-2 right-0 pr-3 cursor-pointer" @click="search = '', getContent()">
                     <i class="fas fa-times-circle"></i>
                 </span>
             </div>
