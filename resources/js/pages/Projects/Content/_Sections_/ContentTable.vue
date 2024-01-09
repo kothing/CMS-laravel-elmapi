@@ -125,69 +125,69 @@
                 <div class="overflow-x-auto sm:rounded-md">
                     <table class="min-w-full divide-y divide-gray-200 ">
                         <thead class="bg-gray-100">
-                            <tr>
+                            <tr class="relative">
                                 <th scope="col" class="px-6 py-3 text-center">
                                     <div class="w-full pl-1">
                                         <input type="checkbox" v-if="relation_type != 1" v-model="selectAll" @click="selectAllFn()" v-formcheckbox>
                                     </div>
                                 </th>
-                                <th scope="col" v-for="field in collection.fields" :key="field.id" v-show="field.type != 'password' && field.type != 'json' && columns[field.name]" @click="sortBy(field.name, 1)" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap cursor-pointer">
+                                <th scope="col" v-for="field in collection.fields" :key="field.id" v-show="field.type != 'password' && field.type != 'json' && columns[field.name]" @click="sortBy(field.name, 1)" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap cursor-pointer">
                                     <div class="w-full flex justify-between item-center">
                                         {{ field.label }}<!--Title-->
                                         <i v-if="listOptions.orderBy == field.name && listOptions.criteria == 'ASC'" class="fa fa-sort-amount-up-alt text-indigo-500 ml-2"></i>
                                         <i v-if="listOptions.orderBy == field.name && listOptions.criteria == 'DESC'" class="fa fa-sort-amount-down-alt text-indigo-500 ml-2"></i>
                                     </div>
                                 </th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                <th scope="col" v-if="columns.created_at" @click="sortBy('created_at')" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap cursor-pointer">
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                                <th scope="col" v-if="columns.created_at" @click="sortBy('created_at')" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap cursor-pointer">
                                     <div class="w-full flex justify-between item-center">
                                         Created At
                                         <i v-if="listOptions.orderBy == 'created_at' && listOptions.criteria == 'ASC'" class="fa fa-sort-amount-up-alt text-indigo-500 ml-2"></i>
                                         <i v-if="listOptions.orderBy == 'created_at' && listOptions.criteria == 'DESC'" class="fa fa-sort-amount-down-alt text-indigo-500 ml-2"></i>
                                     </div>
                                 </th>
-                                <th scope="col" v-if="columns.created_by" @click="sortBy('created_by')" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap cursor-pointer">
+                                <th scope="col" v-if="columns.created_by" @click="sortBy('created_by')" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap cursor-pointer">
                                     <div class="w-full flex justify-between item-center">
                                         Created By
                                         <i v-if="listOptions.orderBy == 'created_by' && listOptions.criteria == 'ASC'" class="fa fa-sort-amount-up-alt text-indigo-500 ml-2"></i>
                                         <i v-if="listOptions.orderBy == 'created_by' && listOptions.criteria == 'DESC'" class="fa fa-sort-amount-down-alt text-indigo-500 ml-2"></i>
                                     </div>
                                 </th>
-                                <th scope="col" v-if="columns.updated_at" @click="sortBy('updated_at')" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap cursor-pointer">
+                                <th scope="col" v-if="columns.updated_at" @click="sortBy('updated_at')" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap cursor-pointer">
                                     <div class="w-full flex justify-between item-center">
                                         Updated At
                                         <i v-if="listOptions.orderBy == 'updated_at' && listOptions.criteria == 'ASC'" class="fa fa-sort-amount-up-alt text-indigo-500 ml-2"></i>
                                         <i v-if="listOptions.orderBy == 'updated_at' && listOptions.criteria == 'DESC'" class="fa fa-sort-amount-down-alt text-indigo-500 ml-2"></i>
                                     </div>
                                 </th>
-                                <th scope="col" v-if="columns.updated_by" @click="sortBy('updated_by')" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap cursor-pointer">
+                                <th scope="col" v-if="columns.updated_by" @click="sortBy('updated_by')" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap cursor-pointer">
                                     <div class="w-full flex justify-between item-center">
                                         Updated By
                                         <i v-if="listOptions.orderBy == 'updated_by' && listOptions.criteria == 'ASC'" class="fa fa-sort-amount-up-alt text-indigo-500 ml-2"></i>
                                         <i v-if="listOptions.orderBy == 'updated_by' && listOptions.criteria == 'DESC'" class="fa fa-sort-amount-down-alt text-indigo-500 ml-2"></i>
                                     </div>
                                 </th>
-                                <th scope="col" v-if="columns.published_at" @click="sortBy('published_at')" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap cursor-pointer">
+                                <th scope="col" v-if="columns.published_at" @click="sortBy('published_at')" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap cursor-pointer">
                                     <div class="w-full flex justify-between item-center">
                                         Published At
                                         <i v-if="listOptions.orderBy == 'published_at' && listOptions.criteria == 'ASC'" class="fa fa-sort-amount-up-alt text-indigo-500 ml-2"></i>
                                         <i v-if="listOptions.orderBy == 'published_at' && listOptions.criteria == 'DESC'" class="fa fa-sort-amount-down-alt text-indigo-500 ml-2"></i>
                                     </div>
                                 </th>
-                                <th scope="col" v-if="columns.published_by" @click="sortBy('published_by')" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap cursor-pointer">
+                                <th scope="col" v-if="columns.published_by" @click="sortBy('published_by')" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap cursor-pointer">
                                     <div class="w-full flex justify-between item-center">
                                         Published By
                                         <i v-if="listOptions.orderBy == 'published_by' && listOptions.criteria == 'ASC'" class="fa fa-sort-amount-up-alt text-indigo-500 ml-2"></i>
                                         <i v-if="listOptions.orderBy == 'published_by' && listOptions.criteria == 'DESC'" class="fa fa-sort-amount-down-alt text-indigo-500 ml-2"></i>
                                     </div>
                                 </th>
-                                <th v-if="listOptions.getItems !== 'trashed'" scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                <th v-if="listOptions.getItems !== 'trashed'" scope="col" class="sticky right-0 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase shadow-sm bg-gray-100">
                                     <span class="inline-block">Action</span>
                                 </th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
-                            <tr v-for="item in content.data" :key="item.id">
+                            <tr v-for="item in content.data" :key="item.id" class="relative">
                                 <td class="pl-2 py-4 text-sm text-center w-px">
                                     <input type="checkbox" :checked="checkIfSelected(item.id)" @click="selectRecord(item.id)" v-formcheckbox>
                                 </td>
@@ -245,13 +245,15 @@
                                 <td v-if="columns.published_by" class="px-6 py-3 text-sm w-px whitespace-nowrap text-gray-600">
                                     <div v-if="item.published_by !== null" class="bg-green-500 text-white p-2 text-md rounded-full text-center mr-2 w-9" v-tooltip="item.published_by.name"><div class="w-full text-center">{{ getUserNameInitials(item.published_by.name) }}</div></div>
                                 </td>
-                                <td v-if="listOptions.getItems != 'trashed'" class="pl-2 py-4 text-sm min-w-full whitespace-nowrap text-center w-px">
-                                    <router-link :to="{name: 'projects.content.edit', params: { project_id: $route.params.project_id, col_id: collection_id, content_id: item.id } }" class="text-indigo-500 p-2 px-3 rounded-md hover:bg-gray-100 cursor-pointer bg-gray-50">
-                                        <i class="fa fa-pencil-alt"></i>
-                                    </router-link>
-                                    <a class="text-orange-500 p-2 px-3 rounded-md hover:bg-gray-100 cursor-pointer bg-gray-50" @click="moveToTrashContent(item)">
-                                        <i class="fa fa-trash-restore"></i>
-                                    </a>
+                                <td v-if="listOptions.getItems != 'trashed'" class="sticky right-0 px-2 py-4 text-sm w-28 whitespace-nowrap text-center shadow-sm bg-white">
+                                    <div class="py-2">
+                                        <router-link :to="{name: 'projects.content.edit', params: { project_id: $route.params.project_id, col_id: collection_id, content_id: item.id } }" class="text-indigo-500 p-2 px-3 rounded-md hover:bg-gray-100 cursor-pointer bg-gray-50">
+                                            <i class="fa fa-pencil-alt"></i>
+                                        </router-link>
+                                        <a class="text-orange-500 p-2 px-3 rounded-md hover:bg-gray-100 cursor-pointer bg-gray-50" @click="moveToTrashContent(item)">
+                                            <i class="fa fa-trash-restore"></i>
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
 
@@ -358,15 +360,15 @@
                     <table class="min-w-full divide-y divide-gray-200 ">
                         <thead>
                             <tr>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase"></th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase"></th>
 
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap">
                                     <div class="w-full flex justify-between item-center">
                                         Created At
                                     </div>
                                 </th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap" v-for="field in relationRecords.collection.fields" :key="field.id" v-show="field.type != 'richtext' && field.type != 'password' && field.type != 'media' && field.type != 'json' && field.type != 'relation' && !JSON.parse(field.options).hideInContentList">
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap" v-for="field in relationRecords.collection.fields" :key="field.id" v-show="field.type != 'richtext' && field.type != 'password' && field.type != 'media' && field.type != 'json' && field.type != 'relation' && !JSON.parse(field.options).hideInContentList">
                                     <div class="w-full flex justify-between item-center">
                                         {{ field.label }}
                                     </div>

@@ -343,3 +343,15 @@ input:checked ~ .dot {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0
 }
+
+.sticky {
+    position: sticky;
+}
+
+.right-1rem {
+    right: 1rem;
+}
+
+.right-2rem {
+    right: 2rem;
+}
