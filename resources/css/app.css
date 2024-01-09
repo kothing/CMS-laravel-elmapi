@@ -355,3 +355,13 @@ input:checked ~ .dot {
 .right-2rem {
     right: 2rem;
 }
+
+@media (min-width: 1440px) {
+    .xxl\:w-1\/3 {
+        width: 33.333333%
+    }
+
+    .xxl\:w-3\/4 {
+        width: 75%
+    }
+}
