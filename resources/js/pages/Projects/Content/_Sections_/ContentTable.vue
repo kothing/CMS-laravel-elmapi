@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="app__project-content-table">
         <h4 class="mb-2 font-bold text-lg flex justify-end items-center h-10">
             <div class="flex-1">{{ collection.name }} <small class="text-gray-400 ml-1">#{{ collection.slug }}</small></div>
 
@@ -104,7 +104,6 @@
         <div class="w-full text-sm text-gray-700 mb-2 pl-1 flex justify-between">
             <div class="flex">
                 <div class="py-1">{{ selected.length }} items selected</div>
-
                 <div v-if="selected.length !== 0 && listOptions.getItems !== 'trashed'" class="ml-2 cursor-pointer text-green-500 font-bold py-1 px-3 rounded-md hover:bg-gray-100" @click="publishSelected"><i class="fa fa-cloud-upload-alt"></i> publish</div>
                 <div v-if="selected.length !== 0 && listOptions.getItems !== 'trashed'" class="ml-2 cursor-pointer text-gray-500 font-bold py-1 px-3 rounded-md hover:bg-gray-100" @click="unPublishSelected"><i class="fa fa-cloud-download-alt"></i> unpublish</div>
                 <div v-if="selected.length !== 0 && listOptions.getItems !== 'trashed'" class="ml-2 cursor-pointer text-orange-500 font-bold py-1 px-3 rounded-md hover:bg-gray-100" @click="moveToTrashSelected"><i class="fa fa-trash-restore"></i> move to trash</div>
@@ -121,14 +120,14 @@
         </div>
 
         <div class="clear-both">
-            <div class="w-full border">
+            <div class="w-full border rounded-md">
                 <div class="overflow-x-auto sm:rounded-md">
-                    <table class="min-w-full divide-y divide-gray-200 ">
+                    <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-100">
                             <tr class="relative">
                                 <th scope="col" class="px-6 py-3 text-center">
                                     <div class="w-full pl-1">
-                                        <input type="checkbox" v-if="relation_type != 1" v-model="selectAll" @click="selectAllFn()" v-formcheckbox>
+                                        <input type="checkbox" v-if="relation_type != 1" v-model="selectAll" @click="selectAllFn()" v-formcheckbox class="cursor-pointer">
                                     </div>
                                 </th>
                                 <th scope="col" v-for="field in collection.fields" :key="field.id" v-show="field.type != 'password' && field.type != 'json' && columns[field.name]" @click="sortBy(field.name, 1)" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap cursor-pointer">
@@ -189,7 +188,7 @@
                         <tbody class="bg-white divide-y divide-gray-200">
                             <tr v-for="item in content.data" :key="item.id" class="relative">
                                 <td class="pl-2 py-4 text-sm text-center w-px">
-                                    <input type="checkbox" :checked="checkIfSelected(item.id)" @click="selectRecord(item.id)" v-formcheckbox>
+                                    <input type="checkbox" :checked="checkIfSelected(item.id)" @click="selectRecord(item.id)" v-formcheckbox class="cursor-pointer">
                                 </td>
                                 <td v-for="field in collection.fields" :key="field.id" v-show="field.type != 'password' && field.type != 'json' && columns[field.name]" class="px-6 py-3 text-sm min-w-full whitespace-nowrap">
                                     <span v-for="meta in item.meta" :key="meta.id">
@@ -295,7 +294,7 @@
             </template>
 
             <template #footer>
-                <ui-button color="gray-50" hover="gray-200" @click.native="closeTextModal">
+                <ui-button color="gray-100" hover="gray-200" @click.native="closeTextModal">
                     <span class="text-gray-800">Close</span>
                 </ui-button>
             </template>
@@ -344,7 +343,7 @@
             </template>
 
             <template #footer>
-                <ui-button color="gray-50" hover="gray-200" @click.native="closeMediaModal">
+                <ui-button color="gray-100" hover="gray-200" @click.native="closeMediaModal">
                     <span class="text-gray-800">Close</span>
                 </ui-button>
             </template>
@@ -357,7 +356,7 @@
 
             <template #content>
                 <div class="overflow-x-auto sm:rounded-md" v-if="relationRecords.length > 0">
-                    <table class="min-w-full divide-y divide-gray-200 ">
+                    <table class="min-w-full divide-y divide-gray-200">
                         <thead>
                             <tr>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase"></th>
@@ -407,7 +406,7 @@
             </template>
 
             <template #footer>
-                <ui-button color="gray-50" hover="gray-200" @click.native="closeRelationModal">
+                <ui-button color="gray-100" hover="gray-200" @click.native="closeRelationModal">
                     <span class="text-gray-800">Close</span>
                 </ui-button>
             </template>

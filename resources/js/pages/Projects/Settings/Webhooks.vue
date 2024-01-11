@@ -155,7 +155,7 @@
             </template>
 
             <template #footer>
-                <ui-button color="gray-50" hover="gray-200" @click.native="closeNewWebhookModal">
+                <ui-button color="gray-100" hover="gray-200" @click.native="closeNewWebhookModal">
                     <span class="text-gray-800">Cancel</span>
                 </ui-button>
                 <ui-button color="indigo-500" :disabled="progress" @click.native="createNewWebhookSubmit">

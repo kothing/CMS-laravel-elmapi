@@ -60,7 +60,7 @@
             </template>
 
             <template #footer>
-                <ui-button color="gray-50" hover="gray-200" @click.native="closeNewCollectionModal">
+                <ui-button color="gray-100" hover="gray-200" @click.native="closeNewCollectionModal">
                     <span class="text-gray-800">Cancel</span>
                 </ui-button>
 

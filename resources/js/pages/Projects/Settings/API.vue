@@ -54,8 +54,8 @@
                                     <div class="cursor-pointer text-indigo-700" @click="openNewTokenModal = true">Create New Token</div>
                                 </div>
                             </div>
-                            <div class="overflow-x-auto mt-1 flex rounded-md">
-                                <table class="min-w-full divide-y divide-gray-200 border">
+                            <div class="overflow-x-auto mt-1 flex border rounded-md">
+                                <table class="min-w-full divide-y divide-gray-200">
                                     <thead class="bg-gray-100">
                                         <tr>
                                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
@@ -176,7 +176,7 @@
             </template>
 
             <template #footer>
-                <ui-button color="gray-50" hover="gray-200" @click.native="closeNewTokenModal">
+                <ui-button color="gray-100" hover="gray-200" @click.native="closeNewTokenModal">
                     <span class="text-gray-800">Cancel</span>
                 </ui-button>
                 <ui-button v-if="!showToken" color="indigo-500" @click.native="createNewTokenSubmit">

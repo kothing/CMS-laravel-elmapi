@@ -8,6 +8,8 @@
     </head>
 
     <body>
-        CMS frontend page
+        <div class="app">
+            AineCMS frontend page
+        </div>
     </body>
 </html>

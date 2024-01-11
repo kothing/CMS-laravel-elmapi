@@ -15,8 +15,8 @@
                             <div class="w-full flex justify-between">
                                 <div class="text-lg font-bold">Available Locales</div>
                             </div>
-                            <div class="overflow-x-auto mt-1 flex rounded-md">
-                                <table class="min-w-full divide-y divide-gray-200 border">
+                            <div class="overflow-x-auto mt-1 flex border rounded-md">
+                                <table class="min-w-full divide-y divide-gray-200">
                                     <tbody class="bg-white divide-y divide-gray-200">
                                         <tr v-for="locale in project.locales" :key="locale">
                                             <td class="px-6 py-3 text-sm align-top">

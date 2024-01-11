@@ -12,8 +12,8 @@
                     <h4 class="mb-2 p-2 font-bold text-xl">Users & Roles</h4>
     
                     <div class="w-full bg-white mt-2 rounded-md p-4">
-                        <div class="overflow-x-auto w-full border clear-both mt-2">
-                            <table class="min-w-full divide-y divide-gray-200 ">
+                        <div class="w-full border rounded-md mt-2 overflow-x-auto clear-both">
+                            <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-100">
                                     <tr>
                                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
@@ -29,7 +29,7 @@
                                             <small class="block text-gray-600 text-xs">Can create and edit collections and content</small>
                                         </td>
                                         <td class="px-6 py-3 text-sm">
-                                            <div v-for="user in super_admins" :key="user.id" class="border border-gray-100 mb-2 block w-full p-2">
+                                            <div v-for="user in super_admins" :key="user.id" class="border border-gray-100 rounded-md mb-2 block w-full p-2">
                                                 <div class="flex items-center">
                                                     <div>
                                                         <div class="flex bg-green-500 text-white p-2 text-md rounded-full text-center mr-2 w-9"><div class="w-full text-center">{{ getUserNameInitials(user.name) }}</div></div>
@@ -40,7 +40,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div v-for="user in admins" :key="user.id" class="border border-gray-100 mb-2 block w-full p-2">
+                                            <div v-for="user in admins" :key="user.id" class="border border-gray-100 rounded-md mb-2 block w-full p-2">
                                                 <div class="flex flex-start w-full items-center">
                                                     <div>
                                                         <div class="flex bg-green-500 text-white p-2 text-md rounded-full text-center mr-2 w-9"><div class="w-full text-center">{{ getUserNameInitials(user.name) }}</div></div>
@@ -67,7 +67,7 @@
                                             <small class="block text-gray-600 text-xs">Can create and edit content</small>
                                         </td>
                                         <td class="px-6 py-3 text-sm">
-                                            <div v-for="user in editors" :key="user.id" class="border border-gray-100 mb-2 block w-full p-2">
+                                            <div v-for="user in editors" :key="user.id" class="border border-gray-100 rounded-md mb-2 block w-full p-2">
                                                 <div class="flex flex-start w-full items-center">
                                                     <div>
                                                         <div class="flex bg-green-500 text-white p-2 text-md rounded-full text-center mr-2 w-9"><div class="w-full text-center">{{ getUserNameInitials(user.name) }}</div></div>
@@ -117,7 +117,7 @@
             <template #content>
                 <div class="mt-4">
                     <div v-if="!createNewUser">
-                        <table class="min-w-full divide-y divide-gray-200 ">
+                        <table class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-100">
                                 <tr>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
@@ -171,7 +171,7 @@
             </template>
 
             <template #footer>
-                <ui-button color="gray-50" hover="gray-200" @click.native="closeAssignUserModal">
+                <ui-button color="gray-100" hover="gray-200" @click.native="closeAssignUserModal">
                     <span class="text-gray-800">Cancel</span>
                 </ui-button>
                 <ui-button color="indigo-500" v-if="createNewUser" @click.native="createNewUserSubmit">

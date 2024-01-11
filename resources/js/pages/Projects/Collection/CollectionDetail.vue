@@ -559,7 +559,7 @@
             </template>
 
             <template #footer>
-                <ui-button color="gray-50" hover="gray-200" @click.native="closeNewFieldModal">
+                <ui-button color="gray-100" hover="gray-200" @click.native="closeNewFieldModal">
                     <span class="text-gray-800">Cancel</span>
                 </ui-button>
 
@@ -595,7 +595,7 @@
             </template>
 
             <template #footer>
-                <ui-button color="gray-50" hover="gray-200" @click.native="closeEditCollectionModal">
+                <ui-button color="gray-100" hover="gray-200" @click.native="closeEditCollectionModal">
                     <span class="text-gray-800">Cancel</span>
                 </ui-button>
 

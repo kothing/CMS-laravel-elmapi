@@ -384,7 +384,7 @@
                                             </div>
     
                                             <div class="overflow-x-auto sm:rounded-md" v-if="relationRecords[field.name] !== undefined && relationRecords[field.name].length !== 0">
-                                                <table class="min-w-full divide-y divide-gray-200 ">
+                                                <table class="min-w-full divide-y divide-gray-200">
                                                     <thead class="">
                                                         <tr>
                                                             <th scope="col" class="px-6 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
@@ -532,7 +532,7 @@
             </template>
 
             <template #footer>
-                <ui-button color="gray-50" hover="gray-200" @click.native="closeMediaLibraryModal">
+                <ui-button color="gray-100" hover="gray-200" @click.native="closeMediaLibraryModal">
                     <span class="text-gray-800">Cancel</span>
                 </ui-button>
             </template>
@@ -548,7 +548,7 @@
             </template>
 
             <template #footer>
-                <ui-button color="gray-50" hover="gray-200" @click.native="closeRelationModal">
+                <ui-button color="gray-100" hover="gray-200" @click.native="closeRelationModal">
                     <span class="text-gray-800">Cancel</span>
                 </ui-button>
             </template>
