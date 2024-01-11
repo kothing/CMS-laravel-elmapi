@@ -9,9 +9,9 @@
             <div class="flex flex-col justify-between h-screen">
                 <div class="flex-item">
                     <div class="app__brand text-center">
-                        <brand size="md" mode="light"></brand>
+                        <brand size="md" mode="light" imgclass="w-20"></brand>
                     </div>
-                    <nav class="app__main-menu mt-6">
+                    <nav class="app__main-menu mt-4">
                         <router-link 
                             :to="{name: 'dashboard'}" 
                             :exact-active-class="'bg-gray-700'" 
