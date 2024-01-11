@@ -9,7 +9,7 @@
             <div class="flex flex-col justify-between h-screen">
                 <div class="flex-item">
                     <div class="app__brand text-center">
-                        <brand></brand>
+                        <brand size="md" mode="light"></brand>
                     </div>
                     <nav class="app__main-menu mt-6">
                         <router-link 

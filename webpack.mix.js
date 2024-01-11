@@ -1,7 +1,8 @@
 const mix = require('laravel-mix');
 const tailwindcss = require('tailwindcss');
 const webpack = require('webpack');
-require('dotenv').config()
+require('dotenv').config();
+
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -16,7 +17,7 @@ mix.options({
     terser: {
         extractComments: false,
     }
-})
+});
 
 mix.js('resources/js/app.js', 'public/js').vue({ version: 2 })
     .js('resources/js/form.js', 'public/js').vue({ version: 2 })

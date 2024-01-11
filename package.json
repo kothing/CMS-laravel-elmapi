@@ -5,6 +5,7 @@
         "watch-poll": "mix watch --watch-options-poll=1000",
         "watch-hot": "mix watch --hot",
         "dev": "npm run development",
+        "build": "npm run production",
         "development": "mix",
         "production": "mix --production"
     },
