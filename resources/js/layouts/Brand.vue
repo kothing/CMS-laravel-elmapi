@@ -1,12 +1,17 @@
 <template>
-    <router-link :to="{name: 'dashboard'}" :exact-active-class="'bg-none'" class="w-full flex justify-center py-2">
-        <img :src="logoUrl" alt="Logo" />
+    <router-link 
+        :to="{name: 'dashboard'}" 
+        :exact-active-class="'bg-none'" 
+        class="w-full flex justify-center py-2"
+    >
+        <img :src="logoUrl" alt="Logo" :class="imgclass" />
     </router-link>
 </template>
 
 <script>
     export default {
         props: [
+            'imgclass',
             'size', // sm | md | lg
             'mode', // light | dark
         ],
@@ -30,7 +35,7 @@
                 };
                 const nameExt = `${SizeMap[this.size] || SizeMap.md}-${ModeMap[this.mode] || ModeMap.dark}`;
                 return `${appUrl}/images/logo-${nameExt}.svg`;
-            }
-        }
+            },
+        },
     }
 </script>
