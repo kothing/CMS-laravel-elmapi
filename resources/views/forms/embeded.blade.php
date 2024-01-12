@@ -14,6 +14,8 @@
         <script src="{{ mix('js/form.js') }}" defer></script>
     </head>
     <body class="font-sans antialiased">
-        <div id="elmapiForm" v-cloak><elmapi-form uuid="{{$form->uuid}}"></elmapi-form></div>
+        <div id="aineForm" v-cloak>
+            <aine-form uuid="{{$form->uuid}}"></aine-form>
+        </div>
     </body>
 </html>

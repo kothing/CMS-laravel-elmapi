@@ -136,7 +136,7 @@ class FormController extends Controller
     {
         $data['form'] = Form::where('uuid', $uuid)->firstOrFail();
 
-        $data['upload_max_filesize'] = \App\Elmapi\ElmapiHelpers::getUploadMaxFileSize();
+        $data['upload_max_filesize'] = \App\Aine\AineHelpers::getUploadMaxFileSize();
 
         return $data;
     }
@@ -154,7 +154,7 @@ class FormController extends Controller
 
         $project = Project::findOrFail($form->project_id);
 
-        $max_file_size = \App\Elmapi\ElmapiHelpers::getUploadMaxFileSize();
+        $max_file_size = \App\Aine\AineHelpers::getUploadMaxFileSize();
         $supported_mimes = 'png,gif,jpeg,jpg,bmp';
         $request->validate([
             'file' => 'required|file|max:'.($max_file_size / 1024).'|mimes:'.$supported_mimes,

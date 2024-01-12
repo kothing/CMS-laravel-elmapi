@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Elmapi;
+namespace App\Aine;
 
 use App\Http\Resources\ContentResource;
 use App\Models\Webhook;

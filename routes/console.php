@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Artisan;
 | simple approach to interacting with each command's IO methods.
 |
 */
-Artisan::command('elmapi:create_super {name} {email} {password}', function(){
+Artisan::command('aine:create_super {name} {email} {password}', function(){
     $user = \App\Models\User::create([
         'name' => $this->argument('name'),
         'email' => $this->argument('email'),
@@ -27,7 +27,7 @@ Artisan::command('elmapi:create_super {name} {email} {password}', function(){
     
 })->describe('Create a new super admin account.');
 
-Artisan::command('elmapi:refresh', function() {
+Artisan::command('aine:refresh', function() {
     exec('rm ' . storage_path('logs/laravel*'));
     $this->info('Logs cleared!');
 

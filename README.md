@@ -1,4 +1,4 @@
-# Laravel-AineCMS
+# Laravel-Aine
 AineCMS is a self-hosted headless CMS built with Laravel and VueJs. It provides a clean and easy to use interface and a powerful Content API.
 
 # What is a Headless CMS?

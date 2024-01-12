@@ -30,6 +30,6 @@ class ProcessWebhooks
         $eventSource = $event->getEventSource();
         $eventContent = $event->getEventContent();
 
-        \App\Elmapi\WebhookHelper::processWebhooks($eventContent, $eventName, $eventSource);
+        \App\Aine\WebhookHelper::processWebhooks($eventContent, $eventName, $eventSource);
     }
 }

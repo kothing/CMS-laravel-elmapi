@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Elmapi;
+namespace App\Aine;
 
-class ElmapiHelpers
+class AineHelpers
 {
     public static function getUploadMaxFileSize()
     {

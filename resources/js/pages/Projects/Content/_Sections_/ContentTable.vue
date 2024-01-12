@@ -264,7 +264,7 @@
                 </div>
             </div>
             <div class="mt-2 clear-both flex justify-between items-center">
-                <div>
+                <div class="block">
                     <pagination :data="content" size="small" :limit="3" @pagination-change-page="getContent"></pagination>
                 </div>
 

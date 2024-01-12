@@ -14,8 +14,8 @@ window.axios.defaults.headers.common = {
     'X-CSRF-TOKEN' : document.querySelector('meta[name="csrf-token"]').content
 };
 
-// elmapiForm
-Vue.component('elmapiForm', require('./layouts/Form.vue').default);
+// aineForm
+Vue.component('aineForm', require('./layouts/Form.vue').default);
 
 // VCalendar
 Vue.use(VCalendar, {
@@ -26,5 +26,5 @@ Vue.use(VCalendar, {
 Vue.component('v-select', vSelect)
 
 const form = new Vue({
-    el: '#elmapiForm',
+    el: '#aineForm',
 });
