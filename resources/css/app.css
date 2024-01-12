@@ -40,6 +40,10 @@
     height: calc(100% - 6rem);
 }
 
+.app__media-library .file-uploads label[for="file"] {
+    cursor: pointer;
+}
+
 @media (min-width: 1024px) {
     .app__content {
         max-width: calc(100% - 16rem);
