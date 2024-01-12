@@ -61,7 +61,7 @@ Vue.use(VueSweetalert2, sweetalert2Options);
 Vue.component('app', require('./layouts/App.vue').default);
 
 const app = new Vue({
-    el: '#app',
+    el: '#admin-app',
     router,
 	store
 });

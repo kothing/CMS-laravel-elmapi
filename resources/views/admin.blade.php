@@ -15,7 +15,7 @@
         <script src="{{ mix('js/app.js') }}" defer></script>
     </head>
     <body class="font-sans antialiased">
-        <div id="app" v-cloak>
+        <div id="admin-app" v-cloak>
             <app></app>
         </div>
     </body>
