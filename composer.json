@@ -3,6 +3,9 @@
     "type": "project",
     "description": "Aine is a self-hosted headless CMS built with Laravel and VueJs.",
     "keywords": [
+        "aine",
+        "aine-cms",
+        "laravel-cms",
         "framework",
         "laravel"
     ],
