@@ -180,7 +180,7 @@
                                         <i v-if="listOptions.orderBy == 'published_by' && listOptions.criteria == 'DESC'" class="fa fa-sort-amount-down-alt text-indigo-500 ml-2"></i>
                                     </div>
                                 </th>
-                                <th v-if="listOptions.getItems !== 'trashed'" scope="col" class="sticky right-0 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase shadow-sm bg-gray-100">
+                                <th v-if="listOptions.getItems !== 'trashed'" scope="col" class="position-sticky right-0 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase shadow-sm bg-gray-100">
                                     <span class="inline-block">Action</span>
                                 </th>
                             </tr>
@@ -244,7 +244,7 @@
                                 <td v-if="columns.published_by" class="px-6 py-3 text-sm w-px whitespace-nowrap text-gray-600">
                                     <div v-if="item.published_by !== null" class="bg-green-500 text-white p-2 text-md rounded-full text-center mr-2 w-9" v-tooltip="item.published_by.name"><div class="w-full text-center">{{ getUserNameInitials(item.published_by.name) }}</div></div>
                                 </td>
-                                <td v-if="listOptions.getItems != 'trashed'" class="sticky right-0 px-2 py-4 text-sm w-28 whitespace-nowrap text-center shadow-sm bg-white">
+                                <td v-if="listOptions.getItems != 'trashed'" class="position-sticky right-0 px-2 py-4 text-sm w-28 whitespace-nowrap text-center shadow-sm bg-white">
                                     <div class="py-2">
                                         <router-link :to="{name: 'projects.content.edit', params: { project_id: $route.params.project_id, col_id: collection_id, content_id: item.id } }" class="text-indigo-500 p-2 px-3 rounded-md hover:bg-gray-100 cursor-pointer bg-gray-50">
                                             <i class="fa fa-pencil-alt"></i>
