@@ -64,9 +64,9 @@
 </template>
 
 <script>
-import UiButton from '../../../UI/Button.vue'
-import UiModal from '../../../UI/Modal.vue'
-import UiDropdown from '../../../UI/Dropdown.vue'
+import UiButton from '../../../components/Button.vue'
+import UiModal from '../../../components/Modal.vue'
+import UiDropdown from '../../../components/Dropdown.vue'
 
 import ProjectHeader from '../_Sections_/ProjectHeader.vue'
 import ContentSidebar from './_Sections_/ContentSidebar.vue'

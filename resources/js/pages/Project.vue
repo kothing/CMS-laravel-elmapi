@@ -82,8 +82,8 @@
 </template>
 
 <script>
-import UiModal from '../UI/Modal.vue'
-import UiButton from '../UI/Button.vue'
+import UiModal from '../components/Modal.vue'
+import UiButton from '../components/Button.vue'
 import checkRole from '../checkrole'
 import localesJson from '../locales.json'
 

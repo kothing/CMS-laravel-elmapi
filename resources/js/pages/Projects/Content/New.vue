@@ -535,9 +535,9 @@ import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 
-import UiButton from '../../../UI/Button.vue'
-import UiModal from '../../../UI/Modal.vue'
-import UiDropdown from '../../../UI/Dropdown.vue'
+import UiButton from '../../../components/Button.vue'
+import UiModal from '../../../components/Modal.vue'
+import UiDropdown from '../../../components/Dropdown.vue'
 
 import ProjectHeader from '../_Sections_/ProjectHeader'
 import MediaLibrary from '../_Sections_/MediaLibrary.vue'

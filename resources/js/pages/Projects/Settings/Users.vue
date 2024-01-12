@@ -184,8 +184,8 @@
 
 <script>
 
-import UiButton from '../../../UI/Button.vue'
-import UiModal from '../../../UI/Modal.vue'
+import UiButton from '../../../components/Button.vue'
+import UiModal from '../../../components/Modal.vue'
 
 import ProjectHeader from '../_Sections_/ProjectHeader.vue'
 import SettingsNav from './_Sections_/SettingsNav.vue'

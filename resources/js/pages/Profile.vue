@@ -72,7 +72,7 @@
 </template>
 
 <script>
-import UiButton from '../UI/Button.vue'
+import UiButton from '../components/Button.vue'
 import store from '../store'
 
 export default {

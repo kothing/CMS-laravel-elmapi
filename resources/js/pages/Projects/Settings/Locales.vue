@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import UiButton from '../../../UI/Button.vue'
+import UiButton from '../../../components/Button.vue'
 import localesJson from '../../../locales'
 
 import ProjectHeader from '../_Sections_/ProjectHeader.vue'

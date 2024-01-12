@@ -377,7 +377,7 @@
 
     import FileUpload from 'vue-upload-component';
 
-    import UiButton from '../UI/Button.vue';
+    import UiButton from '../components/Button.vue';
 
     export default {
         props: ['uuid'],

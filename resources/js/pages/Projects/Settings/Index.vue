@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import UiButton from '../../../UI/Button.vue'
+import UiButton from '../../../components/Button.vue'
 import checkRole from '../../../checkrole'
 
 import ProjectHeader from '../_Sections_/ProjectHeader.vue'

@@ -420,9 +420,9 @@ import moment from 'moment';
 import VTooltip from 'v-tooltip'
 
 import store from '../../../../store'
-import UiModal from '../../../../UI/Modal.vue'
-import UiButton from '../../../../UI/Button.vue'
-import UiDropdown from '../../../../UI/Dropdown.vue'
+import UiModal from '../../../../components/Modal.vue'
+import UiButton from '../../../../components/Button.vue'
+import UiDropdown from '../../../../components/Dropdown.vue'
 
 Vue.use(VTooltip)
 

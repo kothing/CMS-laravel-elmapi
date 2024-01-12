@@ -74,8 +74,8 @@
 
 <script>
 import draggable from 'vuedraggable'
-import UiButton from '../../../../UI/Button.vue';
-import UiModal from '../../../../UI/Modal.vue'
+import UiButton from '../../../../components/Button.vue';
+import UiModal from '../../../../components/Modal.vue'
 
 export default {
     components: {

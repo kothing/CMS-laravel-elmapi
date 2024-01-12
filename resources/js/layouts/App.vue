@@ -98,7 +98,7 @@
 
 <script>
 import Brand from './Brand.vue'
-import UiDropdown from '../UI/Dropdown.vue'
+import UiDropdown from '../components/Dropdown.vue'
 import checkRole from '../checkrole'
 import store from '../store'
 
