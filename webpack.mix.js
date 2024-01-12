@@ -19,9 +19,9 @@ mix.options({
     }
 });
 
-mix.js('resources/js/app.js', 'public/js').vue({ version: 1 })
-    .js('resources/js/admin.js', 'public/js').vue({ version: 1 })
-    .js('resources/js/form.js', 'public/js').vue({ version: 1 })
+mix.js('resources/js/app.js', 'public/js').vue()
+    .js('resources/js/admin.js', 'public/js').vue()
+    .js('resources/js/form.js', 'public/js').vue()
     .postCss('resources/css/admin.css', 'public/css', [
         require('tailwindcss')('./tailwind.config.js')
     ])
