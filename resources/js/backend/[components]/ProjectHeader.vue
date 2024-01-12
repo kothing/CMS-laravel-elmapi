@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import checkRole from "../utils/checkrole";
+import checkRole from "../../utils/checkrole";
 
 export default {
   props: ["project"],

@@ -348,192 +348,194 @@
 </template>
 
 <script>
-import Vue from "vue";
-import Clipboard from "v-clipboard";
-import UiButton from "../../../components/Button.vue";
-import UiModal from "../../../components/Modal.vue";
+  import Vue from "vue";
+  import Clipboard from "v-clipboard";
 
-import ProjectHeader from "../_Sections_/ProjectHeader.vue";
-import SettingsNav from "./_Sections_/SettingsNav.vue";
+  import UiButton from "../../../../[components]/Button.vue";
+  import UiModal from "../../../../[components]/Modal.vue";
 
-Vue.use(Clipboard);
+  import ProjectHeader from "../../../[components]/ProjectHeader.vue";
+  
+  import SettingsNav from "./[sections]/SettingsNav.vue";
 
-export default {
-  components: {
-    ProjectHeader,
-    SettingsNav,
-    UiButton,
-    UiModal,
-  },
+  Vue.use(Clipboard);
 
-  data() {
-    return {
-      project: {},
-      tokens: {},
-      openNewTokenModal: false,
-      new_token: {
-        errors: {},
-        permissions: ["read"],
-      },
-      showToken: false,
-      createdToken: null,
-      editStatus: false,
-      enable_public_access: false,
-    };
-  },
-
-  methods: {
-    getProject() {
-      axios
-        .get("/admin/projects/settings/api/" + this.$route.params.project_id)
-        .then((response) => {
-          this.project = response.data.project;
-          this.tokens = response.data.tokens;
-          this.enable_public_access = response.data.project.public_api;
-        });
+  export default {
+    components: {
+      ProjectHeader,
+      SettingsNav,
+      UiButton,
+      UiModal,
     },
 
-    copyToClipboard(str) {
-      this.$clipboard(str);
-      this.$toast.success("Copied to clipboard");
-    },
-
-    closeNewTokenModal() {
-      this.openNewTokenModal = false;
-      (this.new_token = {
-        errors: {},
-        permissions: ["read"],
-      }),
-        (this.showToken = false),
-        (this.createdToken = null);
-      this.editStatus = false;
-    },
-
-    createNewTokenSubmit() {
-      if (this.editStatus) {
-        axios
-          .post(
-            "/admin/projects/settings/api/update-token/" + this.project.id,
-            this.new_token
-          )
-          .then(
-            (response) => {
-              this.$toast.success("Token updated!");
-              this.getProject();
-              this.closeNewTokenModal();
-            },
-            (error) => {
-              if (error.response.status == 422) {
-                this.new_token.errors = error.response.data.errors;
-              }
-            }
-          );
-      } else {
-        axios
-          .post(
-            "/admin/projects/settings/api/new-token/" + this.project.id,
-            this.new_token
-          )
-          .then(
-            (response) => {
-              this.$toast.success("Token created!");
-              this.getProject();
-              this.showToken = true;
-              this.createdToken = response.data;
-            },
-            (error) => {
-              if (error.response.status == 422) {
-                this.new_token.errors = error.response.data.errors;
-              }
-            }
-          );
-      }
-    },
-
-    editToken(token) {
-      this.new_token = {
-        id: token.id,
-        name: token.name,
-        errors: {},
-        permissions: token.abilities,
+    data() {
+      return {
+        project: {},
+        tokens: {},
+        openNewTokenModal: false,
+        new_token: {
+          errors: {},
+          permissions: ["read"],
+        },
+        showToken: false,
+        createdToken: null,
+        editStatus: false,
+        enable_public_access: false,
       };
-      this.editStatus = true;
-      this.openNewTokenModal = true;
     },
 
-    deleteToken(token) {
-      this.$swal
-        .fire({
-          title: "Are you sure",
-          text: "you want to delete this token? Any applications using this token will not be able to connect to the API!",
-        })
-        .then((result) => {
-          if (result.value) {
-            axios
-              .post(
-                "/admin/projects/settings/api/delete-token/" + this.project.id,
-                token
-              )
-              .then((response) => {
-                this.$toast.success("Token deleted.");
+    methods: {
+      getProject() {
+        axios
+          .get("/admin/projects/settings/api/" + this.$route.params.project_id)
+          .then((response) => {
+            this.project = response.data.project;
+            this.tokens = response.data.tokens;
+            this.enable_public_access = response.data.project.public_api;
+          });
+      },
+
+      copyToClipboard(str) {
+        this.$clipboard(str);
+        this.$toast.success("Copied to clipboard");
+      },
+
+      closeNewTokenModal() {
+        this.openNewTokenModal = false;
+        (this.new_token = {
+          errors: {},
+          permissions: ["read"],
+        }),
+          (this.showToken = false),
+          (this.createdToken = null);
+        this.editStatus = false;
+      },
+
+      createNewTokenSubmit() {
+        if (this.editStatus) {
+          axios
+            .post(
+              "/admin/projects/settings/api/update-token/" + this.project.id,
+              this.new_token
+            )
+            .then(
+              (response) => {
+                this.$toast.success("Token updated!");
                 this.getProject();
-              });
-          }
-        });
-    },
-
-    enablePublicAccess() {
-      this.$swal
-        .fire({
-          title: "Are you sure",
-          text: "you want to enable public API access for get(read) requests in this project? You're still going to need an access token for post and delete (create, update, delete) requests.",
-        })
-        .then((result) => {
-          if (result.value) {
-            axios
-              .post(
-                "/admin/projects/settings/api/enable_public_access/" +
-                  this.project.id
-              )
-              .then((response) => {
-                this.$toast.success("Public API Access has been enabled.");
+                this.closeNewTokenModal();
+              },
+              (error) => {
+                if (error.response.status == 422) {
+                  this.new_token.errors = error.response.data.errors;
+                }
+              }
+            );
+        } else {
+          axios
+            .post(
+              "/admin/projects/settings/api/new-token/" + this.project.id,
+              this.new_token
+            )
+            .then(
+              (response) => {
+                this.$toast.success("Token created!");
                 this.getProject();
-              });
-          }
-        });
+                this.showToken = true;
+                this.createdToken = response.data;
+              },
+              (error) => {
+                if (error.response.status == 422) {
+                  this.new_token.errors = error.response.data.errors;
+                }
+              }
+            );
+        }
+      },
+
+      editToken(token) {
+        this.new_token = {
+          id: token.id,
+          name: token.name,
+          errors: {},
+          permissions: token.abilities,
+        };
+        this.editStatus = true;
+        this.openNewTokenModal = true;
+      },
+
+      deleteToken(token) {
+        this.$swal
+          .fire({
+            title: "Are you sure",
+            text: "you want to delete this token? Any applications using this token will not be able to connect to the API!",
+          })
+          .then((result) => {
+            if (result.value) {
+              axios
+                .post(
+                  "/admin/projects/settings/api/delete-token/" + this.project.id,
+                  token
+                )
+                .then((response) => {
+                  this.$toast.success("Token deleted.");
+                  this.getProject();
+                });
+            }
+          });
+      },
+
+      enablePublicAccess() {
+        this.$swal
+          .fire({
+            title: "Are you sure",
+            text: "you want to enable public API access for get(read) requests in this project? You're still going to need an access token for post and delete (create, update, delete) requests.",
+          })
+          .then((result) => {
+            if (result.value) {
+              axios
+                .post(
+                  "/admin/projects/settings/api/enable_public_access/" +
+                    this.project.id
+                )
+                .then((response) => {
+                  this.$toast.success("Public API Access has been enabled.");
+                  this.getProject();
+                });
+            }
+          });
+      },
+
+      disablePublicAccess() {
+        this.$swal
+          .fire({
+            title: "Are you sure",
+            text: "you want to disable public API access for this project?",
+          })
+          .then((result) => {
+            if (result.value) {
+              axios
+                .post(
+                  "/admin/projects/settings/api/disable_public_access/" +
+                    this.project.id
+                )
+                .then((response) => {
+                  this.$toast.success("Public API Access has been disabled.");
+                  this.getProject();
+                });
+            }
+          });
+      },
     },
 
-    disablePublicAccess() {
-      this.$swal
-        .fire({
-          title: "Are you sure",
-          text: "you want to disable public API access for this project?",
-        })
-        .then((result) => {
-          if (result.value) {
-            axios
-              .post(
-                "/admin/projects/settings/api/disable_public_access/" +
-                  this.project.id
-              )
-              .then((response) => {
-                this.$toast.success("Public API Access has been disabled.");
-                this.getProject();
-              });
-          }
-        });
+    computed: {
+      endpointUrl() {
+        let APP_URL = document.querySelector('meta[name="APP_URL"]').content;
+        return APP_URL + "/api/" + this.project.uuid;
+      },
     },
-  },
 
-  computed: {
-    endpointUrl() {
-      let APP_URL = document.querySelector('meta[name="APP_URL"]').content;
-      return APP_URL + "/api/" + this.project.uuid;
+    mounted() {
+      this.getProject();
     },
-  },
-
-  mounted() {
-    this.getProject();
-  },
-};
+  };
 </script>

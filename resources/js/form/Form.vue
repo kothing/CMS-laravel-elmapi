@@ -377,7 +377,7 @@
     import 'codemirror/theme/solarized.css';
     import "codemirror/addon/display/autorefresh.js";
 
-    import UiButton from '../components/Button.vue';
+    import UiButton from '../[components]/Button.vue';
 
     export default {
         props: ['uuid'],

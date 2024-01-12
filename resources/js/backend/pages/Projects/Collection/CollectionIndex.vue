@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import ProjectHeader from "../_Sections_/ProjectHeader.vue";
-import CollectionSidebar from "./_Sections_/CollectionSidebar.vue";
+import ProjectHeader from "../../../[components]/ProjectHeader.vue";
+import CollectionSidebar from "./[sections]/CollectionSidebar.vue";
 
 export default {
   components: {

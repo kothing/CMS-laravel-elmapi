@@ -229,8 +229,8 @@ import Vue from 'vue'
 import Clipboard from 'v-clipboard'
 import FileUpload from 'vue-upload-component'
 
-import UiButton from '../../../components/Button.vue'
-import checkRole from '../../../utils/checkrole'
+import UiButton from '../../[components]/Button.vue'
+import checkRole from '../../utils/checkrole'
 
 Vue.use(Clipboard)
 

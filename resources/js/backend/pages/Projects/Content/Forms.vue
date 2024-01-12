@@ -64,13 +64,13 @@
 </template>
 
 <script>
-import UiButton from '../../../components/Button.vue'
-import UiModal from '../../../components/Modal.vue'
-import UiDropdown from '../../../components/Dropdown.vue'
+import UiButton from '../../../../[components]/Button.vue'
+import UiModal from '../../../../[components]/Modal.vue'
+import UiDropdown from '../../../../[components]/Dropdown.vue'
 
-import ProjectHeader from '../_Sections_/ProjectHeader.vue'
-import ContentSidebar from './_Sections_/ContentSidebar.vue'
-import ContentFormsSidebar from './_Sections_/ContentFormsSidebar.vue'
+import ProjectHeader from '../../../[components]/ProjectHeader.vue'
+import ContentSidebar from './[sections]/ContentSidebar.vue'
+import ContentFormsSidebar from './[sections]/ContentFormsSidebar.vue'
 
 export default {
     components: {

@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import ProjectHeader from "../_Sections_/ProjectHeader.vue";
-import ContentSidebar from "./_Sections_/ContentSidebar.vue";
+import ProjectHeader from "../../../[components]/ProjectHeader.vue";
+import ContentSidebar from "./[sections]/ContentSidebar.vue";
 
 export default {
   components: {

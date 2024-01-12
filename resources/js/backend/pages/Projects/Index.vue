@@ -52,10 +52,10 @@
 </template>
 
 <script>
-import ProjectHeader from "./_Sections_/ProjectHeader";
-import CollectionSidebar from "./Collection/_Sections_/CollectionSidebar";
-import ContentSidebar from "./Content/_Sections_/ContentSidebar";
-import checkRole from "../../utils/checkrole";
+import ProjectHeader from "../../[components]/ProjectHeader.vue";
+import CollectionSidebar from "./Collection/[sections]/CollectionSidebar.vue";
+import ContentSidebar from "./Content/[sections]/ContentSidebar.vue";
+import checkRole from "../../../utils/checkrole";
 
 export default {
   components: {

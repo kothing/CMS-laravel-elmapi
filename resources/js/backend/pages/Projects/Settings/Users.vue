@@ -317,168 +317,169 @@
 </template>
 
 <script>
-import UiButton from "../../../components/Button.vue";
-import UiModal from "../../../components/Modal.vue";
+  import UiButton from "../../../../[components]/Button.vue";
+  import UiModal from "../../../../[components]/Modal.vue";
 
-import ProjectHeader from "../_Sections_/ProjectHeader.vue";
-import SettingsNav from "./_Sections_/SettingsNav.vue";
+  import ProjectHeader from "../../../[components]/ProjectHeader.vue";
 
-export default {
-  components: {
-    ProjectHeader,
-    SettingsNav,
-    UiButton,
-    UiModal,
-  },
+  import SettingsNav from "./[sections]/SettingsNav.vue";
 
-  data() {
-    return {
-      project: {},
-      super_admins: {},
-      admins: {},
-      editors: {},
-      users: {},
-      current_assign_role: null,
-      openAssignUserModal: false,
-      createNewUser: false,
-      new_user: {
-        password: null,
-        errors: {},
+  export default {
+    components: {
+      ProjectHeader,
+      SettingsNav,
+      UiButton,
+      UiModal,
+    },
+
+    data() {
+      return {
+        project: {},
+        super_admins: {},
+        admins: {},
+        editors: {},
+        users: {},
+        current_assign_role: null,
+        openAssignUserModal: false,
+        createNewUser: false,
+        new_user: {
+          password: null,
+          errors: {},
+        },
+        passwordShow: false,
+      };
+    },
+
+    methods: {
+      getProject() {
+        axios
+          .get("/admin/projects/settings/users/" + this.$route.params.project_id)
+          .then((response) => {
+            this.project = response.data.project;
+            this.super_admins = response.data.super_admins;
+            this.admins = response.data.admins;
+            this.editors = response.data.editors;
+            this.users = response.data.users;
+          });
       },
-      passwordShow: false,
-    };
-  },
 
-  methods: {
-    getProject() {
-      axios
-        .get("/admin/projects/settings/users/" + this.$route.params.project_id)
-        .then((response) => {
-          this.project = response.data.project;
-          this.super_admins = response.data.super_admins;
-          this.admins = response.data.admins;
-          this.editors = response.data.editors;
-          this.users = response.data.users;
-        });
-    },
+      getUserNameInitials(name) {
+        let initials = name.split(" ");
 
-    getUserNameInitials(name) {
-      let initials = name.split(" ");
+        if (initials.length > 1) {
+          initials = initials.shift().charAt(0) + initials.pop().charAt(0);
+        } else {
+          initials = name.substring(0, 2);
+        }
 
-      if (initials.length > 1) {
-        initials = initials.shift().charAt(0) + initials.pop().charAt(0);
-      } else {
-        initials = name.substring(0, 2);
-      }
+        return initials.toUpperCase();
+      },
 
-      return initials.toUpperCase();
-    },
+      assignUser(role) {
+        this.openAssignUserModal = true;
+        this.current_assign_role = role;
+        this.createNewUser = false;
+      },
 
-    assignUser(role) {
-      this.openAssignUserModal = true;
-      this.current_assign_role = role;
-      this.createNewUser = false;
-    },
+      selectUser(user) {
+        let assignUserData = {
+          role: this.current_assign_role,
+          user_id: user.id,
+        };
 
-    selectUser(user) {
-      let assignUserData = {
-        role: this.current_assign_role,
-        user_id: user.id,
-      };
-
-      axios
-        .post(
-          "/admin/projects/settings/users/assign/" + this.project.id,
-          assignUserData
-        )
-        .then((response) => {
-          this.$toast.success("User has assigned!");
-          this.getProject();
-          this.closeAssignUserModal();
-        });
-    },
-
-    removeUser(user, role) {
-      let removeUserData = {
-        role: role,
-        user_id: user.id,
-      };
-
-      this.$swal
-        .fire({
-          title: "Are you sure",
-          text: "you want to remove this user from the project? User account will not be deleted.",
-        })
-        .then((result) => {
-          if (result.value) {
-            axios
-              .post(
-                "/admin/projects/settings/users/remove-user/" + this.project.id,
-                removeUserData
-              )
-              .then((response) => {
-                this.$toast.success("User removed.");
-                this.getProject();
-                this.closeAssignUserModal();
-              });
-          }
-        });
-    },
-
-    closeAssignUserModal() {
-      this.openAssignUserModal = false;
-      this.createNewUser = false;
-    },
-
-    showPassword() {
-      this.passwordShow = !this.passwordShow;
-    },
-
-    generatePassword() {
-      let CharacterSet = "";
-      let password = "";
-
-      CharacterSet += "abcdefghijklmnopqrstuvwxyz";
-      CharacterSet += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-      CharacterSet += "0123456789";
-      CharacterSet += "![]{}()%&*$#^<>~@|";
-
-      for (let i = 0; i < 12; i++) {
-        password += CharacterSet.charAt(
-          Math.floor(Math.random() * CharacterSet.length)
-        );
-      }
-      this.new_user.password = password;
-      this.passwordShow = true;
-    },
-
-    createNewUserSubmit() {
-      axios
-        .post(
-          "/admin/projects/settings/users/new/" + this.project.id,
-          this.new_user
-        )
-        .then(
-          (response) => {
-            this.$toast.success("User created!");
+        axios
+          .post(
+            "/admin/projects/settings/users/assign/" + this.project.id,
+            assignUserData
+          )
+          .then((response) => {
+            this.$toast.success("User has assigned!");
             this.getProject();
-            this.createNewUser = false;
-            this.new_user = {
-              password: null,
-              errors: {},
-            };
-          },
-          (error) => {
-            if (error.response.status == 422) {
-              this.new_user.errors = error.response.data.errors;
-            }
-          }
-        );
-    },
-  },
+            this.closeAssignUserModal();
+          });
+      },
 
-  mounted() {
-    this.getProject();
-  },
-};
+      removeUser(user, role) {
+        let removeUserData = {
+          role: role,
+          user_id: user.id,
+        };
+
+        this.$swal
+          .fire({
+            title: "Are you sure",
+            text: "you want to remove this user from the project? User account will not be deleted.",
+          })
+          .then((result) => {
+            if (result.value) {
+              axios
+                .post(
+                  "/admin/projects/settings/users/remove-user/" + this.project.id,
+                  removeUserData
+                )
+                .then((response) => {
+                  this.$toast.success("User removed.");
+                  this.getProject();
+                  this.closeAssignUserModal();
+                });
+            }
+          });
+      },
+
+      closeAssignUserModal() {
+        this.openAssignUserModal = false;
+        this.createNewUser = false;
+      },
+
+      showPassword() {
+        this.passwordShow = !this.passwordShow;
+      },
+
+      generatePassword() {
+        let CharacterSet = "";
+        let password = "";
+
+        CharacterSet += "abcdefghijklmnopqrstuvwxyz";
+        CharacterSet += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        CharacterSet += "0123456789";
+        CharacterSet += "![]{}()%&*$#^<>~@|";
+
+        for (let i = 0; i < 12; i++) {
+          password += CharacterSet.charAt(
+            Math.floor(Math.random() * CharacterSet.length)
+          );
+        }
+        this.new_user.password = password;
+        this.passwordShow = true;
+      },
+
+      createNewUserSubmit() {
+        axios
+          .post(
+            "/admin/projects/settings/users/new/" + this.project.id,
+            this.new_user
+          )
+          .then(
+            (response) => {
+              this.$toast.success("User created!");
+              this.getProject();
+              this.createNewUser = false;
+              this.new_user = {
+                password: null,
+                errors: {},
+              };
+            },
+            (error) => {
+              if (error.response.status == 422) {
+                this.new_user.errors = error.response.data.errors;
+              }
+            }
+          );
+      },
+    },
+
+    mounted() {
+      this.getProject();
+    },
+  };
 </script>

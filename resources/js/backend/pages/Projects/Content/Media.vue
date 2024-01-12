@@ -14,35 +14,36 @@
 </template>
 
 <script>
-import ProjectHeader from "../_Sections_/ProjectHeader";
-import MediaLibrary from "../_Sections_/MediaLibrary.vue";
-import ContentSidebar from "./_Sections_/ContentSidebar.vue";
+  import ProjectHeader from "../../../[components]/ProjectHeader.vue";
+  import MediaLibrary from "../../../[components]/MediaLibrary.vue";
 
-export default {
-  components: {
-    ProjectHeader,
-    ContentSidebar,
-    MediaLibrary,
-  },
+  import ContentSidebar from "./[sections]/ContentSidebar.vue";
 
-  data() {
-    return {
-      project: {},
-    };
-  },
-
-  methods: {
-    getProject() {
-      axios
-        .get("/admin/projects/" + this.$route.params.project_id)
-        .then((response) => {
-          this.project = response.data;
-        });
+  export default {
+    components: {
+      ProjectHeader,
+      ContentSidebar,
+      MediaLibrary,
     },
-  },
 
-  mounted() {
-    this.getProject();
-  },
-};
+    data() {
+      return {
+        project: {},
+      };
+    },
+
+    methods: {
+      getProject() {
+        axios
+          .get("/admin/projects/" + this.$route.params.project_id)
+          .then((response) => {
+            this.project = response.data;
+          });
+      },
+    },
+
+    mounted() {
+      this.getProject();
+    },
+  };
 </script>

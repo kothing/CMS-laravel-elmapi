@@ -103,87 +103,89 @@
 </template>
 
 <script>
-import UiButton from "../../../components/Button.vue";
-import checkRole from "../../../utils/checkrole";
+  import UiButton from "../../../../[components]/Button.vue";
 
-import ProjectHeader from "../_Sections_/ProjectHeader.vue";
-import SettingsNav from "./_Sections_/SettingsNav.vue";
+  import ProjectHeader from "../../../[components]/ProjectHeader.vue";
+  
+  import checkRole from "../../../../utils/checkrole";
 
-export default {
-  components: {
-    ProjectHeader,
-    SettingsNav,
-    UiButton,
-  },
+  import SettingsNav from "./[sections]/SettingsNav.vue";
 
-  data() {
-    return {
-      project: {},
-      editProjectData: {
-        errors: {
-          name: "",
-        },
-      },
-    };
-  },
-
-  methods: {
-    checkRole,
-
-    getProject() {
-      axios
-        .get("/admin/projects/" + this.$route.params.project_id)
-        .then((response) => {
-          this.project = response.data;
-          this.editProjectData.id = response.data.id;
-          this.editProjectData.name = response.data.name;
-          this.editProjectData.description = response.data.description;
-          this.editProjectData.disk = response.data.disk;
-        });
+  export default {
+    components: {
+      ProjectHeader,
+      SettingsNav,
+      UiButton,
     },
 
-    saveEdit() {
-      axios
-        .post("/admin/projects/update/" + this.project.id, this.editProjectData)
-        .then(
-          (response) => {
-            this.$toast.success("Project updated!");
-            this.editProjectData = {
-              errors: {
-                name: "",
-              },
-            };
-            this.getProject();
+    data() {
+      return {
+        project: {},
+        editProjectData: {
+          errors: {
+            name: "",
           },
-          (error) => {
-            if (error.response.status == 422) {
-              this.editProjectData.errors = error.response.data.errors;
+        },
+      };
+    },
+
+    methods: {
+      checkRole,
+
+      getProject() {
+        axios
+          .get("/admin/projects/" + this.$route.params.project_id)
+          .then((response) => {
+            this.project = response.data;
+            this.editProjectData.id = response.data.id;
+            this.editProjectData.name = response.data.name;
+            this.editProjectData.description = response.data.description;
+            this.editProjectData.disk = response.data.disk;
+          });
+      },
+
+      saveEdit() {
+        axios
+          .post("/admin/projects/update/" + this.project.id, this.editProjectData)
+          .then(
+            (response) => {
+              this.$toast.success("Project updated!");
+              this.editProjectData = {
+                errors: {
+                  name: "",
+                },
+              };
+              this.getProject();
+            },
+            (error) => {
+              if (error.response.status == 422) {
+                this.editProjectData.errors = error.response.data.errors;
+              }
             }
-          }
-        );
+          );
+      },
+
+      deleteProject() {
+        this.$swal
+          .fire({
+            title: "Are you sure",
+            text: "you want to delete this project? All the collections and the content will be lost. You won't be able to revert this!",
+          })
+          .then((result) => {
+            if (result.value) {
+              axios
+                .delete("/admin/projects/delete/" + this.project.id)
+                .then((response) => {
+                  this.$toast.success("Project deleted.");
+                  this.$router.push({ name: "dashboard" });
+                });
+            }
+          });
+      },
     },
 
-    deleteProject() {
-      this.$swal
-        .fire({
-          title: "Are you sure",
-          text: "you want to delete this project? All the collections and the content will be lost. You won't be able to revert this!",
-        })
-        .then((result) => {
-          if (result.value) {
-            axios
-              .delete("/admin/projects/delete/" + this.project.id)
-              .then((response) => {
-                this.$toast.success("Project deleted.");
-                this.$router.push({ name: "dashboard" });
-              });
-          }
-        });
+    mounted() {
+      this.getProject();
     },
-  },
-
-  mounted() {
-    this.getProject();
-  },
-};
+  };
 </script>

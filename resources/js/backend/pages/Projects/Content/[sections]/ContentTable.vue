@@ -1001,495 +1001,496 @@
 </template>
 
 <script>
-import Vue from "vue";
-import moment from "moment";
-import VTooltip from "v-tooltip";
+  import Vue from "vue";
+  import moment from "moment";
+  import VTooltip from "v-tooltip";
 
-import store from "../../../../store";
-import UiModal from "../../../../components/Modal.vue";
-import UiButton from "../../../../components/Button.vue";
-import UiDropdown from "../../../../components/Dropdown.vue";
+  import store from "../../../../store";
+  
+  import UiModal from "../../../../../[components]/Modal.vue";
+  import UiButton from "../../../../../[components]/Button.vue";
+  import UiDropdown from "../../../../../[components]/Dropdown.vue";
 
-Vue.use(VTooltip);
+  Vue.use(VTooltip);
 
-export default {
-  components: {
-    UiModal,
-    UiButton,
-    UiDropdown,
-  },
-
-  props: {
-    relationSelect: {
-      type: Boolean,
-      default: false,
+  export default {
+    components: {
+      UiModal,
+      UiButton,
+      UiDropdown,
     },
-    collection_id: {
-      type: Number,
-    },
-    eachProp: {
-      type: Number,
-      default: 15,
-    },
-    relation_type: {
-      type: Number,
-    },
-  },
 
-  data() {
-    return {
-      project: {},
-      collection: {},
-      content: {},
-      totalCount: 0,
-      publishedCount: 0,
-      draftCount: 0,
-      trashedCount: 0,
-      search: "",
-      columns: {},
-      listOptions: {
-        orderBy: "created_at",
-        criteria: "ASC",
-        sortByMeta: 0,
-        getItems: "all",
+    props: {
+      relationSelect: {
+        type: Boolean,
+        default: false,
       },
-      openTextModal: false,
-      textRecord: null,
-      textModalFieldName: null,
+      collection_id: {
+        type: Number,
+      },
+      eachProp: {
+        type: Number,
+        default: 15,
+      },
+      relation_type: {
+        type: Number,
+      },
+    },
 
-      openMediaModal: false,
-      mediaRecords: {},
-      mediaModalFieldName: null,
-
-      selected: [],
-      selectAll: false,
-
-      openRelationModal: false,
-      relationRecords: {
-        collection: {
-          fields: {},
+    data() {
+      return {
+        project: {},
+        collection: {},
+        content: {},
+        totalCount: 0,
+        publishedCount: 0,
+        draftCount: 0,
+        trashedCount: 0,
+        search: "",
+        columns: {},
+        listOptions: {
+          orderBy: "created_at",
+          criteria: "ASC",
+          sortByMeta: 0,
+          getItems: "all",
         },
-      },
-      relationModalFieldName: null,
+        openTextModal: false,
+        textRecord: null,
+        textModalFieldName: null,
 
-      each: null,
+        openMediaModal: false,
+        mediaRecords: {},
+        mediaModalFieldName: null,
 
-      form_count: 0,
-    };
-  },
+        selected: [],
+        selectAll: false,
 
-  methods: {
-    getContent(page) {
-      if (typeof page === "undefined") {
-        page = 1;
-      }
+        openRelationModal: false,
+        relationRecords: {
+          collection: {
+            fields: {},
+          },
+        },
+        relationModalFieldName: null,
 
-      axios
-        .get(
-          "/admin/content/" +
-            this.$route.params.project_id +
-            "/" +
-            this.collection_id +
-            "?page=" +
-            page +
-            "&search=" +
-            this.search +
-            "&orderBy=" +
-            this.listOptions.orderBy +
-            "&cr=" +
-            this.listOptions.criteria +
-            "&sbm=" +
-            this.listOptions.sortByMeta +
-            "&each=" +
-            this.each +
-            "&getItems=" +
-            this.listOptions.getItems
-        )
-        .then((response) => {
-          this.project = response.data.project;
-          this.collection = response.data.collection;
-          this.content = response.data.content;
-          this.form_count = response.data.forms;
+        each: null,
 
-          this.totalCount = response.data.totalCount;
-          this.publishedCount = response.data.published;
-          this.draftCount = response.data.draft;
-          this.trashedCount = response.data.trashed;
+        form_count: 0,
+      };
+    },
 
-          if (this.content.data == 0) this.selectAll = false;
+    methods: {
+      getContent(page) {
+        if (typeof page === "undefined") {
+          page = 1;
+        }
 
-          if (store.getters && store.getters.columnSettings.length == 0) {
-            this.setInitialColumns();
-            store.dispatch("setColumns", {
-              collection_id: this.collection_id,
-              columns: this.columns,
-            });
-          } else {
-            let storeColumnSettings = store.getters.columnSettings;
-            let storeHasSettings = storeColumnSettings.some(
-              (o) => o.collection_id == this.collection_id
-            );
+        axios
+          .get(
+            "/admin/content/" +
+              this.$route.params.project_id +
+              "/" +
+              this.collection_id +
+              "?page=" +
+              page +
+              "&search=" +
+              this.search +
+              "&orderBy=" +
+              this.listOptions.orderBy +
+              "&cr=" +
+              this.listOptions.criteria +
+              "&sbm=" +
+              this.listOptions.sortByMeta +
+              "&each=" +
+              this.each +
+              "&getItems=" +
+              this.listOptions.getItems
+          )
+          .then((response) => {
+            this.project = response.data.project;
+            this.collection = response.data.collection;
+            this.content = response.data.content;
+            this.form_count = response.data.forms;
 
-            if (!storeHasSettings) {
+            this.totalCount = response.data.totalCount;
+            this.publishedCount = response.data.published;
+            this.draftCount = response.data.draft;
+            this.trashedCount = response.data.trashed;
+
+            if (this.content.data == 0) this.selectAll = false;
+
+            if (store.getters && store.getters.columnSettings.length == 0) {
               this.setInitialColumns();
               store.dispatch("setColumns", {
                 collection_id: this.collection_id,
                 columns: this.columns,
               });
             } else {
-              this.columns = storeColumnSettings.find(
+              let storeColumnSettings = store.getters.columnSettings;
+              let storeHasSettings = storeColumnSettings.some(
                 (o) => o.collection_id == this.collection_id
-              ).columns;
+              );
+
+              if (!storeHasSettings) {
+                this.setInitialColumns();
+                store.dispatch("setColumns", {
+                  collection_id: this.collection_id,
+                  columns: this.columns,
+                });
+              } else {
+                this.columns = storeColumnSettings.find(
+                  (o) => o.collection_id == this.collection_id
+                ).columns;
+              }
+            }
+
+            this.selectAll = false;
+          });
+      },
+
+      setInitialColumns() {
+        this.columns = {
+          created_at: true,
+          updated_at: true,
+          published_at: false,
+          created_by: false,
+          updated_by: false,
+          published_by: false,
+        };
+
+        this.collection.fields.forEach((field) => {
+          if (field.options.hideInContentList)
+            Vue.set(this.columns, field.name, false);
+          else Vue.set(this.columns, field.name, true);
+        });
+      },
+
+      changeColumnSettings() {
+        store.dispatch("updateColumn", {
+          collection_id: this.collection_id,
+          columns: this.columns,
+        });
+      },
+
+      sortBy(field, meta = 0) {
+        if (this.listOptions.orderBy != field) {
+          this.listOptions.criteria = "ASC";
+        } else {
+          if (
+            this.listOptions.criteria == null ||
+            this.listOptions.criteria == "DESC"
+          )
+            this.listOptions.criteria = "ASC";
+          else this.listOptions.criteria = "DESC";
+        }
+        this.listOptions.orderBy = field;
+
+        this.listOptions.sortByMeta = meta;
+        this.getContent(1, meta);
+      },
+
+      selectRecord(id) {
+        if (this.relation_type == 1) {
+          if (this.selected.includes(id)) {
+            this.selected.splice(
+              this.selected.findIndex((v) => v === id),
+              1
+            );
+          } else {
+            this.selected = [];
+            this.selected.push(id);
+          }
+        } else {
+          if (this.selected.includes(id)) {
+            this.selected.splice(
+              this.selected.findIndex((v) => v === id),
+              1
+            );
+          } else {
+            this.selected.push(id);
+          }
+        }
+        this.selectAll = false;
+      },
+
+      checkIfSelected(id) {
+        return this.selected.includes(id);
+      },
+
+      addSelected() {
+        this.$emit("addSelected", {
+          selected: this.selected,
+          collection_id: this.collection_id,
+        });
+        this.selected = [];
+      },
+
+      selectAllFn() {
+        if (!this.selectAll) {
+          for (let i = 0; i < this.content.data.length; i++) {
+            if (!this.selected.includes(this.content.data[i].id)) {
+              this.selected.push(this.content.data[i].id);
             }
           }
-
-          this.selectAll = false;
-        });
-    },
-
-    setInitialColumns() {
-      this.columns = {
-        created_at: true,
-        updated_at: true,
-        published_at: false,
-        created_by: false,
-        updated_by: false,
-        published_by: false,
-      };
-
-      this.collection.fields.forEach((field) => {
-        if (field.options.hideInContentList)
-          Vue.set(this.columns, field.name, false);
-        else Vue.set(this.columns, field.name, true);
-      });
-    },
-
-    changeColumnSettings() {
-      store.dispatch("updateColumn", {
-        collection_id: this.collection_id,
-        columns: this.columns,
-      });
-    },
-
-    sortBy(field, meta = 0) {
-      if (this.listOptions.orderBy != field) {
-        this.listOptions.criteria = "ASC";
-      } else {
-        if (
-          this.listOptions.criteria == null ||
-          this.listOptions.criteria == "DESC"
-        )
-          this.listOptions.criteria = "ASC";
-        else this.listOptions.criteria = "DESC";
-      }
-      this.listOptions.orderBy = field;
-
-      this.listOptions.sortByMeta = meta;
-      this.getContent(1, meta);
-    },
-
-    selectRecord(id) {
-      if (this.relation_type == 1) {
-        if (this.selected.includes(id)) {
-          this.selected.splice(
-            this.selected.findIndex((v) => v === id),
-            1
-          );
         } else {
           this.selected = [];
-          this.selected.push(id);
         }
-      } else {
-        if (this.selected.includes(id)) {
-          this.selected.splice(
-            this.selected.findIndex((v) => v === id),
-            1
-          );
-        } else {
-          this.selected.push(id);
-        }
-      }
-      this.selectAll = false;
-    },
+      },
 
-    checkIfSelected(id) {
-      return this.selected.includes(id);
-    },
+      closeTextModal() {
+        this.openTextModal = false;
+      },
 
-    addSelected() {
-      this.$emit("addSelected", {
-        selected: this.selected,
-        collection_id: this.collection_id,
-      });
-      this.selected = [];
-    },
+      showText(field, value) {
+        this.openTextModal = true;
+        this.textRecord = value;
+        this.textModalFieldName = field.label;
+      },
 
-    selectAllFn() {
-      if (!this.selectAll) {
-        for (let i = 0; i < this.content.data.length; i++) {
-          if (!this.selected.includes(this.content.data[i].id)) {
-            this.selected.push(this.content.data[i].id);
-          }
-        }
-      } else {
+      closeMediaModal() {
+        this.openMediaModal = false;
+      },
+
+      async showMedia(field, files) {
+        await axios
+          .post(
+            "/admin/content/get-selected-files/" + this.$route.params.project_id,
+            { data: files.split(",") }
+          )
+          .then((response) => {
+            this.openMediaModal = true;
+            this.mediaRecords = response.data;
+            this.mediaModalFieldName = field.label;
+            this.$forceUpdate();
+          });
+      },
+
+      closeRelationModal() {
+        this.openRelationModal = false;
+      },
+
+      async showRelationlist(field, value) {
+        let data = {
+          selected: value.split(","),
+          collection_id: field.options.relation.collection,
+        };
+
+        await axios
+          .post(
+            "/admin/content/get-selected-records/" +
+              this.$route.params.project_id,
+            { data: data }
+          )
+          .then((response) => {
+            this.openRelationModal = true;
+            this.relationRecords = response.data.content;
+            this.relationRecords.collection = response.data.collection;
+            this.relationModalFieldName = field.label;
+            this.$forceUpdate();
+          });
+      },
+
+      changeGetItems(status) {
+        (this.listOptions.getItems = status), this.getContent();
         this.selected = [];
-      }
+        this.selectAll = false;
+      },
+
+      publishSelected() {
+        this.$swal
+          .fire({
+            title: "Are you sure",
+            text: "you want to publish all selected items?",
+          })
+          .then((result) => {
+            if (result.value) {
+              axios
+                .post(
+                  "/admin/content/publish-selected/" +
+                    this.$route.params.project_id +
+                    "/" +
+                    this.$route.params.col_id,
+                  { selected: this.selected }
+                )
+                .then((response) => {
+                  this.$toast.success("Selected items has been published");
+                  this.getContent();
+                  this.selected = [];
+                  this.selectAll = false;
+                });
+            }
+          });
+      },
+
+      unPublishSelected() {
+        this.$swal
+          .fire({
+            title: "Are you sure",
+            text: "you want to unpublish all selected items?",
+          })
+          .then((result) => {
+            if (result.value) {
+              axios
+                .post(
+                  "/admin/content/unpublish-selected/" +
+                    this.$route.params.project_id +
+                    "/" +
+                    this.$route.params.col_id,
+                  { selected: this.selected }
+                )
+                .then((response) => {
+                  this.$toast.success("Selected items has been unpublished");
+                  this.getContent();
+                  this.selected = [];
+                  this.selectAll = false;
+                });
+            }
+          });
+      },
+
+      moveToTrashContent(item) {
+        this.$swal
+          .fire({
+            title: "Are you sure",
+            text: "you want to move this item to the trash?",
+          })
+          .then((result) => {
+            if (result.value) {
+              axios
+                .delete(
+                  "/admin/content/move-to-trash/" +
+                    this.$route.params.project_id +
+                    "/" +
+                    this.$route.params.col_id +
+                    "/" +
+                    item.id
+                )
+                .then((response) => {
+                  this.$toast.success("Content moved to the trash.");
+                  this.getContent();
+                });
+            }
+          });
+      },
+
+      moveToTrashSelected() {
+        this.$swal
+          .fire({
+            title: "Are you sure",
+            text: "you want to move all selected items to the trash?",
+          })
+          .then((result) => {
+            if (result.value) {
+              axios
+                .post(
+                  "/admin/content/move-to-trash-selected/" +
+                    this.$route.params.project_id +
+                    "/" +
+                    this.$route.params.col_id,
+                  { selected: this.selected }
+                )
+                .then((response) => {
+                  this.$toast.success(
+                    "Selected items has been moved to the trash"
+                  );
+                  this.getContent();
+                  this.selected = [];
+                  this.selectAll = false;
+                });
+            }
+          });
+      },
+
+      deleteSelected() {
+        this.$swal
+          .fire({
+            title: "Are you sure",
+            text: "you want to delete all selected items permanently?",
+          })
+          .then((result) => {
+            if (result.value) {
+              axios
+                .post(
+                  "/admin/content/delete-selected/" +
+                    this.$route.params.project_id +
+                    "/" +
+                    this.$route.params.col_id,
+                  { selected: this.selected }
+                )
+                .then((response) => {
+                  this.$toast.success("Selected items has been deleted");
+                  this.getContent();
+                  this.selected = [];
+                  this.selectAll = false;
+                });
+            }
+          });
+      },
+
+      restoreSelected() {
+        this.$swal
+          .fire({
+            title: "Are you sure",
+            text: "you want to restore all selected items?",
+          })
+          .then((result) => {
+            if (result.value) {
+              axios
+                .post(
+                  "/admin/content/restore-selected/" +
+                    this.$route.params.project_id +
+                    "/" +
+                    this.$route.params.col_id,
+                  { selected: this.selected }
+                )
+                .then((response) => {
+                  this.$toast.success("Selected items has been restored");
+                  this.getContent();
+                  this.selected = [];
+                  this.selectAll = false;
+                });
+            }
+          });
+      },
+
+      getUserNameInitials(name) {
+        let initials = name.split(" ");
+
+        if (initials.length > 1) {
+          initials = initials.shift().charAt(0) + initials.pop().charAt(0);
+        } else {
+          initials = name.substring(0, 2);
+        }
+
+        return initials.toUpperCase();
+      },
+
+      dateFormat(date) {
+        return moment(date).format("D MMM YYYY, H:mm");
+      },
     },
 
-    closeTextModal() {
-      this.openTextModal = false;
+    mounted() {
+      if (this.collection_id !== undefined) this.getContent();
     },
 
-    showText(field, value) {
-      this.openTextModal = true;
-      this.textRecord = value;
-      this.textModalFieldName = field.label;
+    created() {
+      this.each = this.eachProp;
     },
 
-    closeMediaModal() {
-      this.openMediaModal = false;
+    computed: {
+      hasAddSelectedListener() {
+        return this.$listeners && this.$listeners.addSelected;
+      },
     },
 
-    async showMedia(field, files) {
-      await axios
-        .post(
-          "/admin/content/get-selected-files/" + this.$route.params.project_id,
-          { data: files.split(",") }
-        )
-        .then((response) => {
-          this.openMediaModal = true;
-          this.mediaRecords = response.data;
-          this.mediaModalFieldName = field.label;
-          this.$forceUpdate();
-        });
+    watch: {
+      collection_id(newId, oldId) {
+        this.search = "";
+        this.getContent();
+        this.selected = [];
+        this.selectAll = false;
+      },
     },
-
-    closeRelationModal() {
-      this.openRelationModal = false;
-    },
-
-    async showRelationlist(field, value) {
-      let data = {
-        selected: value.split(","),
-        collection_id: field.options.relation.collection,
-      };
-
-      await axios
-        .post(
-          "/admin/content/get-selected-records/" +
-            this.$route.params.project_id,
-          { data: data }
-        )
-        .then((response) => {
-          this.openRelationModal = true;
-          this.relationRecords = response.data.content;
-          this.relationRecords.collection = response.data.collection;
-          this.relationModalFieldName = field.label;
-          this.$forceUpdate();
-        });
-    },
-
-    changeGetItems(status) {
-      (this.listOptions.getItems = status), this.getContent();
-      this.selected = [];
-      this.selectAll = false;
-    },
-
-    publishSelected() {
-      this.$swal
-        .fire({
-          title: "Are you sure",
-          text: "you want to publish all selected items?",
-        })
-        .then((result) => {
-          if (result.value) {
-            axios
-              .post(
-                "/admin/content/publish-selected/" +
-                  this.$route.params.project_id +
-                  "/" +
-                  this.$route.params.col_id,
-                { selected: this.selected }
-              )
-              .then((response) => {
-                this.$toast.success("Selected items has been published");
-                this.getContent();
-                this.selected = [];
-                this.selectAll = false;
-              });
-          }
-        });
-    },
-
-    unPublishSelected() {
-      this.$swal
-        .fire({
-          title: "Are you sure",
-          text: "you want to unpublish all selected items?",
-        })
-        .then((result) => {
-          if (result.value) {
-            axios
-              .post(
-                "/admin/content/unpublish-selected/" +
-                  this.$route.params.project_id +
-                  "/" +
-                  this.$route.params.col_id,
-                { selected: this.selected }
-              )
-              .then((response) => {
-                this.$toast.success("Selected items has been unpublished");
-                this.getContent();
-                this.selected = [];
-                this.selectAll = false;
-              });
-          }
-        });
-    },
-
-    moveToTrashContent(item) {
-      this.$swal
-        .fire({
-          title: "Are you sure",
-          text: "you want to move this item to the trash?",
-        })
-        .then((result) => {
-          if (result.value) {
-            axios
-              .delete(
-                "/admin/content/move-to-trash/" +
-                  this.$route.params.project_id +
-                  "/" +
-                  this.$route.params.col_id +
-                  "/" +
-                  item.id
-              )
-              .then((response) => {
-                this.$toast.success("Content moved to the trash.");
-                this.getContent();
-              });
-          }
-        });
-    },
-
-    moveToTrashSelected() {
-      this.$swal
-        .fire({
-          title: "Are you sure",
-          text: "you want to move all selected items to the trash?",
-        })
-        .then((result) => {
-          if (result.value) {
-            axios
-              .post(
-                "/admin/content/move-to-trash-selected/" +
-                  this.$route.params.project_id +
-                  "/" +
-                  this.$route.params.col_id,
-                { selected: this.selected }
-              )
-              .then((response) => {
-                this.$toast.success(
-                  "Selected items has been moved to the trash"
-                );
-                this.getContent();
-                this.selected = [];
-                this.selectAll = false;
-              });
-          }
-        });
-    },
-
-    deleteSelected() {
-      this.$swal
-        .fire({
-          title: "Are you sure",
-          text: "you want to delete all selected items permanently?",
-        })
-        .then((result) => {
-          if (result.value) {
-            axios
-              .post(
-                "/admin/content/delete-selected/" +
-                  this.$route.params.project_id +
-                  "/" +
-                  this.$route.params.col_id,
-                { selected: this.selected }
-              )
-              .then((response) => {
-                this.$toast.success("Selected items has been deleted");
-                this.getContent();
-                this.selected = [];
-                this.selectAll = false;
-              });
-          }
-        });
-    },
-
-    restoreSelected() {
-      this.$swal
-        .fire({
-          title: "Are you sure",
-          text: "you want to restore all selected items?",
-        })
-        .then((result) => {
-          if (result.value) {
-            axios
-              .post(
-                "/admin/content/restore-selected/" +
-                  this.$route.params.project_id +
-                  "/" +
-                  this.$route.params.col_id,
-                { selected: this.selected }
-              )
-              .then((response) => {
-                this.$toast.success("Selected items has been restored");
-                this.getContent();
-                this.selected = [];
-                this.selectAll = false;
-              });
-          }
-        });
-    },
-
-    getUserNameInitials(name) {
-      let initials = name.split(" ");
-
-      if (initials.length > 1) {
-        initials = initials.shift().charAt(0) + initials.pop().charAt(0);
-      } else {
-        initials = name.substring(0, 2);
-      }
-
-      return initials.toUpperCase();
-    },
-
-    dateFormat(date) {
-      return moment(date).format("D MMM YYYY, H:mm");
-    },
-  },
-
-  mounted() {
-    if (this.collection_id !== undefined) this.getContent();
-  },
-
-  created() {
-    this.each = this.eachProp;
-  },
-
-  computed: {
-    hasAddSelectedListener() {
-      return this.$listeners && this.$listeners.addSelected;
-    },
-  },
-
-  watch: {
-    collection_id(newId, oldId) {
-      this.search = "";
-      this.getContent();
-      this.selected = [];
-      this.selectAll = false;
-    },
-  },
-};
+  };
 </script>

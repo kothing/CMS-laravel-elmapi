@@ -72,9 +72,10 @@
 </template>
 
 <script>
+    import UiDropdown from '../../[components]/Dropdown.vue';
     import Brand from './Brand.vue';
-    import UiDropdown from './Dropdown.vue';
-    import checkRole from '../utils/checkrole';
+    
+    import checkRole from '../../utils/checkrole';
     import store from '../store';
 
     export default {

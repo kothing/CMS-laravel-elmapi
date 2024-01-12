@@ -535,16 +535,17 @@ import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 
-import UiButton from '../../../components/Button.vue'
-import UiModal from '../../../components/Modal.vue'
-import UiDropdown from '../../../components/Dropdown.vue'
+import UiButton from '../../../../[components]/Button.vue'
+import UiModal from '../../../../[components]/Modal.vue'
+import UiDropdown from '../../../../[components]/Dropdown.vue'
 
-import ProjectHeader from '../_Sections_/ProjectHeader'
-import MediaLibrary from '../_Sections_/MediaLibrary.vue'
-import ContentSidebar from './_Sections_/ContentSidebar.vue'
-import ContentTable from './_Sections_/ContentTable.vue'
+import ProjectHeader from '../../../[components]/ProjectHeader.vue'
+import MediaLibrary from '../../../[components]/MediaLibrary.vue'
 
-import localesJson from '../../../locales.json'
+import ContentSidebar from './[sections]/ContentSidebar.vue'
+import ContentTable from './[sections]/ContentTable.vue'
+
+import localesJson from '../../../../locales.json'
 
 export default {
     components: {

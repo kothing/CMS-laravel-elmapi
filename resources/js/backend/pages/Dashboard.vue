@@ -3,23 +3,21 @@
 </template>
 
 <script>
-import localesJson from "../locales.json";
+    export default {
+        components: {},
 
-export default {
-    components: {},
+        data() {
+            return {
+                locales: [],
+            };
+        },
 
-    data() {
-        return {
-            locales: [],
-        };
-    },
+        methods: {
+            //
+        },
 
-    methods: {
-        //
-    },
-
-    mounted() {
-        //
-    },
-};
+        mounted() {
+            //
+        },
+    };
 </script>

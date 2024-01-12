@@ -164,121 +164,121 @@
 </template>
 
 <script>
-import { codemirror } from "vue-codemirror";
-import "codemirror/lib/codemirror.css";
-import "codemirror/mode/javascript/javascript.js";
-import "codemirror/addon/display/autorefresh.js";
+  import { codemirror } from "vue-codemirror";
+  import "codemirror/lib/codemirror.css";
+  import "codemirror/mode/javascript/javascript.js";
+  import "codemirror/addon/display/autorefresh.js";
 
-import UiButton from "../../../components/Button.vue";
-import UiModal from "../../../components/Modal.vue";
+  import UiButton from "../../../../[components]/Button.vue";
+  import UiModal from "../../../../[components]/Modal.vue";
 
-import ProjectHeader from "../_Sections_/ProjectHeader.vue";
-import SettingsNav from "./_Sections_/SettingsNav.vue";
+  import ProjectHeader from "../../../[components]/ProjectHeader.vue";
+  import SettingsNav from "./[sections]/SettingsNav.vue";
 
-export default {
-  components: {
-    ProjectHeader,
-    SettingsNav,
-    UiButton,
-    UiModal,
-    codemirror,
-  },
+  export default {
+    components: {
+      ProjectHeader,
+      SettingsNav,
+      UiButton,
+      UiModal,
+      codemirror,
+    },
 
-  data() {
-    return {
-      project: {},
-      webhook: {},
-      logs: {},
-      openDetailModal: false,
-      detailType: "",
-      logDetails: {
-        request: "",
-        response: "",
-        url: "",
-      },
-
-      cmOptions: {
-        mode: {
-          name: "javascript",
-          json: true,
+    data() {
+      return {
+        project: {},
+        webhook: {},
+        logs: {},
+        openDetailModal: false,
+        detailType: "",
+        logDetails: {
+          request: "",
+          response: "",
+          url: "",
         },
-        readOnly: true,
-        lineWrapping: true,
-        autoRefresh: true,
+
+        cmOptions: {
+          mode: {
+            name: "javascript",
+            json: true,
+          },
+          readOnly: true,
+          lineWrapping: true,
+          autoRefresh: true,
+        },
+      };
+    },
+
+    methods: {
+      getProject(page) {
+        if (typeof page === "undefined") {
+          page = 1;
+        }
+
+        axios
+          .get(
+            "/admin/projects/settings/webhooks/" +
+              this.$route.params.project_id +
+              "/logs/" +
+              this.$route.params.webhook_id +
+              "?page=" +
+              page
+          )
+          .then((response) => {
+            this.project = response.data.project;
+            this.webhook = response.data.webhook;
+            this.logs = response.data.logs;
+          });
       },
-    };
-  },
 
-  methods: {
-    getProject(page) {
-      if (typeof page === "undefined") {
-        page = 1;
-      }
+      showText(log) {
+        this.logDetails = {
+          request: log.request,
+          response: log.response,
+          url: log.url,
+        };
+        this.$forceUpdate();
+        this.openDetailModal = true;
+      },
 
-      axios
-        .get(
-          "/admin/projects/settings/webhooks/" +
-            this.$route.params.project_id +
-            "/logs/" +
-            this.$route.params.webhook_id +
-            "?page=" +
-            page
-        )
-        .then((response) => {
-          this.project = response.data.project;
-          this.webhook = response.data.webhook;
-          this.logs = response.data.logs;
-        });
+      closeDetailModal() {
+        this.logDetails = {
+          request: null,
+          response: null,
+          url: "",
+        };
+        this.openDetailModal = false;
+        this.$forceUpdate();
+      },
+
+      clearLogs() {
+        this.$swal
+          .fire({
+            title: "Are you sure",
+            text: "you want to delete all logs?",
+          })
+          .then((result) => {
+            if (result.value) {
+              axios
+                .delete(
+                  "/admin/projects/settings/webhooks/" +
+                    this.$route.params.project_id +
+                    "/logs/" +
+                    this.$route.params.webhook_id
+                )
+                .then((response) => {
+                  this.$toast.success("All logs has been deleted.");
+                  this.getProject();
+                });
+            }
+          });
+      },
     },
 
-    showText(log) {
-      this.logDetails = {
-        request: log.request,
-        response: log.response,
-        url: log.url,
-      };
-      this.$forceUpdate();
-      this.openDetailModal = true;
+    computed: {},
+
+    mounted() {
+      this.getProject();
     },
-
-    closeDetailModal() {
-      this.logDetails = {
-        request: null,
-        response: null,
-        url: "",
-      };
-      this.openDetailModal = false;
-      this.$forceUpdate();
-    },
-
-    clearLogs() {
-      this.$swal
-        .fire({
-          title: "Are you sure",
-          text: "you want to delete all logs?",
-        })
-        .then((result) => {
-          if (result.value) {
-            axios
-              .delete(
-                "/admin/projects/settings/webhooks/" +
-                  this.$route.params.project_id +
-                  "/logs/" +
-                  this.$route.params.webhook_id
-              )
-              .then((response) => {
-                this.$toast.success("All logs has been deleted.");
-                this.getProject();
-              });
-          }
-        });
-    },
-  },
-
-  computed: {},
-
-  mounted() {
-    this.getProject();
-  },
-};
+  };
 </script>

@@ -91,63 +91,27 @@
 </template>
 
 <script>
-import UiButton from "../components/Button.vue";
-import store from "../store";
+  import UiButton from "../../[components]/Button.vue";
+  import store from "../store";
 
-export default {
-  components: {
-    UiButton,
-  },
-
-  data() {
-    return {
-      user: {
-        name: store.state.user.name,
-        email: store.state.user.email,
-        errors: {},
-      },
-    };
-  },
-
-  methods: {
-    saveName() {
-      axios.post("/admin/user/update_name", this.user).then(
-        (response) => {
-          this.$toast.success("Saved.");
-          this.user.errors = {};
-        },
-        (error) => {
-          if (error.response.status == 422) {
-            this.user.errors = error.response.data.errors;
-          }
-        }
-      );
+  export default {
+    components: {
+      UiButton,
     },
 
-    saveEmail() {
-      if (this.user.email !== store.state.user.email) {
-        this.$swal
-          .fire({
-            title: "Are you sure",
-            text: "you want to change your e-mail address",
-          })
-          .then((result) => {
-            if (result.value) {
-              axios.post("/admin/user/update_email", this.user).then(
-                (response) => {
-                  this.$toast.success("Saved.");
-                  this.user.errors = {};
-                },
-                (error) => {
-                  if (error.response.status == 422) {
-                    this.user.errors = error.response.data.errors;
-                  }
-                }
-              );
-            }
-          });
-      } else {
-        axios.post("/admin/user/update_email", this.user).then(
+    data() {
+      return {
+        user: {
+          name: store.state.user.name,
+          email: store.state.user.email,
+          errors: {},
+        },
+      };
+    },
+
+    methods: {
+      saveName() {
+        axios.post("/admin/user/update_name", this.user).then(
           (response) => {
             this.$toast.success("Saved.");
             this.user.errors = {};
@@ -158,24 +122,60 @@ export default {
             }
           }
         );
-      }
-    },
+      },
 
-    savePassword() {
-      axios.post("/admin/user/update_password", this.user).then(
-        (response) => {
-          this.$toast.success("Saved.");
-          this.user.errors = {};
-          this.user.password = "";
-          this.user.password_confirmation = "";
-        },
-        (error) => {
-          if (error.response.status == 422) {
-            this.user.errors = error.response.data.errors;
-          }
+      saveEmail() {
+        if (this.user.email !== store.state.user.email) {
+          this.$swal
+            .fire({
+              title: "Are you sure",
+              text: "you want to change your e-mail address",
+            })
+            .then((result) => {
+              if (result.value) {
+                axios.post("/admin/user/update_email", this.user).then(
+                  (response) => {
+                    this.$toast.success("Saved.");
+                    this.user.errors = {};
+                  },
+                  (error) => {
+                    if (error.response.status == 422) {
+                      this.user.errors = error.response.data.errors;
+                    }
+                  }
+                );
+              }
+            });
+        } else {
+          axios.post("/admin/user/update_email", this.user).then(
+            (response) => {
+              this.$toast.success("Saved.");
+              this.user.errors = {};
+            },
+            (error) => {
+              if (error.response.status == 422) {
+                this.user.errors = error.response.data.errors;
+              }
+            }
+          );
         }
-      );
+      },
+
+      savePassword() {
+        axios.post("/admin/user/update_password", this.user).then(
+          (response) => {
+            this.$toast.success("Saved.");
+            this.user.errors = {};
+            this.user.password = "";
+            this.user.password_confirmation = "";
+          },
+          (error) => {
+            if (error.response.status == 422) {
+              this.user.errors = error.response.data.errors;
+            }
+          }
+        );
+      },
     },
-  },
-};
+  };
 </script>

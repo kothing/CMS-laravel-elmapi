@@ -1287,12 +1287,13 @@
 
 <script>
 import draggable from "vuedraggable";
-import UiDropdown from "../../../components/Dropdown.vue";
-import UiButton from "../../../components/Button.vue";
-import UiModal from "../../../components/Modal.vue";
 
-import ProjectHeader from "../_Sections_/ProjectHeader.vue";
-import CollectionSidebar from "./_Sections_/CollectionSidebar.vue";
+import UiDropdown from "../../../../[components]/Dropdown.vue";
+import UiButton from "../../../../[components]/Button.vue";
+import UiModal from "../../../../[components]/Modal.vue";
+
+import ProjectHeader from "../../../[components]/ProjectHeader.vue";
+import CollectionSidebar from "./[sections]/CollectionSidebar.vue";
 
 export default {
   components: {

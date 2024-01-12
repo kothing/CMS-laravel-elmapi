@@ -87,123 +87,125 @@
 </template>
 
 <script>
-import UiButton from "../../../components/Button.vue";
-import localesJson from "../../../locales.json";
+  import UiButton from "../../../../[components]/Button.vue";
 
-import ProjectHeader from "../_Sections_/ProjectHeader.vue";
-import SettingsNav from "./_Sections_/SettingsNav.vue";
+  import ProjectHeader from "../../../[components]/ProjectHeader.vue";
 
-export default {
-  components: {
-    ProjectHeader,
-    SettingsNav,
-    UiButton,
-  },
+  import SettingsNav from "./[sections]/SettingsNav.vue";
 
-  data() {
-    return {
-      project: {},
-      locales: [],
-      addLocaleData: null,
-    };
-  },
+  import localesJson from "../../../../locales.json";
 
-  methods: {
-    getProject() {
-      axios
-        .get(
-          "/admin/projects/settings/locales/" + this.$route.params.project_id
-        )
-        .then((response) => {
-          this.project = response.data;
-          if (this.project.locales !== null)
-            this.project.locales = response.data.locales.split(",");
-        });
+  export default {
+    components: {
+      ProjectHeader,
+      SettingsNav,
+      UiButton,
     },
 
-    getLocale(locale) {
-      return localesJson[locale];
+    data() {
+      return {
+        project: {},
+        locales: [],
+        addLocaleData: null,
+      };
     },
 
-    addLocale() {
-      axios
-        .post(
-          "/admin/projects/settings/locales/add/" +
-            this.$route.params.project_id,
-          { locale: this.addLocaleData }
-        )
-        .then(
-          (response) => {
-            this.$toast.success("Locale added to the project.");
-            this.getProject();
-            this.addLocaleData = null;
-          },
-          (error) => {
-            if (error.response.status == 422) {
-              this.$toast.error("Locale has already added.");
+    methods: {
+      getProject() {
+        axios
+          .get(
+            "/admin/projects/settings/locales/" + this.$route.params.project_id
+          )
+          .then((response) => {
+            this.project = response.data;
+            if (this.project.locales !== null)
+              this.project.locales = response.data.locales.split(",");
+          });
+      },
+
+      getLocale(locale) {
+        return localesJson[locale];
+      },
+
+      addLocale() {
+        axios
+          .post(
+            "/admin/projects/settings/locales/add/" +
+              this.$route.params.project_id,
+            { locale: this.addLocaleData }
+          )
+          .then(
+            (response) => {
+              this.$toast.success("Locale added to the project.");
+              this.getProject();
+              this.addLocaleData = null;
+            },
+            (error) => {
+              if (error.response.status == 422) {
+                this.$toast.error("Locale has already added.");
+              }
             }
-          }
-        );
-    },
+          );
+      },
 
-    setDefaultLocale(locale) {
-      this.$swal
-        .fire({
-          title: "Are you sure",
-          text: "you want to change the default locale for this project?",
-        })
-        .then((result) => {
-          if (result.value) {
-            axios
-              .post(
-                "/admin/projects/settings/locales/change-default-locale/" +
-                  this.project.id,
-                { locale: locale }
-              )
-              .then((response) => {
-                this.$toast.success("Default locale has been changed.");
-                this.getProject();
-              });
-          }
-        });
-    },
-
-    deleteLocale(locale) {
-      this.$swal
-        .fire({
-          title: "Are you sure",
-          text: "you want to delete this locale?",
-        })
-        .then((result) => {
-          if (result.value) {
-            axios
-              .post(
-                "/admin/projects/settings/locales/delete-locale/" +
-                  this.project.id,
-                { locale: locale }
-              )
-              .then(
-                (response) => {
-                  this.$toast.success("Locale deleted.");
+      setDefaultLocale(locale) {
+        this.$swal
+          .fire({
+            title: "Are you sure",
+            text: "you want to change the default locale for this project?",
+          })
+          .then((result) => {
+            if (result.value) {
+              axios
+                .post(
+                  "/admin/projects/settings/locales/change-default-locale/" +
+                    this.project.id,
+                  { locale: locale }
+                )
+                .then((response) => {
+                  this.$toast.success("Default locale has been changed.");
                   this.getProject();
-                },
-                (error) => {
-                  if (error.response.status == 422) {
-                    this.$toast.error("Default locale can not be deleted.");
+                });
+            }
+          });
+      },
+
+      deleteLocale(locale) {
+        this.$swal
+          .fire({
+            title: "Are you sure",
+            text: "you want to delete this locale?",
+          })
+          .then((result) => {
+            if (result.value) {
+              axios
+                .post(
+                  "/admin/projects/settings/locales/delete-locale/" +
+                    this.project.id,
+                  { locale: locale }
+                )
+                .then(
+                  (response) => {
+                    this.$toast.success("Locale deleted.");
+                    this.getProject();
+                  },
+                  (error) => {
+                    if (error.response.status == 422) {
+                      this.$toast.error("Default locale can not be deleted.");
+                    }
                   }
-                }
-              );
-          }
-        });
+                );
+            }
+          });
+      },
     },
-  },
 
-  mounted() {
-    this.getProject();
+    mounted() {
+      this.getProject();
 
-    Object.entries(localesJson).forEach((item, key) => {
-      this.locales.push({ id: item[0], name: item[1] });
-    });
-  },
-};
+      Object.entries(localesJson).forEach((item, key) => {
+        this.locales.push({ id: item[0], name: item[1] });
+      });
+    },
+  };
 </script>

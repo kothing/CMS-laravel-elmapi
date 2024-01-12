@@ -386,188 +386,188 @@
 </template>
 
 <script>
-import Vue from "vue";
-import Clipboard from "v-clipboard";
+  import Vue from "vue";
+  import Clipboard from "v-clipboard";
 
-import UiButton from "../../../components/Button.vue";
-import UiModal from "../../../components/Modal.vue";
+  import UiButton from "../../../../[components]/Button.vue";
+  import UiModal from "../../../../[components]/Modal.vue";
 
-import ProjectHeader from "../_Sections_/ProjectHeader.vue";
-import SettingsNav from "./_Sections_/SettingsNav.vue";
+  import ProjectHeader from "../../../[components]/ProjectHeader.vue";
+  import SettingsNav from "./[sections]/SettingsNav.vue";
 
-Vue.use(Clipboard);
+  Vue.use(Clipboard);
 
-export default {
-  components: {
-    ProjectHeader,
-    SettingsNav,
-    UiButton,
-    UiModal,
-  },
+  export default {
+    components: {
+      ProjectHeader,
+      SettingsNav,
+      UiButton,
+      UiModal,
+    },
 
-  data() {
-    return {
-      project: {},
-      webhooks: {},
-      progress: false,
-      openNewWebhookModal: false,
-      new_webhook: {
-        data: {
-          secret: null,
-          collection_ids: [],
-          events: [],
-          sources: [],
-          payload: true,
-          status: true,
+    data() {
+      return {
+        project: {},
+        webhooks: {},
+        progress: false,
+        openNewWebhookModal: false,
+        new_webhook: {
+          data: {
+            secret: null,
+            collection_ids: [],
+            events: [],
+            sources: [],
+            payload: true,
+            status: true,
+          },
+          errors: {},
         },
-        errors: {},
+        secretShow: false,
+        events: [
+          "content.created",
+          "content.updated",
+          "content.trashed",
+          "content.deleted",
+          "content.published",
+          "content.unpublished",
+          "content.restored",
+          "form.submitted",
+        ],
+        sources: ["User", "API"],
+        editStatus: false,
+      };
+    },
+
+    methods: {
+      getProject() {
+        axios
+          .get(
+            "/admin/projects/settings/webhooks/" + this.$route.params.project_id
+          )
+          .then((response) => {
+            this.project = response.data;
+            this.webhooks = response.data.webhooks;
+          });
       },
-      secretShow: false,
-      events: [
-        "content.created",
-        "content.updated",
-        "content.trashed",
-        "content.deleted",
-        "content.published",
-        "content.unpublished",
-        "content.restored",
-        "form.submitted",
-      ],
-      sources: ["User", "API"],
-      editStatus: false,
-    };
-  },
 
-  methods: {
-    getProject() {
-      axios
-        .get(
-          "/admin/projects/settings/webhooks/" + this.$route.params.project_id
-        )
-        .then((response) => {
-          this.project = response.data;
-          this.webhooks = response.data.webhooks;
-        });
-    },
+      copyToClipboard(str) {
+        this.$clipboard(str);
+        this.$toast.success("Copied to clipboard");
+      },
 
-    copyToClipboard(str) {
-      this.$clipboard(str);
-      this.$toast.success("Copied to clipboard");
-    },
+      closeNewWebhookModal() {
+        this.openNewWebhookModal = false;
+        this.new_webhook = {
+          data: {
+            secret: null,
+            collection_ids: [],
+            events: [],
+            sources: [],
+            payload: true,
+            status: true,
+          },
+          errors: {},
+        };
+        this.editStatus = false;
+      },
 
-    closeNewWebhookModal() {
-      this.openNewWebhookModal = false;
-      this.new_webhook = {
-        data: {
-          secret: null,
-          collection_ids: [],
-          events: [],
-          sources: [],
-          payload: true,
-          status: true,
-        },
-        errors: {},
-      };
-      this.editStatus = false;
-    },
+      createNewWebhookSubmit() {
+        this.progress = true;
 
-    createNewWebhookSubmit() {
-      this.progress = true;
-
-      if (this.editStatus) {
-        axios
-          .post(
-            "/admin/projects/settings/webhooks/update/" + this.project.id,
-            this.new_webhook.data
-          )
-          .then(
-            (response) => {
-              this.$toast.success("Webhook updated!");
-              this.getProject();
-              this.closeNewWebhookModal();
-              this.progress = false;
-            },
-            (error) => {
-              if (error.response.status == 422) {
-                this.new_webhook.errors = error.response.data.errors;
-              }
-              this.progress = false;
-            }
-          );
-      } else {
-        axios
-          .post(
-            "/admin/projects/settings/webhooks/new/" + this.project.id,
-            this.new_webhook.data
-          )
-          .then(
-            (response) => {
-              this.$toast.success("Webhook created!");
-              this.getProject();
-              this.closeNewWebhookModal();
-              this.progress = false;
-            },
-            (error) => {
-              if (error.response.status == 422) {
-                this.new_webhook.errors = error.response.data.errors;
-              }
-              this.progress = false;
-            }
-          );
-      }
-    },
-
-    editWebhook(webhook) {
-      this.new_webhook = {
-        data: JSON.parse(JSON.stringify(webhook)),
-        errors: {},
-      };
-      this.editStatus = true;
-      this.openNewWebhookModal = true;
-    },
-
-    deleteWebhook(webhook) {
-      this.$swal
-        .fire({
-          title: "Are you sure",
-          text: "you want to delete this webhook?",
-        })
-        .then((result) => {
-          if (result.value) {
-            axios
-              .post(
-                "/admin/projects/settings/webhooks/delete/" + this.project.id,
-                webhook
-              )
-              .then((response) => {
-                this.$toast.success("Webhook deleted.");
+        if (this.editStatus) {
+          axios
+            .post(
+              "/admin/projects/settings/webhooks/update/" + this.project.id,
+              this.new_webhook.data
+            )
+            .then(
+              (response) => {
+                this.$toast.success("Webhook updated!");
                 this.getProject();
-              });
-          }
-        });
+                this.closeNewWebhookModal();
+                this.progress = false;
+              },
+              (error) => {
+                if (error.response.status == 422) {
+                  this.new_webhook.errors = error.response.data.errors;
+                }
+                this.progress = false;
+              }
+            );
+        } else {
+          axios
+            .post(
+              "/admin/projects/settings/webhooks/new/" + this.project.id,
+              this.new_webhook.data
+            )
+            .then(
+              (response) => {
+                this.$toast.success("Webhook created!");
+                this.getProject();
+                this.closeNewWebhookModal();
+                this.progress = false;
+              },
+              (error) => {
+                if (error.response.status == 422) {
+                  this.new_webhook.errors = error.response.data.errors;
+                }
+                this.progress = false;
+              }
+            );
+        }
+      },
+
+      editWebhook(webhook) {
+        this.new_webhook = {
+          data: JSON.parse(JSON.stringify(webhook)),
+          errors: {},
+        };
+        this.editStatus = true;
+        this.openNewWebhookModal = true;
+      },
+
+      deleteWebhook(webhook) {
+        this.$swal
+          .fire({
+            title: "Are you sure",
+            text: "you want to delete this webhook?",
+          })
+          .then((result) => {
+            if (result.value) {
+              axios
+                .post(
+                  "/admin/projects/settings/webhooks/delete/" + this.project.id,
+                  webhook
+                )
+                .then((response) => {
+                  this.$toast.success("Webhook deleted.");
+                  this.getProject();
+                });
+            }
+          });
+      },
+
+      generateSecret() {
+        let CharacterSet = "";
+        let secret = "";
+
+        CharacterSet += "abcdefghijklmnopqrstuvwxyz";
+        CharacterSet += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        CharacterSet += "0123456789";
+        CharacterSet += "![]{}()%&*$#^<>~@|";
+
+        for (let i = 0; i < 12; i++) {
+          secret += CharacterSet.charAt(
+            Math.floor(Math.random() * CharacterSet.length)
+          );
+        }
+        this.new_webhook.data.secret = secret;
+        this.secretShow = true;
+      },
     },
 
-    generateSecret() {
-      let CharacterSet = "";
-      let secret = "";
-
-      CharacterSet += "abcdefghijklmnopqrstuvwxyz";
-      CharacterSet += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-      CharacterSet += "0123456789";
-      CharacterSet += "![]{}()%&*$#^<>~@|";
-
-      for (let i = 0; i < 12; i++) {
-        secret += CharacterSet.charAt(
-          Math.floor(Math.random() * CharacterSet.length)
-        );
-      }
-      this.new_webhook.data.secret = secret;
-      this.secretShow = true;
+    mounted() {
+      this.getProject();
     },
-  },
-
-  mounted() {
-    this.getProject();
-  },
-};
+  };
 </script>

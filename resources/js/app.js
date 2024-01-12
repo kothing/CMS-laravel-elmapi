@@ -1,6 +1,5 @@
 /**
- * App
- * frontend entry
+ * Frontend app entry
  */
 
 import Vue from "vue";

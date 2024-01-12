@@ -152,80 +152,81 @@
 </template>
 
 <script>
-import UiModal from "../components/Modal.vue";
-import UiButton from "../components/Button.vue";
-import checkRole from "../utils/checkrole";
-import localesJson from "../locales.json";
+  import UiModal from "../../[components]/Modal.vue";
+  import UiButton from "../../[components]/Button.vue";
 
-export default {
-  components: {
-    UiModal,
-    UiButton,
-  },
+  import checkRole from "../../utils/checkrole";
+  import localesJson from "../../locales.json";
 
-  data() {
-    return {
-      openNewProjectModal: false,
-      new_project: {
-        default_locale: "en",
-        type: 1,
-        errors: {
-          name: "",
+  export default {
+    components: {
+      UiModal,
+      UiButton,
+    },
+
+    data() {
+      return {
+        openNewProjectModal: false,
+        new_project: {
+          default_locale: "en",
+          type: 1,
+          errors: {
+            name: "",
+          },
         },
-      },
-      projects: {},
-      processing: false,
-      search: "",
-      locales: [],
-    };
-  },
+        projects: {},
+        processing: false,
+        search: "",
+        locales: [],
+      };
+    },
 
-  methods: {
-    checkRole,
+    methods: {
+      checkRole,
 
-    addNewProjectSubmit() {
-      this.processing = true;
+      addNewProjectSubmit() {
+        this.processing = true;
 
-      axios.post("/admin/projects", this.new_project).then(
-        (response) => {
-          this.$toast.success("New project created.");
-          this.closeNewProjectModal();
-          this.projects.unshift(response.data);
-        },
-        (error) => {
-          if (error.response.status == 422) {
-            this.new_project.errors = error.response.data.errors;
-            this.processing = false;
+        axios.post("/admin/projects", this.new_project).then(
+          (response) => {
+            this.$toast.success("New project created.");
+            this.closeNewProjectModal();
+            this.projects.unshift(response.data);
+          },
+          (error) => {
+            if (error.response.status == 422) {
+              this.new_project.errors = error.response.data.errors;
+              this.processing = false;
+            }
           }
-        }
-      );
+        );
+      },
+      closeNewProjectModal() {
+        this.openNewProjectModal = false;
+        (this.new_project = {
+          default_locale: "en",
+          type: 1,
+          errors: {
+            name: "",
+          },
+        }),
+          (this.processing = false);
+      },
+      getProjects() {
+        axios
+          .get("/admin/projects", { params: { search: this.search } })
+          .then((response) => {
+            this.projects = response.data;
+          });
+      },
     },
-    closeNewProjectModal() {
-      this.openNewProjectModal = false;
-      (this.new_project = {
-        default_locale: "en",
-        type: 1,
-        errors: {
-          name: "",
-        },
-      }),
-        (this.processing = false);
-    },
-    getProjects() {
-      axios
-        .get("/admin/projects", { params: { search: this.search } })
-        .then((response) => {
-          this.projects = response.data;
-        });
-    },
-  },
 
-  mounted() {
-    this.getProjects();
+    mounted() {
+      this.getProjects();
 
-    Object.entries(localesJson).forEach((item, key) => {
-      this.locales.push({ id: item[0], name: item[1] });
-    });
-  },
-};
+      Object.entries(localesJson).forEach((item, key) => {
+        this.locales.push({ id: item[0], name: item[1] });
+      });
+    },
+  };
 </script>
