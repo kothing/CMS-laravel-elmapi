@@ -16,11 +16,12 @@
     </head>
 
     <body>
+        <div class="flex flex-col justify-center text-center my-5">
+            <img class="w-12 w-12 mx-auto" src="{{ config('app.url') . '/images/logo-64x64-dark.svg'}}">
+            <p class="mt-4">「{{ config('app.name', 'AineCMS') }}」 frontend page</p>
+        </div>
         <div id="app" v-cloak>
-            <div class="flex flex-col justify-center text-center my-5">
-                <img class="w-12 w-12 mx-auto" src="{{ config('app.url') . '/images/logo-64x64-dark.svg'}}">
-                <p class="mt-4">「{{ config('app.name', 'AineCMS') }}」 frontend page</p>
-            </div>
+            <app></app>
         </div>
     </body>
 </html>

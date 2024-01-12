@@ -11,13 +11,13 @@
 
         <link rel="icon" type="image/svg+xml" href="{{ config('app.url') . '/images/favicon.svg'}}">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
-        <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+        <link rel="stylesheet" href="{{ mix('css/admin.css') }}">
 
         <script src="{{ mix('js/admin.js') }}" defer></script>
     </head>
     <body class="font-sans antialiased">
         <div id="admin" v-cloak>
-            <app></app>
+            <admin></admin>
         </div>
     </body>
 </html>
