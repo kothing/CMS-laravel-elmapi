@@ -8,33 +8,33 @@
 </template>
 
 <script>
-import ProjectHeader from "../../../[components]/ProjectHeader.vue";
-import ContentSidebar from "./[sections]/ContentSidebar.vue";
+  import ProjectHeader from "../../../[components]/ProjectHeader.vue";
+  import ContentSidebar from "./[sections]/ContentSidebar.vue";
 
-export default {
-  components: {
-    ProjectHeader,
-    ContentSidebar,
-  },
-
-  data() {
-    return {
-      project: {},
-    };
-  },
-
-  methods: {
-    getProject() {
-      axios
-        .get("/admin/content/project/" + this.$route.params.project_id)
-        .then((response) => {
-          this.project = response.data;
-        });
+  export default {
+    components: {
+      ProjectHeader,
+      ContentSidebar,
     },
-  },
 
-  mounted() {
-    this.getProject();
-  },
-};
+    data() {
+      return {
+        project: {},
+      };
+    },
+
+    methods: {
+      getProject() {
+        axios
+          .get("/admin/content/project/" + this.$route.params.project_id)
+          .then((response) => {
+            this.project = response.data;
+          });
+      },
+    },
+
+    mounted() {
+      this.getProject();
+    },
+  };
 </script>

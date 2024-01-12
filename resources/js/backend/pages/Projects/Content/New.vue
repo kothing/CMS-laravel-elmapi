@@ -521,279 +521,279 @@
 </template>
 
 <script>
-import { codemirror } from 'vue-codemirror'
-import 'codemirror/lib/codemirror.css'
-import 'codemirror/mode/javascript/javascript.js'
-import 'codemirror/addon/edit/closebrackets.js'
-import 'codemirror/addon/edit/matchbrackets.js'
-import 'codemirror/theme/solarized.css'
-import "codemirror/addon/display/autorefresh.js";
+    import { codemirror } from 'vue-codemirror'
+    import 'codemirror/lib/codemirror.css'
+    import 'codemirror/mode/javascript/javascript.js'
+    import 'codemirror/addon/edit/closebrackets.js'
+    import 'codemirror/addon/edit/matchbrackets.js'
+    import 'codemirror/theme/solarized.css'
+    import "codemirror/addon/display/autorefresh.js";
 
-import { quillEditor } from 'vue-quill-editor'
-import imageResize from "quill-image-resize-module";
-import 'quill/dist/quill.core.css'
-import 'quill/dist/quill.snow.css'
-import 'quill/dist/quill.bubble.css'
+    import { quillEditor } from 'vue-quill-editor'
+    import imageResize from "quill-image-resize-module";
+    import 'quill/dist/quill.core.css'
+    import 'quill/dist/quill.snow.css'
+    import 'quill/dist/quill.bubble.css'
 
-import UiButton from '../../../../[components]/Button.vue'
-import UiModal from '../../../../[components]/Modal.vue'
-import UiDropdown from '../../../../[components]/Dropdown.vue'
+    import UiButton from '../../../../[components]/Button.vue'
+    import UiModal from '../../../../[components]/Modal.vue'
+    import UiDropdown from '../../../../[components]/Dropdown.vue'
 
-import ProjectHeader from '../../../[components]/ProjectHeader.vue'
-import MediaLibrary from '../../../[components]/MediaLibrary.vue'
+    import ProjectHeader from '../../../[components]/ProjectHeader.vue'
+    import MediaLibrary from '../../../[components]/MediaLibrary.vue'
 
-import ContentSidebar from './[sections]/ContentSidebar.vue'
-import ContentTable from './[sections]/ContentTable.vue'
+    import ContentSidebar from './[sections]/ContentSidebar.vue'
+    import ContentTable from './[sections]/ContentTable.vue'
 
-import localesJson from '../../../../locales.json'
+    import localesJson from '../../../../locales.json'
 
-export default {
-    components: {
-        ProjectHeader,
-        ContentSidebar,
-        UiButton,
-        UiModal,
-        UiDropdown,
-        MediaLibrary,
-        codemirror,
-        quillEditor,
-        ContentTable
-    },
+    export default {
+        components: {
+            ProjectHeader,
+            ContentSidebar,
+            UiButton,
+            UiModal,
+            UiDropdown,
+            MediaLibrary,
+            codemirror,
+            quillEditor,
+            ContentTable
+        },
 
-    data(){
-        return {
-            project: {},
-            collection: {},
-            newData: {
-                data: {},
-                files: {},
-                errors: {}
-            },
-            openMediaLibraryModal: false,
-            currentMediaField: null,
-            selectedFiles: [],
-            mediaModalTYPE: null,
-            passwordShow: [],
-            cmOptions: {
-                autoCloseBrackets: true,
-                lineNumbers: true,
-                matchBrackets: true,
-                mode: {
-                    name: 'javascript',
-                    json: true
+        data(){
+            return {
+                project: {},
+                collection: {},
+                newData: {
+                    data: {},
+                    files: {},
+                    errors: {}
                 },
-                smartIndent: true,
-                tabSize: 2,
-                theme:'solarized dark',
-                autoRefresh: true
-            },
-            insertFilesToEditor: false,
-            openRelationModal: false,
-            relationModalCollectionID: null,
-            relationModalCollectionTYPE: null,
-            currentRelationField: null,
-            relationRecords: {},
-        }
-    },
+                openMediaLibraryModal: false,
+                currentMediaField: null,
+                selectedFiles: [],
+                mediaModalTYPE: null,
+                passwordShow: [],
+                cmOptions: {
+                    autoCloseBrackets: true,
+                    lineNumbers: true,
+                    matchBrackets: true,
+                    mode: {
+                        name: 'javascript',
+                        json: true
+                    },
+                    smartIndent: true,
+                    tabSize: 2,
+                    theme:'solarized dark',
+                    autoRefresh: true
+                },
+                insertFilesToEditor: false,
+                openRelationModal: false,
+                relationModalCollectionID: null,
+                relationModalCollectionTYPE: null,
+                currentRelationField: null,
+                relationRecords: {},
+            }
+        },
 
-    methods: {
-        getNew(){
-            axios.get('/admin/content/new/'+this.$route.params.project_id+'/'+this.$route.params.col_id).then((response) => {
-                this.project = response.data.project;
-                this.collection = response.data.collection;
-                this.newData.project_id = response.data.project.id;
-                this.newData.collection_id = response.data.collection.id;
-                this.newData.locale = response.data.project.default_locale;
+        methods: {
+            getNew(){
+                axios.get('/admin/content/new/'+this.$route.params.project_id+'/'+this.$route.params.col_id).then((response) => {
+                    this.project = response.data.project;
+                    this.collection = response.data.collection;
+                    this.newData.project_id = response.data.project.id;
+                    this.newData.collection_id = response.data.collection.id;
+                    this.newData.locale = response.data.project.default_locale;
 
-                this.collection.fields.forEach(element => {
-                    element.options = JSON.parse(element.options);
-                });
+                    this.collection.fields.forEach(element => {
+                        element.options = JSON.parse(element.options);
+                    });
 
-                var array = this.collection.fields;
-                for (let i = 0; i < array.length; i++) {
-                    this.passwordShow[array[i].name] = false;
-                }
-                this.collection.fields.forEach(slugField => {
-                    if(slugField.options.slug !== undefined && slugField.options.slug.field !== null){
-                        for (let i = 0; i < array.length; i++) {
-                            if(slugField.options.slug.field === array[i].name){
-                                this.collection.fields[i].slug_field = slugField.name;
+                    var array = this.collection.fields;
+                    for (let i = 0; i < array.length; i++) {
+                        this.passwordShow[array[i].name] = false;
+                    }
+                    this.collection.fields.forEach(slugField => {
+                        if(slugField.options.slug !== undefined && slugField.options.slug.field !== null){
+                            for (let i = 0; i < array.length; i++) {
+                                if(slugField.options.slug.field === array[i].name){
+                                    this.collection.fields[i].slug_field = slugField.name;
+                                }
                             }
                         }
-                    }
-                });
-                this.collection.fields.forEach(field => {
-                    if(field.options.repeatable){
-                        this.newData.data[field.name] = [{
-                            value: null,
-                        }];
-                    }
-                });
-            });
-        },
-
-        addNewLineToRepeatableField(field){
-            this.newData.data[field.name].push({ value: null });
-            this.$forceUpdate();
-        },
-        removeLineFromRepeatableField(field, index){
-            this.newData.data[field.name].splice(index, 1);
-            this.$forceUpdate();
-        },
-
-        saveNew(published, after=null){
-            this.newData.published = published;
-
-            axios.post('/admin/content/store/'+this.$route.params.project_id+'/'+this.$route.params.col_id, this.newData).then((response) => {
-                this.$toast.success('Content created!');
-
-                if(after === null){
-                    this.$router.push({name: 'projects.content.edit', params: {project_id: this.$route.params.project_id, col_id: this.$route.params.col_id, content_id: response.data.id}});
-                } else if(after === 'close'){
-                    this.$router.push({name: 'projects.content.list', params: {project_id: this.$route.params.project_id, col_id: this.$route.params.col_id}});
-                } else if(after === 'new'){
-                    this.$router.go();
-                }
-            }, (error) => {
-                if(error.response.status == 422){
-                    this.newData.errors = error.response.data.errors;
-                }
-            });
-        },
-
-        openMediaLibraryModalFn(field_name, insertToEditor=false, media_type){
-            this.insertFilesToEditor = insertToEditor
-            this.currentMediaField = field_name;
-            this.openMediaLibraryModal = true;
-            this.mediaModalTYPE = parseInt(media_type);
-
-            if(!insertToEditor){
-                this.selectedFiles = this.newData.data[field_name];
-            } else {
-                this.selectedFiles = [];
-            }
-        },
-
-        closeMediaLibraryModal(){
-            this.openMediaLibraryModal = false;
-        },
-
-        async insertFiles(files){
-            await axios.post('/admin/content/get-selected-files/'+this.$route.params.project_id, { data: files }).then((response) => {
-                if(this.insertFilesToEditor){
-                    let editor_ref = 'quillEditor_'+this.currentMediaField;
-                    let editor = this.$refs[editor_ref][0].quill;
-
-                    let APP_URL = document.querySelector('meta[name="APP_URL"]').content
-
-                    let array = response.data;
-                    let file_link = '';
-                    for (let i = 0; i < array.length; i++) {
-                        const element = array[i];
-                        let full_url = element.full_url;
-
-                        if(element.type == 'jpg' || element.type == 'jpeg' || element.type == 'png' || element.type == 'gif' || element.type == 'webp'){
-                            editor.insertEmbed(editor.getSelection(true).index, 'image', full_url);
-                        } else {
-                            file_link ='<br><p><a href="'+full_url+'" target="_blank">'+element.name+"</a></p>";
-                            editor.clipboard.dangerouslyPasteHTML(editor.getSelection(true).index, file_link);
+                    });
+                    this.collection.fields.forEach(field => {
+                        if(field.options.repeatable){
+                            this.newData.data[field.name] = [{
+                                value: null,
+                            }];
                         }
-                    }
-                    this.selectedFiles = [];
-                } else {
-                    this.selectedFiles = files;
-                    this.newData.files[this.currentMediaField] = response.data;
-                    this.newData.data[this.currentMediaField] = files;
-                }
-            });
-            this.closeMediaLibraryModal();
-        },
+                    });
+                });
+            },
 
-        removeFile(file, field_name){
-            for (let i = 0; i < this.newData.data[field_name].length; i++) {
-                const element = this.newData.data[field_name][i];
-                if(element == file.id)
-                    this.$delete(this.newData.data[field_name], i);
-            }
-            for (let i = 0; i < this.newData.files[field_name].length; i++) {
-                const element = this.newData.files[field_name][i];
-                if(element.id == file.id)
-                    this.$delete(this.newData.files[field_name], i);
-            }
-            this.$forceUpdate();
-        },
-
-        showPassword(field){
-            this.passwordShow[field] = !this.passwordShow[field];
-            this.$forceUpdate();
-        },
-
-        generatePassword (field){
-            let CharacterSet = '';
-            let password = '';
-
-            CharacterSet += 'abcdefghijklmnopqrstuvwxyz';
-            CharacterSet += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            CharacterSet += '0123456789';
-            CharacterSet += '![]{}()%&*$#^<>~@|';
-
-            for(let i=0; i < 12; i++) {
-                password += CharacterSet.charAt(Math.floor(Math.random() * CharacterSet.length));
-            }
-            this.newData.data[field] = password;
-            this.passwordShow[field] = true;
-            this.$forceUpdate();
-        },
-
-        openRelationModalFn(field_name, relation_collection, relation_type){
-            this.currentRelationField = field_name;
-            this.relationModalCollectionID = relation_collection;
-            this.relationModalCollectionTYPE = parseInt(relation_type);
-            this.openRelationModal = true;
-        },
-
-        closeRelationModal(){
-            this.openRelationModal = false;
-        },
-
-        async addSelectedRelation(data){
-            this.closeRelationModal();
-
-            await axios.post('/admin/content/get-selected-records/'+this.$route.params.project_id, { data: data }).then((response) => {
-                this.relationRecords[this.currentRelationField] = response.data.content;
-                this.relationRecords[this.currentRelationField].collection = response.data.collection;
-                this.newData.data[this.currentRelationField] = data.selected;
+            addNewLineToRepeatableField(field){
+                this.newData.data[field.name].push({ value: null });
                 this.$forceUpdate();
-            });
+            },
+            removeLineFromRepeatableField(field, index){
+                this.newData.data[field.name].splice(index, 1);
+                this.$forceUpdate();
+            },
+
+            saveNew(published, after=null){
+                this.newData.published = published;
+
+                axios.post('/admin/content/store/'+this.$route.params.project_id+'/'+this.$route.params.col_id, this.newData).then((response) => {
+                    this.$toast.success('Content created!');
+
+                    if(after === null){
+                        this.$router.push({name: 'projects.content.edit', params: {project_id: this.$route.params.project_id, col_id: this.$route.params.col_id, content_id: response.data.id}});
+                    } else if(after === 'close'){
+                        this.$router.push({name: 'projects.content.list', params: {project_id: this.$route.params.project_id, col_id: this.$route.params.col_id}});
+                    } else if(after === 'new'){
+                        this.$router.go();
+                    }
+                }, (error) => {
+                    if(error.response.status == 422){
+                        this.newData.errors = error.response.data.errors;
+                    }
+                });
+            },
+
+            openMediaLibraryModalFn(field_name, insertToEditor=false, media_type){
+                this.insertFilesToEditor = insertToEditor
+                this.currentMediaField = field_name;
+                this.openMediaLibraryModal = true;
+                this.mediaModalTYPE = parseInt(media_type);
+
+                if(!insertToEditor){
+                    this.selectedFiles = this.newData.data[field_name];
+                } else {
+                    this.selectedFiles = [];
+                }
+            },
+
+            closeMediaLibraryModal(){
+                this.openMediaLibraryModal = false;
+            },
+
+            async insertFiles(files){
+                await axios.post('/admin/content/get-selected-files/'+this.$route.params.project_id, { data: files }).then((response) => {
+                    if(this.insertFilesToEditor){
+                        let editor_ref = 'quillEditor_'+this.currentMediaField;
+                        let editor = this.$refs[editor_ref][0].quill;
+
+                        let APP_URL = document.querySelector('meta[name="APP_URL"]').content
+
+                        let array = response.data;
+                        let file_link = '';
+                        for (let i = 0; i < array.length; i++) {
+                            const element = array[i];
+                            let full_url = element.full_url;
+
+                            if(element.type == 'jpg' || element.type == 'jpeg' || element.type == 'png' || element.type == 'gif' || element.type == 'webp'){
+                                editor.insertEmbed(editor.getSelection(true).index, 'image', full_url);
+                            } else {
+                                file_link ='<br><p><a href="'+full_url+'" target="_blank">'+element.name+"</a></p>";
+                                editor.clipboard.dangerouslyPasteHTML(editor.getSelection(true).index, file_link);
+                            }
+                        }
+                        this.selectedFiles = [];
+                    } else {
+                        this.selectedFiles = files;
+                        this.newData.files[this.currentMediaField] = response.data;
+                        this.newData.data[this.currentMediaField] = files;
+                    }
+                });
+                this.closeMediaLibraryModal();
+            },
+
+            removeFile(file, field_name){
+                for (let i = 0; i < this.newData.data[field_name].length; i++) {
+                    const element = this.newData.data[field_name][i];
+                    if(element == file.id)
+                        this.$delete(this.newData.data[field_name], i);
+                }
+                for (let i = 0; i < this.newData.files[field_name].length; i++) {
+                    const element = this.newData.files[field_name][i];
+                    if(element.id == file.id)
+                        this.$delete(this.newData.files[field_name], i);
+                }
+                this.$forceUpdate();
+            },
+
+            showPassword(field){
+                this.passwordShow[field] = !this.passwordShow[field];
+                this.$forceUpdate();
+            },
+
+            generatePassword (field){
+                let CharacterSet = '';
+                let password = '';
+
+                CharacterSet += 'abcdefghijklmnopqrstuvwxyz';
+                CharacterSet += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                CharacterSet += '0123456789';
+                CharacterSet += '![]{}()%&*$#^<>~@|';
+
+                for(let i=0; i < 12; i++) {
+                    password += CharacterSet.charAt(Math.floor(Math.random() * CharacterSet.length));
+                }
+                this.newData.data[field] = password;
+                this.passwordShow[field] = true;
+                this.$forceUpdate();
+            },
+
+            openRelationModalFn(field_name, relation_collection, relation_type){
+                this.currentRelationField = field_name;
+                this.relationModalCollectionID = relation_collection;
+                this.relationModalCollectionTYPE = parseInt(relation_type);
+                this.openRelationModal = true;
+            },
+
+            closeRelationModal(){
+                this.openRelationModal = false;
+            },
+
+            async addSelectedRelation(data){
+                this.closeRelationModal();
+
+                await axios.post('/admin/content/get-selected-records/'+this.$route.params.project_id, { data: data }).then((response) => {
+                    this.relationRecords[this.currentRelationField] = response.data.content;
+                    this.relationRecords[this.currentRelationField].collection = response.data.collection;
+                    this.newData.data[this.currentRelationField] = data.selected;
+                    this.$forceUpdate();
+                });
+            },
+
+            removeRelation(item, field_name){
+                for (let i = 0; i < this.newData.data[field_name].length; i++) {
+                    const element = this.newData.data[field_name][i];
+                    if(element == item.id)
+                        this.$delete(this.newData.data[field_name], i);
+                }
+                for (let i = 0; i < this.relationRecords[field_name].length; i++) {
+                    const element = this.relationRecords[field_name][i];
+                    if(element.id == item.id)
+                        this.$delete(this.relationRecords[field_name], i);
+                }
+                this.$forceUpdate();
+            },
+
+            getLocale(locale){
+                return localesJson[locale];
+            },
         },
 
-        removeRelation(item, field_name){
-            for (let i = 0; i < this.newData.data[field_name].length; i++) {
-                const element = this.newData.data[field_name][i];
-                if(element == item.id)
-                    this.$delete(this.newData.data[field_name], i);
-            }
-            for (let i = 0; i < this.relationRecords[field_name].length; i++) {
-                const element = this.relationRecords[field_name][i];
-                if(element.id == item.id)
-                    this.$delete(this.relationRecords[field_name], i);
-            }
-            this.$forceUpdate();
-        },
-
-        getLocale(locale){
-            return localesJson[locale];
-        },
-    },
-
-    mounted(){
-        this.getNew();
-    },
-
-    watch: {
-        '$route.params.col_id'(newId, oldId) {
+        mounted(){
             this.getNew();
         },
+
+        watch: {
+            '$route.params.col_id'(newId, oldId) {
+                this.getNew();
+            },
+        }
     }
-}
 </script>

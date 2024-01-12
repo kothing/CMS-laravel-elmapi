@@ -309,292 +309,292 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import Clipboard from 'v-clipboard'
-import draggable from 'vuedraggable'
-import { diff } from "deep-diff";
+    import Vue from 'vue'
+    import Clipboard from 'v-clipboard'
+    import draggable from 'vuedraggable'
+    import { diff } from "deep-diff";
 
-import { codemirror } from 'vue-codemirror'
-import 'codemirror/lib/codemirror.css'
-import 'codemirror/mode/javascript/javascript.js'
-import 'codemirror/addon/edit/closebrackets.js'
-import 'codemirror/addon/edit/matchbrackets.js'
-import 'codemirror/theme/solarized.css'
-import "codemirror/addon/display/autorefresh.js";
+    import { codemirror } from 'vue-codemirror'
+    import 'codemirror/lib/codemirror.css'
+    import 'codemirror/mode/javascript/javascript.js'
+    import 'codemirror/addon/edit/closebrackets.js'
+    import 'codemirror/addon/edit/matchbrackets.js'
+    import 'codemirror/theme/solarized.css'
+    import "codemirror/addon/display/autorefresh.js";
 
-import { quillEditor } from 'vue-quill-editor'
-import imageResize from "quill-image-resize-module";
-import 'quill/dist/quill.core.css'
-import 'quill/dist/quill.snow.css'
-import 'quill/dist/quill.bubble.css'
+    import { quillEditor } from 'vue-quill-editor'
+    import imageResize from "quill-image-resize-module";
+    import 'quill/dist/quill.core.css'
+    import 'quill/dist/quill.snow.css'
+    import 'quill/dist/quill.bubble.css'
 
-import UiButton from '../../../../[components]/Button.vue'
-import UiModal from '../../../../[components]/Modal.vue'
+    import UiButton from '../../../../[components]/Button.vue'
+    import UiModal from '../../../../[components]/Modal.vue'
 
-import ProjectHeader from '../../../[components]/ProjectHeader.vue'
-import ContentSidebar from './[sections]/ContentSidebar.vue'
-import ContentFormsSidebar from './[sections]/ContentFormsSidebar.vue'
+    import ProjectHeader from '../../../[components]/ProjectHeader.vue'
+    import ContentSidebar from './[sections]/ContentSidebar.vue'
+    import ContentFormsSidebar from './[sections]/ContentFormsSidebar.vue'
 
-Vue.use(Clipboard)
+    Vue.use(Clipboard)
 
-export default {
-    components: {
-        ProjectHeader,
-        ContentSidebar,
-        UiButton,
-        UiModal,
-        ContentFormsSidebar,
-        codemirror,
-        quillEditor,
-        draggable
-    },
+    export default {
+        components: {
+            ProjectHeader,
+            ContentSidebar,
+            UiButton,
+            UiModal,
+            ContentFormsSidebar,
+            codemirror,
+            quillEditor,
+            draggable
+        },
 
-    data(){
-        return {
-            project: {},
-            collection: {},
-            forms: {},
-            openNewFormModal: false,
-            new_form: {
-                errors: {
-                    name: '',
-                }
-            },
-            processing_new_form: false,
+        data(){
+            return {
+                project: {},
+                collection: {},
+                forms: {},
+                openNewFormModal: false,
+                new_form: {
+                    errors: {
+                        name: '',
+                    }
+                },
+                processing_new_form: false,
 
-            openEmbedModal: false,
+                openEmbedModal: false,
 
-            form: {},
-            formClone: {},
-            openAddFieldsModal: false,
-            fieldDetails: {
-                "text": {
-                    "label": "Text",
-                    "desc": "Single line text (headings, titles)",
-                    "icon": "fas fa-font",
-                    "bg": "bg-yellow-400"
+                form: {},
+                formClone: {},
+                openAddFieldsModal: false,
+                fieldDetails: {
+                    "text": {
+                        "label": "Text",
+                        "desc": "Single line text (headings, titles)",
+                        "icon": "fas fa-font",
+                        "bg": "bg-yellow-400"
+                    },
+                    "longtext": {
+                        "label": "Long Text",
+                        "desc": "Multi line text like descriptions",
+                        "icon": "fas fa-align-left",
+                        "bg": "bg-yellow-600"
+                    },
+                    "richtext": {
+                        "label": "Rich Text",
+                        "desc": "Rich text editor with formatting",
+                        "icon": "fas fa-outdent",
+                        "bg": "bg-yellow-900"
+                    },
+                    "slug": {
+                        "label": "Slug",
+                        "desc": "Like Urls and permalinks",
+                        "icon": "fas fa-link",
+                        "bg": "bg-green-400"
+                    },
+                    "email": {
+                        "label": "E-mail",
+                        "desc": "Email field with validation",
+                        "icon": "fas fa-at",
+                        "bg": "bg-red-400"
+                    },
+                    "password": {
+                        "label": "Password",
+                        "desc": "Password field with encryption",
+                        "icon": "fas fa-lock",
+                        "bg": "bg-blue-400"
+                    },
+                    "number": {
+                        "label": "Number",
+                        "desc": "Integer, decimal, float numbers",
+                        "icon": "fas fa-sort-numeric-up",
+                        "bg": "bg-pink-600"
+                    },
+                    "enumeration": {
+                        "label": "Enumeration",
+                        "desc": "List of values",
+                        "icon": "fas fa-list-ol",
+                        "bg": "bg-green-600"
+                    },
+                    "boolean": {
+                        "label": "Boolean",
+                        "desc": "True or false",
+                        "icon": "fas fa-check-square",
+                        "bg": "bg-red-600"
+                    },
+                    "color": {
+                        "label": "Color",
+                        "desc": "Color picker",
+                        "icon": "fas fa-tint",
+                        "bg": "bg-orange-400"
+                    },
+                    "date": {
+                        "label": "Date",
+                        "desc": "Calendar date picker",
+                        "icon": "fas fa-calendar-alt",
+                        "bg": "bg-indigo-600"
+                    },
+                    "time": {
+                        "label": "Time",
+                        "desc": "Time picker",
+                        "icon": "fas fa-calendar-check",
+                        "bg": "bg-purple-600"
+                    },
+                    "media": {
+                        "label": "Media",
+                        "desc": "Files, images, videos from the library",
+                        "icon": "fas fa-photo-video",
+                        "bg": "bg-gray-500"
+                    },
+                    "relation": {
+                        "label": "Relation",
+                        "desc": "Collection relations",
+                        "icon": "fas fa-exchange-alt",
+                        "bg": "bg-pink-400"
+                    },
+                    "json": {
+                        "label": "JSON",
+                        "desc": "Data in JSON format",
+                        "icon": "fas fa-code",
+                        "bg": "bg-red-700"
+                    }
                 },
-                "longtext": {
-                    "label": "Long Text",
-                    "desc": "Multi line text like descriptions",
-                    "icon": "fas fa-align-left",
-                    "bg": "bg-yellow-600"
-                },
-                "richtext": {
-                    "label": "Rich Text",
-                    "desc": "Rich text editor with formatting",
-                    "icon": "fas fa-outdent",
-                    "bg": "bg-yellow-900"
-                },
-                "slug": {
-                    "label": "Slug",
-                    "desc": "Like Urls and permalinks",
-                    "icon": "fas fa-link",
-                    "bg": "bg-green-400"
-                },
-                "email": {
-                    "label": "E-mail",
-                    "desc": "Email field with validation",
-                    "icon": "fas fa-at",
-                    "bg": "bg-red-400"
-                },
-                "password": {
-                    "label": "Password",
-                    "desc": "Password field with encryption",
-                    "icon": "fas fa-lock",
-                    "bg": "bg-blue-400"
-                },
-                "number": {
-                    "label": "Number",
-                    "desc": "Integer, decimal, float numbers",
-                    "icon": "fas fa-sort-numeric-up",
-                    "bg": "bg-pink-600"
-                },
-                "enumeration": {
-                    "label": "Enumeration",
-                    "desc": "List of values",
-                    "icon": "fas fa-list-ol",
-                    "bg": "bg-green-600"
-                },
-                "boolean": {
-                    "label": "Boolean",
-                    "desc": "True or false",
-                    "icon": "fas fa-check-square",
-                    "bg": "bg-red-600"
-                },
-                "color": {
-                    "label": "Color",
-                    "desc": "Color picker",
-                    "icon": "fas fa-tint",
-                    "bg": "bg-orange-400"
-                },
-                "date": {
-                    "label": "Date",
-                    "desc": "Calendar date picker",
-                    "icon": "fas fa-calendar-alt",
-                    "bg": "bg-indigo-600"
-                },
-                "time": {
-                    "label": "Time",
-                    "desc": "Time picker",
-                    "icon": "fas fa-calendar-check",
-                    "bg": "bg-purple-600"
-                },
-                "media": {
-                    "label": "Media",
-                    "desc": "Files, images, videos from the library",
-                    "icon": "fas fa-photo-video",
-                    "bg": "bg-gray-500"
-                },
-                "relation": {
-                    "label": "Relation",
-                    "desc": "Collection relations",
-                    "icon": "fas fa-exchange-alt",
-                    "bg": "bg-pink-400"
-                },
-                "json": {
-                    "label": "JSON",
-                    "desc": "Data in JSON format",
-                    "icon": "fas fa-code",
-                    "bg": "bg-red-700"
-                }
-            },
-        }
-    },
+            }
+        },
 
-    methods: {
-        getForms(){
-            axios.get('/admin/content/forms/'+this.$route.params.project_id+'/'+this.$route.params.col_id).then((response) => {
-                this.project = response.data.project;
-                this.collection = response.data.collection;
-                this.forms = response.data.forms;
-                this.new_form.project_id = response.data.project.id;
-                this.new_form.collection_id = response.data.collection.id;
+        methods: {
+            getForms(){
+                axios.get('/admin/content/forms/'+this.$route.params.project_id+'/'+this.$route.params.col_id).then((response) => {
+                    this.project = response.data.project;
+                    this.collection = response.data.collection;
+                    this.forms = response.data.forms;
+                    this.new_form.project_id = response.data.project.id;
+                    this.new_form.collection_id = response.data.collection.id;
 
-                this.collection.fields.forEach(element => {
-                    element.options = JSON.parse(element.options);
-                    element.validations = JSON.parse(element.validations);
+                    this.collection.fields.forEach(element => {
+                        element.options = JSON.parse(element.options);
+                        element.validations = JSON.parse(element.validations);
+                    });
+                    this.forms.forEach(form => {
+                        if(form.id == this.$route.params.form_id){
+                            this.form = form;
+                            this.form.fields = this.form.fields !== null ? JSON.parse(this.form.fields) : [];
+
+                            this.formClone = JSON.parse(JSON.stringify(this.form))
+                            this.$forceUpdate();
+                        }
+                    });
                 });
-                this.forms.forEach(form => {
-                    if(form.id == this.$route.params.form_id){
-                        this.form = form;
-                        this.form.fields = this.form.fields !== null ? JSON.parse(this.form.fields) : [];
+            },
 
-                        this.formClone = JSON.parse(JSON.stringify(this.form))
-                        this.$forceUpdate();
+            closeNewFormModal(){
+                this.openNewFormModal = false;
+                this.new_form = {
+                    errors: {
+                        name: '',
+                    }
+                };
+                this.processing_new_form = false;
+            },
+
+            saveNew(){
+                axios.post('/admin/content/forms/'+this.$route.params.project_id+'/'+this.$route.params.col_id, this.new_form).then((response) => {
+                    this.closeNewFormModal();
+                    this.$toast.success('New form created.');
+                    this.$router.push({ name: 'projects.content.forms.detail', params: { project_id: this.project.id, collection_id: this.collection.id, form_id: response.data.id } });
+                }, (error) => {
+                    if(error.response.status == 422){
+                        this.new_form.errors = error.response.data.errors;
                     }
                 });
-            });
-        },
+            },
 
-        closeNewFormModal(){
-            this.openNewFormModal = false;
-            this.new_form = {
-                errors: {
-                    name: '',
-                }
-            };
-            this.processing_new_form = false;
-        },
+            closeAddFieldsModal(){
+                this.openAddFieldsModal = false;
+            },
 
-        saveNew(){
-            axios.post('/admin/content/forms/'+this.$route.params.project_id+'/'+this.$route.params.col_id, this.new_form).then((response) => {
-                this.closeNewFormModal();
-                this.$toast.success('New form created.');
-                this.$router.push({ name: 'projects.content.forms.detail', params: { project_id: this.project.id, collection_id: this.collection.id, form_id: response.data.id } });
-            }, (error) => {
-                if(error.response.status == 422){
-                    this.new_form.errors = error.response.data.errors;
-                }
-            });
-        },
+            addField(field){
+                this.form.fields.push(field);
+                this.closeAddFieldsModal();
+            },
 
-        closeAddFieldsModal(){
-            this.openAddFieldsModal = false;
-        },
+            removeField(field){
+                this.form.fields.splice(this.form.fields.indexOf(field), 1);
+                this.$forceUpdate();
+            },
 
-        addField(field){
-            this.form.fields.push(field);
-            this.closeAddFieldsModal();
-        },
-
-        removeField(field){
-            this.form.fields.splice(this.form.fields.indexOf(field), 1);
-            this.$forceUpdate();
-        },
-
-        saveForm(){
-            axios.post('/admin/content/forms/save/'+this.$route.params.project_id+'/'+this.$route.params.col_id+'/'+this.form.id, this.form).then((response) => {
-                this.$toast.success('Form updated.');
-                this.formClone = JSON.parse(JSON.stringify(this.form))
-            });
-        },
-
-        closeEmbedModal(){
-            this.openEmbedModal = false;
-        },
-
-        copyToClipboard(str){
-            this.$clipboard(str);
-            this.$toast.success('Copied to clipboard');
-        },
-
-        deleteForm(){
-            this.$swal.fire({
-                title: 'Are you sure',
-                text: "you want to delete this form permanently?",
-            }).then((result) => {
-                if (result.value) {
+            saveForm(){
+                axios.post('/admin/content/forms/save/'+this.$route.params.project_id+'/'+this.$route.params.col_id+'/'+this.form.id, this.form).then((response) => {
+                    this.$toast.success('Form updated.');
                     this.formClone = JSON.parse(JSON.stringify(this.form))
+                });
+            },
 
-                    axios.delete('/admin/content/forms/delete/'+this.$route.params.project_id+'/'+this.$route.params.col_id+'/'+this.$route.params.form_id).then((response) => {
-                        this.$toast.success('Form deleted.');
-                        this.$router.push({name: 'projects.content.forms', params: {project_id: this.$route.params.project_id, col_id: this.$route.params.col_id}});
-                    });
-                }
-            });
+            closeEmbedModal(){
+                this.openEmbedModal = false;
+            },
+
+            copyToClipboard(str){
+                this.$clipboard(str);
+                this.$toast.success('Copied to clipboard');
+            },
+
+            deleteForm(){
+                this.$swal.fire({
+                    title: 'Are you sure',
+                    text: "you want to delete this form permanently?",
+                }).then((result) => {
+                    if (result.value) {
+                        this.formClone = JSON.parse(JSON.stringify(this.form))
+
+                        axios.delete('/admin/content/forms/delete/'+this.$route.params.project_id+'/'+this.$route.params.col_id+'/'+this.$route.params.form_id).then((response) => {
+                            this.$toast.success('Form deleted.');
+                            this.$router.push({name: 'projects.content.forms', params: {project_id: this.$route.params.project_id, col_id: this.$route.params.col_id}});
+                        });
+                    }
+                });
+            },
         },
-    },
 
-    mounted(){
-        this.getForms();
-    },
-
-    computed: {
-        embedCode(){
-            let APP_URL = document.querySelector('meta[name="APP_URL"]').content
-            let url = APP_URL+'/forms/'+this.form.uuid;
-            return '<iframe width="100%" height="100%"  style="border:none;" src="'+url+'"></iframe>';
-        },
-        dragOptions() {
-            return {
-                animation: 200,
-            };
-        },
-        isSavingEnable() {
-            return diff(this.form, this.formClone);
-        }
-    },
-
-    watch: {
-        '$route.params.form_id'(newId, oldId) {
+        mounted(){
             this.getForms();
         },
-    },
 
-    beforeRouteLeave (to, from , next) {
-        if(this.isSavingEnable){
-            this.$swal.fire({
-                title: 'Are you sure',
-                text: "you want to leave? You have unsaved changes?",
-            }).then((result) => {
-                if (result.value) {
-                    next()
-                }
-            });
-        } else {
-            next()
+        computed: {
+            embedCode(){
+                let APP_URL = document.querySelector('meta[name="APP_URL"]').content
+                let url = APP_URL+'/forms/'+this.form.uuid;
+                return '<iframe width="100%" height="100%"  style="border:none;" src="'+url+'"></iframe>';
+            },
+            dragOptions() {
+                return {
+                    animation: 200,
+                };
+            },
+            isSavingEnable() {
+                return diff(this.form, this.formClone);
+            }
+        },
+
+        watch: {
+            '$route.params.form_id'(newId, oldId) {
+                this.getForms();
+            },
+        },
+
+        beforeRouteLeave (to, from , next) {
+            if(this.isSavingEnable){
+                this.$swal.fire({
+                    title: 'Are you sure',
+                    text: "you want to leave? You have unsaved changes?",
+                }).then((result) => {
+                    if (result.value) {
+                        next()
+                    }
+                });
+            } else {
+                next()
+            }
         }
     }
-}
 </script>

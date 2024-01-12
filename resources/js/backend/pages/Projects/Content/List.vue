@@ -15,33 +15,33 @@
 </template>
 
 <script>
-import ProjectHeader from '../../../[components]/ProjectHeader.vue'
-import ContentSidebar from './[sections]/ContentSidebar.vue'
-import ContentTable from './[sections]/ContentTable.vue'
+    import ProjectHeader from '../../../[components]/ProjectHeader.vue'
+    import ContentSidebar from './[sections]/ContentSidebar.vue'
+    import ContentTable from './[sections]/ContentTable.vue'
 
-export default {
-    components: {
-        ProjectHeader,
-        ContentSidebar,
-        ContentTable
-    },
-
-    data(){
-        return {
-            project: {},
-        }
-    },
-
-    methods: {
-        getProject(){
-            axios.get('/admin/content/project/'+this.$route.params.project_id).then((response) => {
-                this.project = response.data;
-            });
+    export default {
+        components: {
+            ProjectHeader,
+            ContentSidebar,
+            ContentTable
         },
-    },
 
-    mounted(){
-        this.getProject();
-    },
-}
+        data(){
+            return {
+                project: {},
+            }
+        },
+
+        methods: {
+            getProject(){
+                axios.get('/admin/content/project/'+this.$route.params.project_id).then((response) => {
+                    this.project = response.data;
+                });
+            },
+        },
+
+        mounted(){
+            this.getProject();
+        },
+    }
 </script>

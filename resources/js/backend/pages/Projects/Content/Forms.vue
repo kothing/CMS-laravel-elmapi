@@ -64,85 +64,85 @@
 </template>
 
 <script>
-import UiButton from '../../../../[components]/Button.vue'
-import UiModal from '../../../../[components]/Modal.vue'
-import UiDropdown from '../../../../[components]/Dropdown.vue'
+    import UiButton from '../../../../[components]/Button.vue'
+    import UiModal from '../../../../[components]/Modal.vue'
+    import UiDropdown from '../../../../[components]/Dropdown.vue'
 
-import ProjectHeader from '../../../[components]/ProjectHeader.vue'
-import ContentSidebar from './[sections]/ContentSidebar.vue'
-import ContentFormsSidebar from './[sections]/ContentFormsSidebar.vue'
+    import ProjectHeader from '../../../[components]/ProjectHeader.vue'
+    import ContentSidebar from './[sections]/ContentSidebar.vue'
+    import ContentFormsSidebar from './[sections]/ContentFormsSidebar.vue'
 
-export default {
-    components: {
-        ProjectHeader,
-        ContentSidebar,
-        UiButton,
-        UiModal,
-        UiDropdown,
-        ContentFormsSidebar,
-    },
+    export default {
+        components: {
+            ProjectHeader,
+            ContentSidebar,
+            UiButton,
+            UiModal,
+            UiDropdown,
+            ContentFormsSidebar,
+        },
 
-    data(){
-        return {
-            project: {},
-            collection: {},
-            forms: {},
-            openNewFormModal: false,
-            new_form: {
-                errors: {
-                    name: '',
-                }
-            },
-            processing_new_form: false,
-        }
-    },
+        data(){
+            return {
+                project: {},
+                collection: {},
+                forms: {},
+                openNewFormModal: false,
+                new_form: {
+                    errors: {
+                        name: '',
+                    }
+                },
+                processing_new_form: false,
+            }
+        },
 
-    methods: {
-        getForms(){
-            axios.get('/admin/content/forms/'+this.$route.params.project_id+'/'+this.$route.params.col_id).then((response) => {
-                this.project = response.data.project;
-                this.collection = response.data.collection;
-                this.forms = response.data.forms;
-                this.new_form.project_id = response.data.project.id;
-                this.new_form.collection_id = response.data.collection.id;
+        methods: {
+            getForms(){
+                axios.get('/admin/content/forms/'+this.$route.params.project_id+'/'+this.$route.params.col_id).then((response) => {
+                    this.project = response.data.project;
+                    this.collection = response.data.collection;
+                    this.forms = response.data.forms;
+                    this.new_form.project_id = response.data.project.id;
+                    this.new_form.collection_id = response.data.collection.id;
 
-                this.collection.fields.forEach(element => {
-                    element.options = JSON.parse(element.options);
+                    this.collection.fields.forEach(element => {
+                        element.options = JSON.parse(element.options);
+                    });
                 });
-            });
+            },
+
+            closeNewFormModal(){
+                this.openNewFormModal = false;
+                this.new_form = {
+                    errors: {
+                        name: '',
+                    }
+                };
+                this.processing_new_form = false;
+            },
+
+            saveNew(){
+                axios.post('/admin/content/forms/'+this.$route.params.project_id+'/'+this.$route.params.col_id, this.new_form).then((response) => {
+                    this.closeNewFormModal();
+                    this.$toast.success('New form created.');
+                    this.$router.push({ name: 'projects.content.forms.detail', params: { project_id: this.project.id, collection_id: this.collection.id, form_id: response.data.id } });
+                }, (error) => {
+                    if(error.response.status == 422){
+                        this.new_form.errors = error.response.data.errors;
+                    }
+                });
+            },
         },
 
-        closeNewFormModal(){
-            this.openNewFormModal = false;
-            this.new_form = {
-                errors: {
-                    name: '',
-                }
-            };
-            this.processing_new_form = false;
-        },
-
-        saveNew(){
-            axios.post('/admin/content/forms/'+this.$route.params.project_id+'/'+this.$route.params.col_id, this.new_form).then((response) => {
-                this.closeNewFormModal();
-                this.$toast.success('New form created.');
-                this.$router.push({ name: 'projects.content.forms.detail', params: { project_id: this.project.id, collection_id: this.collection.id, form_id: response.data.id } });
-            }, (error) => {
-                if(error.response.status == 422){
-                    this.new_form.errors = error.response.data.errors;
-                }
-            });
-        },
-    },
-
-    mounted(){
-        this.getForms();
-    },
-
-    watch: {
-        '$route.params.col_id'(newId, oldId) {
+        mounted(){
             this.getForms();
         },
-    },
-}
+
+        watch: {
+            '$route.params.col_id'(newId, oldId) {
+                this.getForms();
+            },
+        },
+    }
 </script>

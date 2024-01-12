@@ -557,295 +557,410 @@
 </template>
 
 <script>
-import Vue from 'vue'
+    import Vue from 'vue'
 
-import { codemirror } from 'vue-codemirror'
-import { diff } from "deep-diff";
-import 'codemirror/lib/codemirror.css'
-import 'codemirror/mode/javascript/javascript.js'
-import 'codemirror/addon/edit/closebrackets.js'
-import 'codemirror/addon/edit/matchbrackets.js'
-import 'codemirror/theme/solarized.css'
-import "codemirror/addon/display/autorefresh.js";
+    import { codemirror } from 'vue-codemirror'
+    import { diff } from "deep-diff";
+    import 'codemirror/lib/codemirror.css'
+    import 'codemirror/mode/javascript/javascript.js'
+    import 'codemirror/addon/edit/closebrackets.js'
+    import 'codemirror/addon/edit/matchbrackets.js'
+    import 'codemirror/theme/solarized.css'
+    import "codemirror/addon/display/autorefresh.js";
 
-import { quillEditor } from 'vue-quill-editor'
-import imageResize from "quill-image-resize-module";
-import 'quill/dist/quill.core.css'
-import 'quill/dist/quill.snow.css'
-import 'quill/dist/quill.bubble.css'
+    import { quillEditor } from 'vue-quill-editor'
+    import imageResize from "quill-image-resize-module";
+    import 'quill/dist/quill.core.css'
+    import 'quill/dist/quill.snow.css'
+    import 'quill/dist/quill.bubble.css'
 
-import UiButton from '../../../../[components]/Button.vue'
-import UiModal from '../../../../[components]/Modal.vue'
-import UiDropdown from '../../../../[components]/Dropdown.vue'
+    import UiButton from '../../../../[components]/Button.vue'
+    import UiModal from '../../../../[components]/Modal.vue'
+    import UiDropdown from '../../../../[components]/Dropdown.vue'
 
-import ProjectHeader from '../../../[components]/ProjectHeader.vue'
-import MediaLibrary from '../../../[components]/MediaLibrary.vue'
+    import ProjectHeader from '../../../[components]/ProjectHeader.vue'
+    import MediaLibrary from '../../../[components]/MediaLibrary.vue'
 
-import ContentSidebar from './[sections]/ContentSidebar.vue'
-import ContentTable from './[sections]/ContentTable.vue'
+    import ContentSidebar from './[sections]/ContentSidebar.vue'
+    import ContentTable from './[sections]/ContentTable.vue'
 
-import localesJson from '../../../../locales.json'
+    import localesJson from '../../../../locales.json'
 
-export default {
-    components: {
-        ProjectHeader,
-        ContentSidebar,
-        UiButton,
-        UiModal,
-        UiDropdown,
-        MediaLibrary,
-        codemirror,
-        quillEditor,
-        ContentTable
-    },
+    export default {
+        components: {
+            ProjectHeader,
+            ContentSidebar,
+            UiButton,
+            UiModal,
+            UiDropdown,
+            MediaLibrary,
+            codemirror,
+            quillEditor,
+            ContentTable
+        },
 
-    data(){
-        return {
-            project: {},
-            collection: {},
-            content: {},
-            newData: {
-                locale: null,
-                data: {},
-                files: {},
-                errors: {},
-                deleted: []
-            },
-            newDataClone: {
-                locale: null,
-                data: {},
-                files: {},
-                errors: {}
-            },
-            openMediaLibraryModal: false,
-            currentMediaField: null,
-            selectedFiles: [],
-            mediaModalTYPE: null,
-            passwordShow: [],
-            cmOptions: {
-                autoCloseBrackets: true,
-                lineNumbers: true,
-                matchBrackets: true,
-                mode: {
-                    name: 'javascript',
-                    json: true
+        data(){
+            return {
+                project: {},
+                collection: {},
+                content: {},
+                newData: {
+                    locale: null,
+                    data: {},
+                    files: {},
+                    errors: {},
+                    deleted: []
                 },
-                smartIndent: true,
-                tabSize: 2,
-                theme:'solarized dark',
-                autoRefresh: true
-            },
-            insertFilesToEditor: false,
-            openRelationModal: false,
-            relationModalCollectionID: null,
-            relationModalCollectionTYPE: null,
-            currentRelationField: null,
-            relationRecords: {},
-            init: false,
-        }
-    },
+                newDataClone: {
+                    locale: null,
+                    data: {},
+                    files: {},
+                    errors: {}
+                },
+                openMediaLibraryModal: false,
+                currentMediaField: null,
+                selectedFiles: [],
+                mediaModalTYPE: null,
+                passwordShow: [],
+                cmOptions: {
+                    autoCloseBrackets: true,
+                    lineNumbers: true,
+                    matchBrackets: true,
+                    mode: {
+                        name: 'javascript',
+                        json: true
+                    },
+                    smartIndent: true,
+                    tabSize: 2,
+                    theme:'solarized dark',
+                    autoRefresh: true
+                },
+                insertFilesToEditor: false,
+                openRelationModal: false,
+                relationModalCollectionID: null,
+                relationModalCollectionTYPE: null,
+                currentRelationField: null,
+                relationRecords: {},
+                init: false,
+            }
+        },
 
-    methods: {
-        getEdit(){
-            axios.get('/admin/content/edit/'+this.$route.params.project_id+'/'+this.$route.params.col_id+'/'+this.$route.params.content_id).then((response) => {
-                this.project = response.data.project;
-                this.collection = response.data.collection;
-                this.newData.project_id = response.data.project.id;
-                this.newData.collection_id = response.data.collection.id;
+        methods: {
+            getEdit(){
+                axios.get('/admin/content/edit/'+this.$route.params.project_id+'/'+this.$route.params.col_id+'/'+this.$route.params.content_id).then((response) => {
+                    this.project = response.data.project;
+                    this.collection = response.data.collection;
+                    this.newData.project_id = response.data.project.id;
+                    this.newData.collection_id = response.data.collection.id;
 
-                this.collection.fields.forEach(element => {
-                    element.options = JSON.parse(element.options);
-                });
+                    this.collection.fields.forEach(element => {
+                        element.options = JSON.parse(element.options);
+                    });
 
-                var array = this.collection.fields;
-                for (let i = 0; i < array.length; i++) {
-                    this.passwordShow[array[i].name] = false;
-                }
-                this.collection.fields.forEach(slugField => {
-                    if(slugField.options.slug !== undefined && slugField.options.slug.field !== null){
-                        for (let i = 0; i < array.length; i++) {
-                            if(slugField.options.slug.field === array[i].name){
-                                this.collection.fields[i].slug_field = slugField.name;
+                    var array = this.collection.fields;
+                    for (let i = 0; i < array.length; i++) {
+                        this.passwordShow[array[i].name] = false;
+                    }
+                    this.collection.fields.forEach(slugField => {
+                        if(slugField.options.slug !== undefined && slugField.options.slug.field !== null){
+                            for (let i = 0; i < array.length; i++) {
+                                if(slugField.options.slug.field === array[i].name){
+                                    this.collection.fields[i].slug_field = slugField.name;
+                                }
                             }
                         }
-                    }
-                });
-                this.collection.fields.forEach(field => {
-                    if(field.options.repeatable){
-                        Vue.set(this.newData.data, field.name, []);
-                    }
-                });
+                    });
+                    this.collection.fields.forEach(field => {
+                        if(field.options.repeatable){
+                            Vue.set(this.newData.data, field.name, []);
+                        }
+                    });
 
-                this.content = response.data.content;
-                this.newData.locale = response.data.content.locale;
+                    this.content = response.data.content;
+                    this.newData.locale = response.data.content.locale;
 
-                var content = response.data.content;
-                var array = this.collection.fields;
-                for (let i = 0; i < array.length; i++) {
-                    if(array[i].options.repeatable){
-                        content.meta.forEach(element => {
-                            if(element.field_name == array[i].name){
-                                this.addNewLineToRepeatableField(array[i], element.value, element.id);
-                            }
-                        });
-                    } else {
-                        content.meta.forEach(element => {
-                            if(element.field_name == array[i].name){
-                                if(array[i].type == 'enumeration'){
-                                    if(array[i].options.multiple){
-                                        Vue.set(this.newData.data, array[i].name, element.value.split(','))
+                    var content = response.data.content;
+                    var array = this.collection.fields;
+                    for (let i = 0; i < array.length; i++) {
+                        if(array[i].options.repeatable){
+                            content.meta.forEach(element => {
+                                if(element.field_name == array[i].name){
+                                    this.addNewLineToRepeatableField(array[i], element.value, element.id);
+                                }
+                            });
+                        } else {
+                            content.meta.forEach(element => {
+                                if(element.field_name == array[i].name){
+                                    if(array[i].type == 'enumeration'){
+                                        if(array[i].options.multiple){
+                                            Vue.set(this.newData.data, array[i].name, element.value.split(','))
+                                        } else {
+                                            Vue.set(this.newData.data, array[i].name, element.value)
+                                        }
+                                    } else if(array[i].type == 'password'){
+                                        Vue.set(this.newData.data, array[i].name, null)
+                                    } else if(array[i].type == 'boolean'){
+                                        if(element.value == 1){
+                                            Vue.set(this.newData.data, array[i].name, true)
+                                        } else {
+                                            Vue.set(this.newData.data, array[i].name, false)
+                                        }
+                                    } else if(array[i].type == 'media'){
+                                        if(element.value !== ''){
+                                            let arr = element.value.split(',');
+                                            for (let k = 0; k < arr.length; k++) {
+                                                const element = arr[k];
+                                                arr[k] = parseInt(arr[k]);
+                                            }
+                                            this.insertFilesToEditor = false;
+                                            this.insertFiles(arr, array[i].name, true);
+                                        }
+                                    } else if(array[i].type == 'relation'){
+                                        if(element.value != ''){
+                                            let arr = element.value.split(',');
+                                            for (let k = 0; k < arr.length; k++) {
+                                                const element = arr[k];
+                                                arr[k] = parseInt(arr[k]);
+                                            }
+                                            this.addSelectedRelation({selected: arr, collection_id: array[i].options.relation.collection}, array[i].name, true);
+                                        }
+                                    } else if(array[i].type == 'json'){
+                                    Vue.set(this.newData.data, array[i].name, JSON.parse(element.value))
                                     } else {
                                         Vue.set(this.newData.data, array[i].name, element.value)
                                     }
-                                } else if(array[i].type == 'password'){
-                                    Vue.set(this.newData.data, array[i].name, null)
-                                } else if(array[i].type == 'boolean'){
-                                    if(element.value == 1){
-                                        Vue.set(this.newData.data, array[i].name, true)
-                                    } else {
-                                        Vue.set(this.newData.data, array[i].name, false)
-                                    }
-                                } else if(array[i].type == 'media'){
-                                    if(element.value !== ''){
-                                        let arr = element.value.split(',');
-                                        for (let k = 0; k < arr.length; k++) {
-                                            const element = arr[k];
-                                            arr[k] = parseInt(arr[k]);
-                                        }
-                                        this.insertFilesToEditor = false;
-                                        this.insertFiles(arr, array[i].name, true);
-                                    }
-                                } else if(array[i].type == 'relation'){
-                                    if(element.value != ''){
-                                        let arr = element.value.split(',');
-                                        for (let k = 0; k < arr.length; k++) {
-                                            const element = arr[k];
-                                            arr[k] = parseInt(arr[k]);
-                                        }
-                                        this.addSelectedRelation({selected: arr, collection_id: array[i].options.relation.collection}, array[i].name, true);
-                                    }
-                                } else if(array[i].type == 'json'){
-                                Vue.set(this.newData.data, array[i].name, JSON.parse(element.value))
-                                } else {
-                                    Vue.set(this.newData.data, array[i].name, element.value)
                                 }
-                            }
-                        });
+                            });
+                        }
                     }
+
+                    //Check if repeatable field is empty
+                    this.collection.fields.forEach(field => {
+                        if(field.options.repeatable){
+                            if(this.newData.data[field.name].length == 0){
+                                this.addNewLineToRepeatableField(field, '');
+                            }
+                        }
+                    });
+
+                    this.newDataClone = JSON.parse(JSON.stringify(this.newData))
+
+
+                });
+            },
+
+            addNewLineToRepeatableField(field, value, id = null){
+                this.newData.data[field.name].push({ value: value, id: id });
+            },
+            removeLineFromRepeatableField(field, index){
+                this.newData.deleted.push(this.newData.data[field.name][index].id);
+
+                let array = this.newData.data[field.name];
+                array.splice(index, 1);
+                Vue.set(this.newData.data, field.name, array);
+            },
+
+            saveEdit(published, after=null){
+                if(!published){
+                    if(this.content.published_at !== null){
+                        this.newData.published = true;
+                    }
+                } else {
+                    this.newData.published = published;
                 }
 
-                //Check if repeatable field is empty
-                this.collection.fields.forEach(field => {
-                    if(field.options.repeatable){
-                        if(this.newData.data[field.name].length == 0){
-                            this.addNewLineToRepeatableField(field, '');
+                axios.post('/admin/content/update/'+this.$route.params.project_id+'/'+this.$route.params.col_id+'/'+this.$route.params.content_id, this.newData).then((response) => {
+                    this.$toast.success('Content updated!');
+                    this.newData.errors = {};
+
+                    if(after === null){
+                        this.getEdit();
+                    } else if(after === 'close'){
+                        this.newDataClone = JSON.parse(JSON.stringify(this.newData))
+
+                        this.$router.push({name: 'projects.content.list', params: {project_id: this.$route.params.project_id, col_id: this.$route.params.col_id}});
+                    } else if(after === 'new'){
+                        this.newDataClone = JSON.parse(JSON.stringify(this.newData))
+
+                        this.$router.push({name: 'projects.content.new', params: {project_id: this.$route.params.project_id, col_id: this.$route.params.col_id}});
+                    }
+                }, (error) => {
+                    if(error.response.status == 422){
+                        this.newData.errors = error.response.data.errors;
+                    }
+                });
+            },
+
+            openMediaLibraryModalFn(field_name, insertToEditor=false, media_type){
+                this.insertFilesToEditor = insertToEditor
+                this.currentMediaField = field_name;
+                this.openMediaLibraryModal = true;
+                this.mediaModalTYPE = parseInt(media_type);
+
+                if(!insertToEditor){
+                    this.selectedFiles = this.newData.data[field_name];
+                } else {
+                    this.selectedFiles = [];
+                }
+            },
+
+            closeMediaLibraryModal(){
+                this.openMediaLibraryModal = false;
+            },
+
+            async insertFiles(files, field_name=null, clone=false){
+                await axios.post('/admin/content/get-selected-files/'+this.$route.params.project_id, { data: files}).then((response) => {
+                    if(this.insertFilesToEditor){
+                        let editor_ref = 'quillEditor_'+this.currentMediaField;
+                        let editor = this.$refs[editor_ref][0].quill;
+
+                        let APP_URL = document.querySelector('meta[name="APP_URL"]').content
+
+                        let array = response.data;
+                        let file_link = '';
+                        for (let i = 0; i < array.length; i++) {
+                            const element = array[i];
+                            let full_url = element.full_url;
+
+                            if(element.type == 'jpg' || element.type == 'jpeg' || element.type == 'png' || element.type == 'gif' || element.type == 'webp'){
+                                editor.insertEmbed(editor.getSelection(true).index, 'image', full_url);
+                            } else {
+                                file_link ='<br><p><a href="'+full_url+'" target="_blank">'+element.name+"</a></p>";
+                                editor.clipboard.dangerouslyPasteHTML(editor.getSelection(true).index, file_link);
+                            }
+                        }
+                        this.selectedFiles = [];
+                    } else {
+                        let new_files_arr = [];
+                        response.data.forEach(file => {
+                            new_files_arr.push(file.id);
+                        });
+
+                        this.selectedFiles = new_files_arr;
+                        if(field_name === null){
+                            Vue.set(this.newData.data, this.currentMediaField, new_files_arr)
+                        } else {
+                            Vue.set(this.newData.data, field_name, new_files_arr)
+                        }
+                        if(field_name === null){
+                            Vue.set(this.newData.files, this.currentMediaField, response.data)
+                        } else {
+                            Vue.set(this.newData.files, field_name, response.data)
+                        }
+
+                        this.$forceUpdate();
+
+                        if(clone){
+                            this.newDataClone = JSON.parse(JSON.stringify(this.newData))
+                            this.$forceUpdate();
                         }
                     }
                 });
+                this.closeMediaLibraryModal();
+            },
 
-                this.newDataClone = JSON.parse(JSON.stringify(this.newData))
-
-
-            });
-        },
-
-        addNewLineToRepeatableField(field, value, id = null){
-            this.newData.data[field.name].push({ value: value, id: id });
-        },
-        removeLineFromRepeatableField(field, index){
-            this.newData.deleted.push(this.newData.data[field.name][index].id);
-
-            let array = this.newData.data[field.name];
-            array.splice(index, 1);
-            Vue.set(this.newData.data, field.name, array);
-        },
-
-        saveEdit(published, after=null){
-            if(!published){
-                if(this.content.published_at !== null){
-                    this.newData.published = true;
+            removeFile(file, field_name){
+                for (let i = 0; i < this.newData.data[field_name].length; i++) {
+                    const element = this.newData.data[field_name][i];
+                    if(element == file.id)
+                        this.$delete(this.newData.data[field_name], i);
                 }
-            } else {
-                this.newData.published = published;
-            }
-
-            axios.post('/admin/content/update/'+this.$route.params.project_id+'/'+this.$route.params.col_id+'/'+this.$route.params.content_id, this.newData).then((response) => {
-                this.$toast.success('Content updated!');
-                this.newData.errors = {};
-
-                if(after === null){
-                    this.getEdit();
-                } else if(after === 'close'){
-                    this.newDataClone = JSON.parse(JSON.stringify(this.newData))
-
-                    this.$router.push({name: 'projects.content.list', params: {project_id: this.$route.params.project_id, col_id: this.$route.params.col_id}});
-                } else if(after === 'new'){
-                    this.newDataClone = JSON.parse(JSON.stringify(this.newData))
-
-                    this.$router.push({name: 'projects.content.new', params: {project_id: this.$route.params.project_id, col_id: this.$route.params.col_id}});
+                for (let i = 0; i < this.newData.files[field_name].length; i++) {
+                    const element = this.newData.files[field_name][i];
+                    if(element.id == file.id)
+                        this.$delete(this.newData.files[field_name], i);
                 }
-            }, (error) => {
-                if(error.response.status == 422){
-                    this.newData.errors = error.response.data.errors;
+                this.$forceUpdate();
+            },
+
+            showPassword(field){
+                this.passwordShow[field] = !this.passwordShow[field];
+                this.$forceUpdate();
+            },
+
+            generatePassword (field){
+                let CharacterSet = '';
+                let password = '';
+
+                CharacterSet += 'abcdefghijklmnopqrstuvwxyz';
+                CharacterSet += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                CharacterSet += '0123456789';
+                CharacterSet += '![]{}()%&*$#^<>~@|';
+
+                for(let i=0; i < 12; i++) {
+                    password += CharacterSet.charAt(Math.floor(Math.random() * CharacterSet.length));
                 }
-            });
-        },
+                Vue.set(this.newData.data, field, password);
+                this.passwordShow[field] = true;
+                this.$forceUpdate();
+            },
 
-        openMediaLibraryModalFn(field_name, insertToEditor=false, media_type){
-            this.insertFilesToEditor = insertToEditor
-            this.currentMediaField = field_name;
-            this.openMediaLibraryModal = true;
-            this.mediaModalTYPE = parseInt(media_type);
-
-            if(!insertToEditor){
-                this.selectedFiles = this.newData.data[field_name];
-            } else {
-                this.selectedFiles = [];
-            }
-        },
-
-        closeMediaLibraryModal(){
-            this.openMediaLibraryModal = false;
-        },
-
-        async insertFiles(files, field_name=null, clone=false){
-            await axios.post('/admin/content/get-selected-files/'+this.$route.params.project_id, { data: files}).then((response) => {
-                if(this.insertFilesToEditor){
-                    let editor_ref = 'quillEditor_'+this.currentMediaField;
-                    let editor = this.$refs[editor_ref][0].quill;
-
-                    let APP_URL = document.querySelector('meta[name="APP_URL"]').content
-
-                    let array = response.data;
-                    let file_link = '';
-                    for (let i = 0; i < array.length; i++) {
-                        const element = array[i];
-                        let full_url = element.full_url;
-
-                        if(element.type == 'jpg' || element.type == 'jpeg' || element.type == 'png' || element.type == 'gif' || element.type == 'webp'){
-                            editor.insertEmbed(editor.getSelection(true).index, 'image', full_url);
-                        } else {
-                            file_link ='<br><p><a href="'+full_url+'" target="_blank">'+element.name+"</a></p>";
-                            editor.clipboard.dangerouslyPasteHTML(editor.getSelection(true).index, file_link);
-                        }
+            unpublish(){
+                this.$swal.fire({
+                    title: 'Are you sure',
+                    text: "you want to unpublish this item?",
+                }).then((result) => {
+                    if (result.value) {
+                        axios.get('/admin/content/unpublish/'+this.$route.params.project_id+'/'+this.$route.params.col_id+'/'+this.$route.params.content_id).then((response) => {
+                            this.$toast.success('Content updated!');
+                            this.$router.go();
+                        });
                     }
-                    this.selectedFiles = [];
-                } else {
-                    let new_files_arr = [];
-                    response.data.forEach(file => {
-                        new_files_arr.push(file.id);
-                    });
+                });
+            },
 
-                    this.selectedFiles = new_files_arr;
-                    if(field_name === null){
-                        Vue.set(this.newData.data, this.currentMediaField, new_files_arr)
-                    } else {
-                        Vue.set(this.newData.data, field_name, new_files_arr)
+            moveToTrashContent(){
+                this.$swal.fire({
+                    title: 'Are you sure',
+                    text: "you want to move this item to the trash?",
+                }).then((result) => {
+                    if (result.value) {
+                        axios.delete('/admin/content/move-to-trash/'+this.$route.params.project_id+'/'+this.$route.params.col_id+'/'+this.$route.params.content_id).then((response) => {
+                            this.$toast.success('Content has been moved to the trash.');
+                            this.$router.push({name: 'projects.content.list', params: {project_id: this.$route.params.project_id, col_id: this.$route.params.col_id}});
+                        });
                     }
-                    if(field_name === null){
-                        Vue.set(this.newData.files, this.currentMediaField, response.data)
+                });
+            },
+
+            deleteContent(){
+                this.$swal.fire({
+                    title: 'Are you sure',
+                    text: "you want to delete this item permanently?",
+                }).then((result) => {
+                    if (result.value) {
+                        axios.delete('/admin/content/delete/'+this.$route.params.project_id+'/'+this.$route.params.col_id+'/'+this.$route.params.content_id).then((response) => {
+                            this.$toast.success('Content deleted.');
+                            this.$router.push({name: 'projects.content.list', params: {project_id: this.$route.params.project_id, col_id: this.$route.params.col_id}});
+                        });
+                    }
+                });
+            },
+
+            openRelationModalFn(field_name, relation_collection, relation_type){
+                this.currentRelationField = field_name;
+                this.relationModalCollectionID = relation_collection;
+                this.relationModalCollectionTYPE = parseInt(relation_type);
+                this.openRelationModal = true;
+            },
+
+            closeRelationModal(){
+                this.openRelationModal = false;
+            },
+
+            async addSelectedRelation(data, field_name=null, clone=false){
+
+                this.closeRelationModal();
+
+                await axios.post('/admin/content/get-selected-records/'+this.$route.params.project_id, { data: data }).then((response) => {
+                    if(field_name !== null){
+                        this.relationRecords[field_name] = response.data.content;
+                        this.relationRecords[field_name].collection = response.data.collection;
+                        Vue.set(this.newData.data, field_name, data.selected)
                     } else {
-                        Vue.set(this.newData.files, field_name, response.data)
+                        this.relationRecords[this.currentRelationField] = response.data.content;
+                        this.relationRecords[this.currentRelationField].collection = response.data.collection;
+                        Vue.set(this.newData.data, this.currentRelationField, data.selected)
                     }
 
                     this.$forceUpdate();
@@ -854,168 +969,53 @@ export default {
                         this.newDataClone = JSON.parse(JSON.stringify(this.newData))
                         this.$forceUpdate();
                     }
+                });
+            },
+
+            removeRelation(item, field_name){
+                for (let i = 0; i < this.newData.data[field_name].length; i++) {
+                    const element = this.newData.data[field_name][i];
+                    if(element == item.id)
+                        this.$delete(this.newData.data[field_name], i);
                 }
-            });
-            this.closeMediaLibraryModal();
-        },
-
-        removeFile(file, field_name){
-            for (let i = 0; i < this.newData.data[field_name].length; i++) {
-                const element = this.newData.data[field_name][i];
-                if(element == file.id)
-                    this.$delete(this.newData.data[field_name], i);
-            }
-            for (let i = 0; i < this.newData.files[field_name].length; i++) {
-                const element = this.newData.files[field_name][i];
-                if(element.id == file.id)
-                    this.$delete(this.newData.files[field_name], i);
-            }
-            this.$forceUpdate();
-        },
-
-        showPassword(field){
-            this.passwordShow[field] = !this.passwordShow[field];
-            this.$forceUpdate();
-        },
-
-        generatePassword (field){
-            let CharacterSet = '';
-            let password = '';
-
-            CharacterSet += 'abcdefghijklmnopqrstuvwxyz';
-            CharacterSet += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            CharacterSet += '0123456789';
-            CharacterSet += '![]{}()%&*$#^<>~@|';
-
-            for(let i=0; i < 12; i++) {
-                password += CharacterSet.charAt(Math.floor(Math.random() * CharacterSet.length));
-            }
-            Vue.set(this.newData.data, field, password);
-            this.passwordShow[field] = true;
-            this.$forceUpdate();
-        },
-
-        unpublish(){
-            this.$swal.fire({
-                title: 'Are you sure',
-                text: "you want to unpublish this item?",
-            }).then((result) => {
-                if (result.value) {
-                    axios.get('/admin/content/unpublish/'+this.$route.params.project_id+'/'+this.$route.params.col_id+'/'+this.$route.params.content_id).then((response) => {
-                        this.$toast.success('Content updated!');
-                        this.$router.go();
-                    });
+                for (let i = 0; i < this.relationRecords[field_name].length; i++) {
+                    const element = this.relationRecords[field_name][i];
+                    if(element.id == item.id)
+                        this.$delete(this.relationRecords[field_name], i);
                 }
-            });
-        },
-
-        moveToTrashContent(){
-            this.$swal.fire({
-                title: 'Are you sure',
-                text: "you want to move this item to the trash?",
-            }).then((result) => {
-                if (result.value) {
-                    axios.delete('/admin/content/move-to-trash/'+this.$route.params.project_id+'/'+this.$route.params.col_id+'/'+this.$route.params.content_id).then((response) => {
-                        this.$toast.success('Content has been moved to the trash.');
-                        this.$router.push({name: 'projects.content.list', params: {project_id: this.$route.params.project_id, col_id: this.$route.params.col_id}});
-                    });
-                }
-            });
-        },
-
-        deleteContent(){
-            this.$swal.fire({
-                title: 'Are you sure',
-                text: "you want to delete this item permanently?",
-            }).then((result) => {
-                if (result.value) {
-                    axios.delete('/admin/content/delete/'+this.$route.params.project_id+'/'+this.$route.params.col_id+'/'+this.$route.params.content_id).then((response) => {
-                        this.$toast.success('Content deleted.');
-                        this.$router.push({name: 'projects.content.list', params: {project_id: this.$route.params.project_id, col_id: this.$route.params.col_id}});
-                    });
-                }
-            });
-        },
-
-        openRelationModalFn(field_name, relation_collection, relation_type){
-            this.currentRelationField = field_name;
-            this.relationModalCollectionID = relation_collection;
-            this.relationModalCollectionTYPE = parseInt(relation_type);
-            this.openRelationModal = true;
-        },
-
-        closeRelationModal(){
-            this.openRelationModal = false;
-        },
-
-        async addSelectedRelation(data, field_name=null, clone=false){
-
-            this.closeRelationModal();
-
-            await axios.post('/admin/content/get-selected-records/'+this.$route.params.project_id, { data: data }).then((response) => {
-                if(field_name !== null){
-                    this.relationRecords[field_name] = response.data.content;
-                    this.relationRecords[field_name].collection = response.data.collection;
-                    Vue.set(this.newData.data, field_name, data.selected)
-                } else {
-                    this.relationRecords[this.currentRelationField] = response.data.content;
-                    this.relationRecords[this.currentRelationField].collection = response.data.collection;
-                    Vue.set(this.newData.data, this.currentRelationField, data.selected)
-                }
-
                 this.$forceUpdate();
+            },
 
-                if(clone){
-                    this.newDataClone = JSON.parse(JSON.stringify(this.newData))
-                    this.$forceUpdate();
-                }
-            });
+            getLocale(locale){
+                return localesJson[locale];
+            },
         },
 
-        removeRelation(item, field_name){
-            for (let i = 0; i < this.newData.data[field_name].length; i++) {
-                const element = this.newData.data[field_name][i];
-                if(element == item.id)
-                    this.$delete(this.newData.data[field_name], i);
+        mounted(){
+            this.getEdit();
+        },
+
+        computed: {
+            isSavingEnable() {
+                if (!diff(this.newData, this.newDataClone)) return false;
+
+                return true;
             }
-            for (let i = 0; i < this.relationRecords[field_name].length; i++) {
-                const element = this.relationRecords[field_name][i];
-                if(element.id == item.id)
-                    this.$delete(this.relationRecords[field_name], i);
+        },
+
+        beforeRouteLeave (to, from , next) {
+            if(this.isSavingEnable){
+                this.$swal.fire({
+                    title: 'Are you sure',
+                    text: "you want to leave? You have unsaved changes?",
+                }).then((result) => {
+                    if (result.value) {
+                        next()
+                    }
+                });
+            } else {
+                next()
             }
-            this.$forceUpdate();
-        },
-
-        getLocale(locale){
-            return localesJson[locale];
-        },
-    },
-
-    mounted(){
-        this.getEdit();
-    },
-
-    computed: {
-        isSavingEnable() {
-            if (!diff(this.newData, this.newDataClone)) return false;
-
-            return true;
-        }
-    },
-
-    beforeRouteLeave (to, from , next) {
-        if(this.isSavingEnable){
-            this.$swal.fire({
-                title: 'Are you sure',
-                text: "you want to leave? You have unsaved changes?",
-            }).then((result) => {
-                if (result.value) {
-                    next()
-                }
-            });
-        } else {
-            next()
         }
     }
-}
 </script>

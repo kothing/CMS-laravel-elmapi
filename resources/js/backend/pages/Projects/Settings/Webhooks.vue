@@ -22,10 +22,10 @@
 
           <div class="bg-white mt-2 rounded-md p-4 w-full">
             <div class="mt-2">
-              <div class="overflow-x-auto mt-1 flex rounded-md">
+              <div class="overflow-x-auto mt-1 flex border rounded-md">
                 <table
                   v-if="webhooks != undefined"
-                  class="w-full divide-y divide-gray-200 border"
+                  class="w-full divide-y divide-gray-200"
                 >
                   <thead class="bg-gray-100">
                     <tr>

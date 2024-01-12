@@ -13,17 +13,17 @@
               Webhooks <small>/ {{ webhook.name }} / Logs</small>
             </h4>
 
-            <ui-button color="indigo-500" @click.native="clearLogs"
-              ><i class="fa fa-trash-restore"></i> Clear Logs</ui-button
-            >
+            <ui-button color="indigo-500" @click.native="clearLogs">
+              <i class="fa fa-trash-restore"></i> Clear Logs
+            </ui-button>
           </div>
 
           <div class="w-full bg-white mt-2 rounded-md p-4">
             <div class="mt-2">
-              <div class="overflow-x-auto mt-2 flex rounded-md">
+              <div class="overflow-x-auto mt-2 flex border rounded-md">
                 <table
                   v-if="logs != undefined"
-                  class="w-full divide-y divide-gray-200 border"
+                  class="w-full divide-y divide-gray-200"
                 >
                   <thead class="bg-gray-100">
                     <tr>
@@ -120,10 +120,8 @@
       <template #content>
         <div class="mt-4">
           <div class="w-full flex">
-            <div>
-              <div class="text-indigo-700">
-                <span class="text-gray-500">URL:</span> {{ logDetails.url }}
-              </div>
+            <div class="text-indigo-700">
+              <span class="text-gray-500">URL:</span> {{ logDetails.url }}
             </div>
           </div>
 
