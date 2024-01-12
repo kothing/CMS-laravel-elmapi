@@ -10,30 +10,29 @@
         "production": "mix --production"
     },
     "devDependencies": {
-        "@fortawesome/fontawesome-free": "^5.15.2",
-        "@tailwindcss/forms": "^0.2.1",
-        "alpinejs": "^2.7.3",
         "autoprefixer": "10.4.5",
-        "axios": "^0.21",
         "browser-sync": "^2.27.5",
         "browser-sync-webpack-plugin": "^2.3.0",
         "cross-env": "^7.0.3",
         "laravel-mix": "^6.0.6",
-        "lodash": "^4.17.19",
-        "nprogress": "^0.2.0",
         "postcss": "^8.2.1",
         "postcss-import": "^12.0.1",
         "tailwindcss": "^2.0.2",
         "vue": "^2.6.12",
+        "vuex": "^3.6.2",
         "vue-loader": "^15.9.6",
         "vue-router": "^3.5.1",
         "vue-template-compiler": "^2.6.12",
         "vue-toastification": "^1.7.11"
     },
     "dependencies": {
+        "@fortawesome/fontawesome-free": "^5.15.2",
+        "@tailwindcss/forms": "^0.2.1",
+        "axios": "^0.21",
         "deep-diff": "^1.0.2",
         "laravel-vue-pagination": "^2.3.1",
         "moment": "^2.29.1",
+        "nprogress": "^0.2.0",
         "quill-image-resize-module": "^3.0.0",
         "v-calendar": "^2.3.2",
         "v-clipboard": "^2.2.3",
@@ -45,8 +44,6 @@
         "vue-sweetalert2": "^5.0.2",
         "vue-upload-component": "^2.8.22",
         "vue2-editor": "^2.10.2",
-        "vuedraggable": "^2.24.3",
-        "vuex": "^3.6.2",
-        "vuex-persistedstate": "^4.0.0"
+        "vuedraggable": "^2.24.3"
     }
 }

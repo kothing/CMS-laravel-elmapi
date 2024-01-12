@@ -1,5 +1,5 @@
 const mix = require('laravel-mix');
-const tailwindcss = require('tailwindcss');
+// const tailwindcss = require('tailwindcss');
 const webpack = require('webpack');
 require('dotenv').config();
 
@@ -19,11 +19,13 @@ mix.options({
     }
 });
 
-mix.js('resources/js/app.js', 'public/js').vue({ version: 2 })
-    .js('resources/js/form.js', 'public/js').vue({ version: 2 })
-    .postCss('resources/css/app.css', 'public/css', [
+mix.js('resources/js/app.js', 'public/js').vue({ version: 1 })
+    .js('resources/js/admin.js', 'public/js').vue({ version: 1 })
+    .js('resources/js/form.js', 'public/js').vue({ version: 1 })
+    .postCss('resources/css/admin.css', 'public/css', [
         require('tailwindcss')('./tailwind.config.js')
     ])
+    .postCss('resources/css/app.css', 'public/css')
     .webpackConfig({
         output: {
             chunkFilename: 'js/partials/[name].js?id=[hash]',
@@ -34,4 +36,4 @@ mix.js('resources/js/app.js', 'public/js').vue({ version: 2 })
                 Quill: 'quill/dist/quill.js'
             })
         ],
-        }).version();
+    }).version();

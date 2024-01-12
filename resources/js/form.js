@@ -1,11 +1,12 @@
 
 import Vue from 'vue'
-import "@fortawesome/fontawesome-free/css/all.min.css";
 import VCalendar from 'v-calendar';
-import vSelect from 'vue-select'
+import VSelect from 'vue-select'
 import 'vue-select/dist/vue-select.css';
-import './directives'
-import './filters'
+import "@fortawesome/fontawesome-free/css/all.min.css";
+
+import './utils/directives'
+import './utils/filters'
 import './plugins/colorpicker'
 
 window.axios = require('axios');
@@ -15,7 +16,7 @@ window.axios.defaults.headers.common = {
 };
 
 // aineForm
-Vue.component('aineForm', require('./layouts/Form.vue').default);
+Vue.component('aineForm', require('./form/Form.vue').default);
 
 // VCalendar
 Vue.use(VCalendar, {
@@ -23,8 +24,8 @@ Vue.use(VCalendar, {
 });
 
 // vSelect
-Vue.component('v-select', vSelect)
+Vue.component('v-select', VSelect)
 
-const form = new Vue({
+new Vue({
     el: '#aineForm',
 });
