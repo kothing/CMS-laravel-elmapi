@@ -6,6 +6,8 @@ A headless CMF is a backend-only `Content Management Framework` that makes conte
 
 # How to start
 
+[Aine document](https://github.com/kothing/laravel-aine-document/ "Aine document")
+
 ## Server Requirements
 - PHP >= 8.1
 - Mysql >= 5.7.8
