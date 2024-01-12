@@ -80,7 +80,7 @@
               ></v-select>
             </div>
             <div class="mt-6">
-              <div class="grid grid-cols-3 gap-4">
+              <div class="grid grid-cols-2 gap-4">
                 <div class="col-span-1">
                   <div
                     class="p-5 border border-gray-300 rounded-md text-sm space-x-2 h-32 relative"
