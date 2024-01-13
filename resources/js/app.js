@@ -11,7 +11,7 @@ import router from "./frontend/routes";
 import store from "./frontend/store";
 
 // app
-Vue.component("app", require("./frontend/App.vue").default);
+Vue.component("app", require("./frontend/Layout.vue").default);
 
 /**
  * Render

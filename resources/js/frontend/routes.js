@@ -4,7 +4,7 @@ import store from "./store";
 
 Vue.use(VueRouter);
 
-const Home = () => import(/* webpackChunkName: "frontend.home" */ "./pages/Home");
+const Home = () => import(/* webpackChunkName: "frontend.home" */ "./views/Home");
 /**
  * Routes
  */
