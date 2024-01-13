@@ -8,12 +8,12 @@
 
         <div 
             :class="sidebarOpen ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'" 
-            class="admin__sidebar w-64 fixed z-10 inset-y-0 left-0 transition duration-300 transform bg-gray-900 overflow-y-auto lg:translate-x-0 lg:static lg:inset-0 text-white"
+            class="admin__sidebar w-64 fixed z-10 inset-y-0 left-0 transition duration-300 transform bg-gray-900 lg:translate-x-0 lg:static lg:inset-0 text-white"
         >
             <sidebar></sidebar>
         </div>
 
-        <div class="admin__content flex-1 flex flex-col">
+        <div class="admin__content flex-1 flex flex-col verflow-auto">
              <header class="admin__content-header flex items-center py-1 px-3 bg-white border-b border-gray-200 lg:hidden">
                 <div class="m-r-2 flex items-center">
                     <button @click="sidebarOpen = !sidebarOpen" class="text-gray-500 focus:outline-none lg:hidden">
@@ -24,9 +24,9 @@
                 </div>
             </header>
 
-            <div class="flex-1 overflow-x-hidden">
+            <!-- <div class="flex-1"> -->
                 <router-view></router-view>
-            </div>
+            <!-- </div> -->
         </div>
     </div>
 </template>

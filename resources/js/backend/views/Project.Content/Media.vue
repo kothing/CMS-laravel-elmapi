@@ -1,9 +1,9 @@
 <template>
-    <div class="admin__content-media-library h-full relative overflow-hidden">
-        <project-header :project="project" class="bg-white"></project-header>
+    <div class="admin__content-media-library relative h-screen overflow-auto">
+        <project-header :project="project"></project-header>
 
-        <div class="flex h-full pt-4 overflow-hidden">
-            <div class="w-3/12 overflow-x-hidden h-full bg-white">
+        <div class="flex pt-4">
+            <div class="w-3/12 bg-white overflow-x-hidden">
                 <content-sidebar :project="project"></content-sidebar>
             </div>
             <div class="w-9/12 p-4 overflow-x-auto">

@@ -1,8 +1,8 @@
 <template>
-    <div class="h-full relative overflow-hidden">
-        <project-header :project="project" class="bg-white"></project-header>
+    <div class="relative h-screen overflow-auto">
+        <project-header :project="project"></project-header>
 
-        <div class="flex h-full pt-4 overflow-hidden">
+        <div class="flex pt-4">
             <div class="w-3/12 overflow-x-hidden bg-white">
                 <content-sidebar :project="project"></content-sidebar>
             </div>
@@ -18,7 +18,7 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-6 space-x-4 h-full overflow-hidden">
+                <div class="grid grid-cols-6 space-x-4 h-full">
                     <div class="col-span-4 p-5 bg-white mt-2 rounded-md overflow-x-hidden">
                         <div class="flex justify-end">
                             <div class="flex-1 border p-4">

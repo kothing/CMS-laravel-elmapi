@@ -1,9 +1,9 @@
 <template>
-    <div class="admin__project-api h-full relative">
-        <project-header :project="project" class="bg-white"></project-header>
+    <div class="admin__project-api relative h-screen overflow-auto">
+        <project-header :project="project"></project-header>
 
-        <div class="flex h-full pt-4 overflow-hidden">
-            <div class="w-3/12 h-full bg-white overflow-x-hidden">
+        <div class="flex pt-4">
+            <div class="w-3/12 bg-white overflow-x-hidden">
                 <settings-nav :project="project"></settings-nav>
             </div>
             <div class="w-9/12 overflow-x-hidden">

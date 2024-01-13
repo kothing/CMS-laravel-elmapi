@@ -1,8 +1,8 @@
 <template>
-    <div class="h-full relative overflow-hidden">
-        <project-header :project="project" class="bg-white"></project-header>
+    <div class="relative h-screen overflow-auto">
+        <project-header :project="project"></project-header>
 
-        <div class="flex h-full pt-4 overflow-hidden">
+        <div class="flex pt-4">
             <div class="w-3/12 overflow-x-hidden bg-white">
                 <content-sidebar :project="project"></content-sidebar>
             </div>

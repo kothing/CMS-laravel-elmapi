@@ -1,36 +1,34 @@
 <template>
-    <div class="admin__project-centre h-full overflow-auto">
-        <div class="w-full relative m-auto">
-            <project-header :project="project" class="mb-3"></project-header>
-            <div class="grid grid-cols-1 sm:grid-cols-2 pt-4">
-                <div class="col p-4" v-if="checkRole(['admin' + project.id])">
-                    <div class="inline-flex mb-5">
-                        <div class="mr-4 text-gray-100 bg-yellow-900 rounded-md text-xl p-4 h-full items-center content-center">
-                            <i class="fas fa-table"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-lg">Set up Collections</h3>
-                            <div class="text-sm">
-                                Add new collections to your projects, edit fields to create your schema.
-                            </div>
+    <div class="admin__project-centre relative h-screen w-full m-auto overflow-auto">
+        <project-header :project="project"></project-header>
+        <div class="grid grid-cols-1 sm:grid-cols-2 pt-4">
+            <div class="col p-4" v-if="checkRole(['admin' + project.id])">
+                <div class="inline-flex mb-5">
+                    <div class="mr-4 text-gray-100 bg-yellow-900 rounded-md text-xl p-4 h-full items-center content-center">
+                        <i class="fas fa-table"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg">Set up Collections</h3>
+                        <div class="text-sm">
+                            Add new collections to your projects, edit fields to create your schema.
                         </div>
                     </div>
-                    <collection-sidebar :project="project" class="shadow-md rounded-md"></collection-sidebar>
                 </div>
-                <div class="col p-4">
-                    <div class="inline-flex mb-5">
-                        <div class="mr-4 text-gray-100 bg-green-400 rounded-md text-xl p-4 h-full items-center content-center">
-                            <i class="fas fa-edit"></i>
-                        </div>
-                        <div class="block">
-                            <h3 class="font-bold text-lg">Create Content</h3>
-                            <div class="text-sm">
-                                Using the collection schema structure create content for your project.
-                            </div>
+                <collection-sidebar :project="project" class="shadow-md rounded-md"></collection-sidebar>
+            </div>
+            <div class="col p-4">
+                <div class="inline-flex mb-5">
+                    <div class="mr-4 text-gray-100 bg-green-400 rounded-md text-xl p-4 h-full items-center content-center">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <div class="block">
+                        <h3 class="font-bold text-lg">Create Content</h3>
+                        <div class="text-sm">
+                            Using the collection schema structure create content for your project.
                         </div>
                     </div>
-                    <content-sidebar :project="project" class="shadow-md rounded-md"></content-sidebar>
                 </div>
+                <content-sidebar :project="project" class="shadow-md rounded-md"></content-sidebar>
             </div>
         </div>
     </div>

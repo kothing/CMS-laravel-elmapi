@@ -1,12 +1,12 @@
 <template>
-    <div class="admin__project-collection-item h-full relative">
-        <project-header :project="project" class="bg-white"></project-header>
+    <div class="admin__project-collection-item relative h-screen overflow-auto">
+        <project-header :project="project"></project-header>
 
-        <div class="flex h-full pt-4 overflow-hidden">
-            <div class="w-3/12 h-full bg-white overflow-x-hidden">
+        <div class="flex pt-4">
+            <div class="w-3/12 bg-white overflow-x-hidden">
                 <collection-sidebar :project="project"></collection-sidebar>
             </div>
-            <div class="w-6/12 h-full p-4 overflow-x-auto">
+            <div class="w-6/12 p-4 overflow-x-auto">
                 <div class="mb-2 p-2 font-bold text-lg flex">
                     <div class="flex">
                         {{ collection.name }}
@@ -105,7 +105,7 @@
                     </draggable>
                 </ul>
             </div>
-            <div class="w-3/12 h-full bg-white overflow-x-hidden">
+            <div class="w-3/12 bg-white overflow-x-hidden">
                 <div class="h-full p-4" v-if="collection.name">
                     <h4 class="mb-2 p-2 font-bold text-lg">+ Fields</h4>
                     <ul>
