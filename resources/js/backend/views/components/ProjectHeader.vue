@@ -1,6 +1,6 @@
 <template>
   <div
-    class="admin__project-common-header fixed w-full flex p-4 border-b bg-white"
+    class="admin__project-common-header w-full flex position-sticky top-0 p-4 border-b bg-white"
   >
     <span class="flex items-center pr-4">
       <router-link :to="{ name: 'projects' }">

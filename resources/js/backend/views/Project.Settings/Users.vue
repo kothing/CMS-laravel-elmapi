@@ -2,7 +2,7 @@
     <div class="admin__project-users h-full relative">
         <project-header :project="project" class="bg-white"></project-header>
 
-        <div class="flex h-full pt-20 overflow-hidden">
+        <div class="flex h-full pt-4 overflow-hidden">
             <div class="w-3/12 h-full bg-white overflow-x-hidden">
                 <settings-nav :project="project"></settings-nav>
             </div>

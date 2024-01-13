@@ -2,7 +2,7 @@
     <div class="admin__project-collection h-full relative overflow-hidden">
         <project-header :project="project" class="bg-white"></project-header>
 
-        <div class="w-96 h-full pt-20 bg-white overflow-x-hidden">
+        <div class="w-96 h-full pt-4 bg-white overflow-x-hidden">
             <collection-sidebar :project="project"></collection-sidebar>
         </div>
     </div>

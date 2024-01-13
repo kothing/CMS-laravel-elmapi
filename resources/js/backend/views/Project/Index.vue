@@ -2,7 +2,7 @@
     <div class="admin__project-centre h-full overflow-auto">
         <div class="w-full relative m-auto">
             <project-header :project="project" class="mb-3"></project-header>
-            <div class="grid grid-cols-1 sm:grid-cols-2 pt-24">
+            <div class="grid grid-cols-1 sm:grid-cols-2 pt-4">
                 <div class="col p-4" v-if="checkRole(['admin' + project.id])">
                     <div class="inline-flex mb-5">
                         <div class="mr-4 text-gray-100 bg-yellow-900 rounded-md text-xl p-4 h-full items-center content-center">
