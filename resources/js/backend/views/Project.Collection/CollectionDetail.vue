@@ -43,8 +43,8 @@
                     class="_drag-box"
                 >
                     <transition-group type="transition" class="_trans-group">
-                        <div class="w-full mb-2" v-for="field in collection.fields" :key="field.id">
-                            <div class="flex items-center w-full bg-white rounded-md p-4">
+                        <div class="w-full mb-3" v-for="field in collection.fields" :key="field.id">
+                            <div class="flex items-center w-full bg-white rounded-md p-4 shadow-sm">
                                 <i class="fas fa-grip-vertical mr-4 text-gray-500 an__cursor-move handle"></i>
                                 <div :class="fieldDetails[field.type].bg" class="mr-4 text-gray-100 rounded-md text-xl items-center text-center flex field_icon_xl">
                                     <i :class="fieldDetails[field.type].icon" class="w-full"></i>
