@@ -1,8 +1,8 @@
 <template>
-    <div class="admin__projects-list m-3 p-3">
+    <div class="admin__projects-list h-full flex flex-col m-3 p-3">
         <div clsss="admin__projects-search">
             <div class="relative flex w-full flex-wrap items-stretch mb-4">
-                <span class="z-9 h-full leading-snug font-normal absolute text-center text-gray-400 absolute bg-transparent rounded-md text-base items-center justify-center w-8 pl-3 py-3">
+                <span class="h-full leading-snug font-normal absolute text-center text-gray-400 absolute bg-transparent rounded-md text-base items-center justify-center w-8 pl-3 py-3">
                     <i class="fas fa-search"></i>
                 </span>
                 <input
@@ -14,28 +14,32 @@
                 />
             </div>
         </div>
-        <div class="grid grid-cols-1 gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 overflow-y-auto overflow-y-auto">
             <div
                 v-if="checkRole(['super_admin'])"
                 @click="openNewProjectModal = true"
-                class="flex flex-col justify-center bg-green-500 hover:bg-green-600 text-white p-5 rounded-md cursor-pointer items-center shadow-sm"
+                class="flex flex-col justify-center bg-green-500 hover:bg-green-600 text-white m-2 p-5 rounded-md cursor-pointer items-center shadow-sm"
             >
                 <i class="fas fa-plus-circle text-sm md:text-2xl"></i>
                 <p>Create New Project</p>
             </div>
 
-            <router-link
+            <div
                 v-for="project in projects"
                 :key="project.id"
-                :to="{
-                    name: 'projects.index',
-                    params: { project_id: project.id },
-                }"
-                class="bg-white hover:bg-gray-100 p-10 text-gray-900 border border-gray-100 cursor-pointer items-center rounded-md shadow-sm"
+                class="bg-white hover:bg-gray-50 m-2 text-gray-900 cursor-pointer items-center rounded-md shadow-md"
             >
-                <span class="font-bold">{{ project.name }}</span>
-                <span class="text-sm block">{{ project.description }}</span>
-            </router-link>
+                <router-link
+                    :to="{
+                        name: 'projects.index',
+                        params: { project_id: project.id },
+                    }"
+                    class="block p-6"
+                >
+                    <span class="font-bold">{{ project.name }}</span>
+                    <span class="text-sm block">{{ project.description }}</span>
+                </router-link>
+            </div>
         </div>
 
         <ui-modal :show="openNewProjectModal" @close="closeNewProjectModal">
@@ -121,8 +125,8 @@
 
             <template #footer>
                 <ui-button
-                    color="gray-100"
-                    hover="gray-200"
+                    color="gray-200"
+                    hover="gray-300"
                     @click.native="closeNewProjectModal"
                 >
                     <span class="text-gray-800">Cancel</span>

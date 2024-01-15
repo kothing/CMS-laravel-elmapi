@@ -64,7 +64,7 @@
 
 }
 
-.admin__content .admin__project-common-header .router-link-active.bg-gray-100 {
+.admin__project-header .router-link-active.bg-gray-100 {
     background-color: transparent;
 }
 
@@ -375,11 +375,11 @@ input:checked ~ .dot {
  */
 
 /* position */
-.position-sticky {
+.an__sticky {
     position: sticky;
 }
 
-.custom_bottom-0 {
+.an__bottom-0 {
     bottom: 0
 }
 
@@ -397,6 +397,11 @@ input:checked ~ .dot {
 /* flex */
 .an__flex-0 {
     flex: 0;
+}
+
+/* cursor */
+.an__cursor-move {
+    cursor: move;
 }
 
 @media (min-width: 1440px) {

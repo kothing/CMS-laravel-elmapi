@@ -1,13 +1,11 @@
 <template>
-    <div class="admin__profile">
-        <div class="w-full an__xxl:w-3/4 m-auto mt-5 px-4">
-            <div class="w-full p-4 flex border-b">
-                <div class="w-full">
-                    <div class="text-xl font-bold">My Profile</div>
-                </div>
-            </div>
-
-            <div class="w-full bg-white mt-5 rounded-md p-4">
+    <div class="admin__profile relative h-full flex flex-col overflow-y-auto">
+        <div class="w-full p-4 border-b ">
+            <div class="text-xl font-bold">My Profile</div>
+        </div>
+        
+        <div class="w-full flex flex-col flex-1 an__xxl:w-3/4 m-auto mt-5 px-4 overflow-y-auto">
+            <div class="w-full bg-white rounded-md shadow-sm p-4">
                 <form class="space-y-6">
                     <div class="form-item">
                         <label v-formlabel>Name</label>
@@ -40,7 +38,7 @@
                 </form>
             </div>
 
-            <div class="w-full bg-white mt-5 rounded-md p-4">
+            <div class="w-full bg-white rounded-md shadow-sm p-4 mt-5">
                 <form class="space-y-6">
                     <div class="form-item">
                         <label v-formlabel>E-mail</label>
@@ -73,7 +71,7 @@
                 </form>
             </div>
 
-            <div class="w-full bg-white mt-5 rounded-md p-4">
+            <div class="w-full bg-white rounded-md shadow-sm p-4 mt-5 mb-5">
                 <div class="form-item">
                     <label v-formlabel>Password</label>
                     <div class="mt-1 relative">

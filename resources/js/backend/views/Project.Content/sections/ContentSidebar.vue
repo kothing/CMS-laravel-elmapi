@@ -1,5 +1,5 @@
 <template>
-    <div class="admin__project-content-sidebar p-4 bg-white">
+    <div class="admin__project-content-sidebar w-full p-4 bg-white">
         <div class="mb-4">
             <h4 class="mb-2 p-2 font-bold text-lg flex justify-between items-center h-10" v-if="!openSearchInput">
                 <div>Content</div>
@@ -9,7 +9,7 @@
             </h4>
 
             <div v-if="openSearchInput" class="mb-2 relative flex w-full flex-wrap items-stretch mb-2 h-10">
-                <span class="z-9 h-full leading-snug font-normal absolute text-center text-gray-400 absolute bg-transparent rounded-md text-base items-center justify-center w-8 pl-3 py-3">
+                <span class="h-full leading-snug font-normal absolute text-center text-gray-400 absolute bg-transparent rounded-md text-base items-center justify-center w-8 pl-3 py-3">
                     <i class="fas fa-search"></i>
                 </span>
                 <input
@@ -20,7 +20,7 @@
                     autofocus
                 />
                 <span
-                    class="z-9 h-full leading-snug font-normal absolute text-center text-gray-400 absolute bg-transparent rounded-md text-base items-center justify-center w-8 py-3 right-0 pr-3 cursor-pointer"
+                    class="h-full leading-snug font-normal absolute text-center text-gray-400 absolute bg-transparent rounded-md text-base items-center justify-center w-8 py-3 right-0 pr-3 cursor-pointer"
                     @click="(searchCollection = ''), (openSearchInput = false)"
                 >
                     <i class="fas fa-times-circle"></i>

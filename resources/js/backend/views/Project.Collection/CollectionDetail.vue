@@ -1,8 +1,8 @@
 <template>
-    <div class="admin__project-collection-item relative h-screen overflow-auto">
+    <div class="admin__project-collection-detail relative h-full flex flex-col">
         <project-header :project="project"></project-header>
 
-        <div class="flex pt-4">
+        <div class="flex flex-1 overflow-y-auto">
             <div class="w-3/12 bg-white overflow-x-hidden">
                 <collection-sidebar :project="project"></collection-sidebar>
             </div>
@@ -35,78 +35,82 @@
                     </div>
                 </div>
 
-                <ul>
-                    <draggable :list="collection.fields" @end="sortFields" v-bind="dragOptions" handle=".handle">
-                        <transition-group type="transition">
-                            <li class="w-full mb-2" v-for="field in collection.fields" :key="field.id">
-                                <div class="flex items-center w-full bg-white rounded-md p-4">
-                                    <i class="fas fa-grip-vertical mr-4 text-gray-500 cursor-pointer handle"></i>
-                                    <div :class="fieldDetails[field.type].bg" class="mr-4 text-gray-100 rounded-md text-xl items-center text-center flex field_icon_xl">
-                                        <i :class="fieldDetails[field.type].icon" class="w-full"></i>
+                <draggable 
+                    :list="collection.fields" 
+                    @end="sortFields" 
+                    v-bind="dragOptions" 
+                    handle=".handle"
+                    class="_drag-box"
+                >
+                    <transition-group type="transition" class="_trans-group">
+                        <div class="w-full mb-2" v-for="field in collection.fields" :key="field.id">
+                            <div class="flex items-center w-full bg-white rounded-md p-4">
+                                <i class="fas fa-grip-vertical mr-4 text-gray-500 an__cursor-move handle"></i>
+                                <div :class="fieldDetails[field.type].bg" class="mr-4 text-gray-100 rounded-md text-xl items-center text-center flex field_icon_xl">
+                                    <i :class="fieldDetails[field.type].icon" class="w-full"></i>
+                                </div>
+                                <div class="items-center w-full">
+                                    <div class="text-lg">
+                                        {{ field.label }}
                                     </div>
-                                    <div class="items-center w-full">
-                                        <div class="text-lg">
-                                            {{ field.label }}
+
+                                    <div class="w-full flex justify-between">
+                                        <div class="flex items-center space-x-1">
+                                            <span class="text-blue-900 text-sm rounded-md bg-gray-200 px-3">#{{ field.name }}</span>
+                                            <span class="text-blue-900 text-sm rounded-md bg-indigo-200 px-3">
+                                                {{ field.type }}
+                                                <span v-if="field.type == 'enumeration'">
+                                                    <span v-if="field.options.multiple">: multiple</span>
+                                                </span>
+                                                <span v-if="field.type == 'date'">
+                                                    <span v-if="field.options.timepicker">: time</span>
+                                                </span>
+                                                <span v-if="field.type == 'media'">
+                                                    <span v-if="field.options.media.type == 1">: single</span>
+                                                    <span v-else-if="field.options.media.type == 2">: multiple</span>
+                                                </span>
+                                                <span v-else-if="field.type == 'relation'">
+                                                    <span v-if="field.options.relation.type == 1">: one-to-one</span>
+                                                    <span v-else-if="field.options.relation.type == 2">: one-to-many</span>
+                                                </span>
+                                            </span>
+                                            <span class="text-blue-900 text-sm rounded-md bg-gray-100 px-3" v-if="field.validations.required.status">
+                                                <i class="fas fa-star-of-life text-xs"></i> required
+                                            </span>
+                                            <span class="text-blue-900 text-sm rounded-md bg-gray-100 px-3" v-if="field.validations.unique.status">
+                                                <i class="fas fa-fingerprint text-xs"></i> unique
+                                            </span>
+                                            <span class="text-blue-900 text-sm rounded-md bg-gray-100 px-3" v-if="field.options.repeatable">
+                                                <i class="fas fa-redo text-xs"></i> repeatable
+                                            </span>
+                                            <span class="text-blue-900 text-sm rounded-md bg-gray-100 px-3" v-if="field.options.hideInContentList">
+                                                hide in content list
+                                            </span>
+                                            <span class="text-blue-900 text-sm rounded-md bg-gray-100 px-3" v-if="field.options.hiddenInAPI">
+                                                hidden in api
+                                            </span>
                                         </div>
 
-                                        <div class="w-full flex justify-between">
-                                            <div class="flex items-center space-x-1">
-                                                <span class="text-blue-900 text-sm rounded-md bg-gray-200 px-3">#{{ field.name }}</span>
-                                                <span class="text-blue-900 text-sm rounded-md bg-indigo-200 px-3">
-                                                    {{ field.type }}
-                                                    <span v-if="field.type == 'enumeration'">
-                                                        <span v-if="field.options.multiple">: multiple</span>
-                                                    </span>
-                                                    <span v-if="field.type == 'date'">
-                                                        <span v-if="field.options.timepicker">: time</span>
-                                                    </span>
-                                                    <span v-if="field.type == 'media'">
-                                                        <span v-if="field.options.media.type == 1">: single</span>
-                                                        <span v-else-if="field.options.media.type == 2">: multiple</span>
-                                                    </span>
-                                                    <span v-else-if="field.type == 'relation'">
-                                                        <span v-if="field.options.relation.type == 1">: one-to-one</span>
-                                                        <span v-else-if="field.options.relation.type == 2">: one-to-many</span>
-                                                    </span>
-                                                </span>
-                                                <span class="text-blue-900 text-sm rounded-md bg-gray-100 px-3" v-if="field.validations.required.status">
-                                                    <i class="fas fa-star-of-life text-xs"></i> required
-                                                </span>
-                                                <span class="text-blue-900 text-sm rounded-md bg-gray-100 px-3" v-if="field.validations.unique.status">
-                                                    <i class="fas fa-fingerprint text-xs"></i> unique
-                                                </span>
-                                                <span class="text-blue-900 text-sm rounded-md bg-gray-100 px-3" v-if="field.options.repeatable">
-                                                    <i class="fas fa-redo text-xs"></i> repeatable
-                                                </span>
-                                                <span class="text-blue-900 text-sm rounded-md bg-gray-100 px-3" v-if="field.options.hideInContentList">
-                                                    hide in content list
-                                                </span>
-                                                <span class="text-blue-900 text-sm rounded-md bg-gray-100 px-3" v-if="field.options.hiddenInAPI">
-                                                    hidden in api
-                                                </span>
-                                            </div>
-
-                                            <div class="flex justify-between space-x-1">
-                                                <a
-                                                    @click="openNewFieldModal(field.type, true, field)"
-                                                    class="inline-block text-white text-sm rounded-md bg-indigo-500 px-3 cursor-pointer hover:bg-indigo-600 whitespace-nowrap"
-                                                >
-                                                    <i class="fa fa-edit text-xs"></i>
-                                                </a>
-                                                <a @click="deleteField(field)" class="inline-block text-white text-sm rounded-md bg-red-500 px-3 cursor-pointer hover:bg-red-600 whitespace-nowrap">
-                                                    <i class="fa fa-trash-alt text-xs"></i>
-                                                </a>
-                                            </div>
+                                        <div class="flex items-center justify-between space-x-1">
+                                            <a
+                                                @click="openNewFieldModal(field.type, true, field)"
+                                                class="inline-block text-white text-sm rounded-md bg-indigo-500 px-3 cursor-pointer hover:bg-indigo-600 whitespace-nowrap"
+                                            >
+                                                <i class="fa fa-edit text-xs"></i>
+                                            </a>
+                                            <a @click="deleteField(field)" class="inline-block text-white text-sm rounded-md bg-red-500 px-3 cursor-pointer hover:bg-red-600 whitespace-nowrap">
+                                                <i class="fa fa-trash-alt text-xs"></i>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
-                            </li>
-                        </transition-group>
-                    </draggable>
-                </ul>
+                            </div>
+                        </div>
+                    </transition-group>
+                </draggable>
             </div>
             <div class="w-3/12 bg-white overflow-x-hidden">
-                <div class="h-full p-4" v-if="collection.name">
+                <div class="p-4" v-if="collection.name">
                     <h4 class="mb-2 p-2 font-bold text-lg">+ Fields</h4>
                     <ul>
                         <li class="mb-2">
@@ -788,7 +792,7 @@
             </template>
 
             <template #footer>
-                <ui-button color="gray-100" hover="gray-200" @click.native="closeNewFieldModal">
+                <ui-button color="gray-200" hover="gray-300" @click.native="closeNewFieldModal">
                     <span class="text-gray-800">Cancel</span>
                 </ui-button>
 
@@ -826,7 +830,7 @@
             </template>
 
             <template #footer>
-                <ui-button color="gray-100" hover="gray-200" @click.native="closeEditCollectionModal">
+                <ui-button color="gray-200" hover="gray-300" @click.native="closeEditCollectionModal">
                     <span class="text-gray-800">Cancel</span>
                 </ui-button>
 

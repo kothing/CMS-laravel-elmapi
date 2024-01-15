@@ -1,11 +1,12 @@
 <template>
-    <div class="relative h-screen overflow-auto">
+    <div class="admin__project-content-list relative h-full flex flex-col">
         <project-header :project="project"></project-header>
-
-        <div class="flex">
+        
+        <div class="flex flex-1 overflow-y-auto">
             <div class="w-3/12 bg-white overflow-x-hidden">
                 <content-sidebar :project="project"></content-sidebar>
             </div>
+            
             <div class="w-9/12 p-4 overflow-x-auto">
                 <content-table v-if="$route.params.col_id !== undefined" :collection_id="parseInt($route.params.col_id)"></content-table>
             </div>

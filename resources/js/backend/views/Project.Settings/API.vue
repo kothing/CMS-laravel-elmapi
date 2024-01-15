@@ -1,8 +1,8 @@
 <template>
-    <div class="admin__project-api relative h-screen overflow-auto">
+    <div class="admin__project-settings-api relative h-full flex flex-col">
         <project-header :project="project"></project-header>
 
-        <div class="flex pt-4">
+        <div class="flex flex-1 overflow-y-auto">
             <div class="w-3/12 bg-white overflow-x-hidden">
                 <settings-nav :project="project"></settings-nav>
             </div>
@@ -348,8 +348,8 @@
 
             <template #footer>
                 <ui-button
-                    color="gray-100"
-                    hover="gray-200"
+                    color="gray-200"
+                    hover="gray-300"
                     @click.native="closeNewTokenModal"
                 >
                     <span class="text-gray-800">Cancel</span>

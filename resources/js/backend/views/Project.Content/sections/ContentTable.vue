@@ -1,6 +1,6 @@
 <template>
     <div class="admin__project-content-table">
-        <h4 class="mb-2 font-bold text-lg flex justify-end items-center h-10">
+        <h4 class="h-10 flex justify-end items-center font-bold text-lg mb-2">
             <div class="flex-1">
                 {{ collection.name }}
                 <small class="text-gray-400 ml-1">#{{ collection.slug }}</small>
@@ -37,9 +37,9 @@
             <ui-button color="green-500" v-if="relationSelect && selected.length !== 0" @click.native="addSelected()"><i class="fa fa-link"></i> Add Selected</ui-button>
         </h4>
 
-        <div class="flex space-between">
-            <div class="relative flex w-full flex-wrap items-stretch mb-2">
-                <span class="z-9 h-full leading-snug font-normal absolute text-center text-gray-400 absolute bg-transparent rounded-md text-base items-center justify-center w-8 pl-3 py-2">
+        <div class="flex space-between mb-2">
+            <div class="relative flex w-full flex-wrap items-stretch">
+                <span class="h-full leading-snug font-normal absolute text-center text-gray-400 absolute bg-transparent rounded-md text-base items-center justify-center w-8 pl-3 py-2">
                     <i class="fas fa-search"></i>
                 </span>
                 <form class="w-full">
@@ -53,14 +53,14 @@
                 </form>
                 <span
                     v-show="search != ''"
-                    class="z-9 h-full leading-snug font-normal absolute text-center text-gray-400 absolute bg-transparent rounded-md text-base items-center justify-center w-8 py-2 right-0 pr-3 cursor-pointer"
+                    class="h-full leading-snug font-normal absolute text-center text-gray-400 absolute bg-transparent rounded-md text-base items-center justify-center w-8 py-2 right-0 pr-3 cursor-pointer"
                     @click="(search = ''), getContent()"
                 >
                     <i class="fas fa-times-circle"></i>
                 </span>
             </div>
 
-            <div class="ml-2 w-auto h-auto">
+            <div class="w-auto h-auto ml-2">
                 <ui-dropdown align="right" :closeable="false">
                     <template #trigger>
                         <ui-button :color="'white'" class="border border-gray-200">
@@ -134,7 +134,7 @@
             </div>
         </div>
 
-        <div class="w-full text-sm text-gray-700 mb-2 pl-1 flex justify-between">
+        <div class="w-full flex justify-between text-sm text-gray-700 mb-2 pl-1">
             <div class="flex">
                 <div class="py-1">{{ selected.length }} items selected</div>
                 <div
@@ -199,267 +199,265 @@
             </div>
         </div>
 
-        <div class="clear-both">
-            <div class="w-full border rounded-md">
-                <div class="overflow-x-auto sm:rounded-md">
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-100">
-                            <tr class="relative">
-                                <th scope="col" class="px-6 py-3 text-center">
-                                    <div class="w-full pl-1">
-                                        <input type="checkbox" v-if="relation_type != 1" v-model="selectAll" @click="selectAllFn()" v-formcheckbox class="cursor-pointer" />
-                                    </div>
-                                </th>
-                                <th
-                                    scope="col"
-                                    v-for="field in collection.fields"
-                                    :key="field.id"
-                                    v-show="field.type != 'password' && field.type != 'json' && columns[field.name]"
-                                    @click="sortBy(field.name, 1)"
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap cursor-pointer"
-                                >
-                                    <div class="w-full flex justify-between item-center">
-                                        {{ field.label
-                                        }}<!--Title-->
-                                        <i v-if="listOptions.orderBy == field.name && listOptions.criteria == 'ASC'" class="fa fa-sort-amount-up-alt text-indigo-500 ml-2"></i>
-                                        <i v-if="listOptions.orderBy == field.name && listOptions.criteria == 'DESC'" class="fa fa-sort-amount-down-alt text-indigo-500 ml-2"></i>
-                                    </div>
-                                </th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-                                <th
-                                    scope="col"
-                                    v-if="columns.created_at"
-                                    @click="sortBy('created_at')"
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap cursor-pointer"
-                                >
-                                    <div class="w-full flex justify-between item-center">
-                                        Created At
-                                        <i v-if="listOptions.orderBy == 'created_at' && listOptions.criteria == 'ASC'" class="fa fa-sort-amount-up-alt text-indigo-500 ml-2"></i>
-                                        <i v-if="listOptions.orderBy == 'created_at' && listOptions.criteria == 'DESC'" class="fa fa-sort-amount-down-alt text-indigo-500 ml-2"></i>
-                                    </div>
-                                </th>
-                                <th
-                                    scope="col"
-                                    v-if="columns.created_by"
-                                    @click="sortBy('created_by')"
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap cursor-pointer"
-                                >
-                                    <div class="w-full flex justify-between item-center">
-                                        Created By
-                                        <i v-if="listOptions.orderBy == 'created_by' && listOptions.criteria == 'ASC'" class="fa fa-sort-amount-up-alt text-indigo-500 ml-2"></i>
-                                        <i v-if="listOptions.orderBy == 'created_by' && listOptions.criteria == 'DESC'" class="fa fa-sort-amount-down-alt text-indigo-500 ml-2"></i>
-                                    </div>
-                                </th>
-                                <th
-                                    scope="col"
-                                    v-if="columns.updated_at"
-                                    @click="sortBy('updated_at')"
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap cursor-pointer"
-                                >
-                                    <div class="w-full flex justify-between item-center">
-                                        Updated At
-                                        <i v-if="listOptions.orderBy == 'updated_at' && listOptions.criteria == 'ASC'" class="fa fa-sort-amount-up-alt text-indigo-500 ml-2"></i>
-                                        <i v-if="listOptions.orderBy == 'updated_at' && listOptions.criteria == 'DESC'" class="fa fa-sort-amount-down-alt text-indigo-500 ml-2"></i>
-                                    </div>
-                                </th>
-                                <th
-                                    scope="col"
-                                    v-if="columns.updated_by"
-                                    @click="sortBy('updated_by')"
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap cursor-pointer"
-                                >
-                                    <div class="w-full flex justify-between item-center">
-                                        Updated By
-                                        <i v-if="listOptions.orderBy == 'updated_by' && listOptions.criteria == 'ASC'" class="fa fa-sort-amount-up-alt text-indigo-500 ml-2"></i>
-                                        <i v-if="listOptions.orderBy == 'updated_by' && listOptions.criteria == 'DESC'" class="fa fa-sort-amount-down-alt text-indigo-500 ml-2"></i>
-                                    </div>
-                                </th>
-                                <th
-                                    scope="col"
-                                    v-if="columns.published_at"
-                                    @click="sortBy('published_at')"
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap cursor-pointer"
-                                >
-                                    <div class="w-full flex justify-between item-center">
-                                        Published At
-                                        <i v-if="listOptions.orderBy == 'published_at' && listOptions.criteria == 'ASC'" class="fa fa-sort-amount-up-alt text-indigo-500 ml-2"></i>
-                                        <i v-if="listOptions.orderBy == 'published_at' && listOptions.criteria == 'DESC'" class="fa fa-sort-amount-down-alt text-indigo-500 ml-2"></i>
-                                    </div>
-                                </th>
-                                <th
-                                    scope="col"
-                                    v-if="columns.published_by"
-                                    @click="sortBy('published_by')"
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap cursor-pointer"
-                                >
-                                    <div class="w-full flex justify-between item-center">
-                                        Published By
-                                        <i v-if="listOptions.orderBy == 'published_by' && listOptions.criteria == 'ASC'" class="fa fa-sort-amount-up-alt text-indigo-500 ml-2"></i>
-                                        <i v-if="listOptions.orderBy == 'published_by' && listOptions.criteria == 'DESC'" class="fa fa-sort-amount-down-alt text-indigo-500 ml-2"></i>
-                                    </div>
-                                </th>
-                                <th
-                                    v-if="listOptions.getItems !== 'trashed'"
-                                    scope="col"
-                                    class="position-sticky right-0 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase shadow-sm bg-gray-100"
-                                >
-                                    <span class="inline-block">Action</span>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
-                            <tr v-for="item in content.data" :key="item.id" class="relative">
-                                <td class="pl-2 py-4 text-sm text-center w-px">
-                                    <input type="checkbox" :checked="checkIfSelected(item.id)" @click="selectRecord(item.id)" v-formcheckbox class="cursor-pointer" />
-                                </td>
-                                <td
-                                    v-for="field in collection.fields"
-                                    :key="field.id"
-                                    v-show="field.type != 'password' && field.type != 'json' && columns[field.name]"
-                                    class="px-6 py-3 text-sm min-w-full whitespace-nowrap"
-                                >
-                                    <span v-for="meta in item.meta" :key="meta.id">
-                                        <span v-if="meta.field_name == field.name">
+        <div class="w-full border rounded-md">
+            <div class="overflow-x-auto sm:rounded-md">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-100">
+                        <tr class="relative">
+                            <th scope="col" class="px-6 py-3 text-center">
+                                <div class="w-full pl-1">
+                                    <input type="checkbox" v-if="relation_type != 1" v-model="selectAll" @click="selectAllFn()" v-formcheckbox class="cursor-pointer" />
+                                </div>
+                            </th>
+                            <th
+                                scope="col"
+                                v-for="field in collection.fields"
+                                :key="field.id"
+                                v-show="field.type != 'password' && field.type != 'json' && columns[field.name]"
+                                @click="sortBy(field.name, 1)"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap cursor-pointer"
+                            >
+                                <div class="w-full flex justify-between item-center">
+                                    {{ field.label
+                                    }}<!--Title-->
+                                    <i v-if="listOptions.orderBy == field.name && listOptions.criteria == 'ASC'" class="fa fa-sort-amount-up-alt text-indigo-500 ml-2"></i>
+                                    <i v-if="listOptions.orderBy == field.name && listOptions.criteria == 'DESC'" class="fa fa-sort-amount-down-alt text-indigo-500 ml-2"></i>
+                                </div>
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                            <th
+                                scope="col"
+                                v-if="columns.created_at"
+                                @click="sortBy('created_at')"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap cursor-pointer"
+                            >
+                                <div class="w-full flex justify-between item-center">
+                                    Created At
+                                    <i v-if="listOptions.orderBy == 'created_at' && listOptions.criteria == 'ASC'" class="fa fa-sort-amount-up-alt text-indigo-500 ml-2"></i>
+                                    <i v-if="listOptions.orderBy == 'created_at' && listOptions.criteria == 'DESC'" class="fa fa-sort-amount-down-alt text-indigo-500 ml-2"></i>
+                                </div>
+                            </th>
+                            <th
+                                scope="col"
+                                v-if="columns.created_by"
+                                @click="sortBy('created_by')"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap cursor-pointer"
+                            >
+                                <div class="w-full flex justify-between item-center">
+                                    Created By
+                                    <i v-if="listOptions.orderBy == 'created_by' && listOptions.criteria == 'ASC'" class="fa fa-sort-amount-up-alt text-indigo-500 ml-2"></i>
+                                    <i v-if="listOptions.orderBy == 'created_by' && listOptions.criteria == 'DESC'" class="fa fa-sort-amount-down-alt text-indigo-500 ml-2"></i>
+                                </div>
+                            </th>
+                            <th
+                                scope="col"
+                                v-if="columns.updated_at"
+                                @click="sortBy('updated_at')"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap cursor-pointer"
+                            >
+                                <div class="w-full flex justify-between item-center">
+                                    Updated At
+                                    <i v-if="listOptions.orderBy == 'updated_at' && listOptions.criteria == 'ASC'" class="fa fa-sort-amount-up-alt text-indigo-500 ml-2"></i>
+                                    <i v-if="listOptions.orderBy == 'updated_at' && listOptions.criteria == 'DESC'" class="fa fa-sort-amount-down-alt text-indigo-500 ml-2"></i>
+                                </div>
+                            </th>
+                            <th
+                                scope="col"
+                                v-if="columns.updated_by"
+                                @click="sortBy('updated_by')"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap cursor-pointer"
+                            >
+                                <div class="w-full flex justify-between item-center">
+                                    Updated By
+                                    <i v-if="listOptions.orderBy == 'updated_by' && listOptions.criteria == 'ASC'" class="fa fa-sort-amount-up-alt text-indigo-500 ml-2"></i>
+                                    <i v-if="listOptions.orderBy == 'updated_by' && listOptions.criteria == 'DESC'" class="fa fa-sort-amount-down-alt text-indigo-500 ml-2"></i>
+                                </div>
+                            </th>
+                            <th
+                                scope="col"
+                                v-if="columns.published_at"
+                                @click="sortBy('published_at')"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap cursor-pointer"
+                            >
+                                <div class="w-full flex justify-between item-center">
+                                    Published At
+                                    <i v-if="listOptions.orderBy == 'published_at' && listOptions.criteria == 'ASC'" class="fa fa-sort-amount-up-alt text-indigo-500 ml-2"></i>
+                                    <i v-if="listOptions.orderBy == 'published_at' && listOptions.criteria == 'DESC'" class="fa fa-sort-amount-down-alt text-indigo-500 ml-2"></i>
+                                </div>
+                            </th>
+                            <th
+                                scope="col"
+                                v-if="columns.published_by"
+                                @click="sortBy('published_by')"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase whitespace-nowrap cursor-pointer"
+                            >
+                                <div class="w-full flex justify-between item-center">
+                                    Published By
+                                    <i v-if="listOptions.orderBy == 'published_by' && listOptions.criteria == 'ASC'" class="fa fa-sort-amount-up-alt text-indigo-500 ml-2"></i>
+                                    <i v-if="listOptions.orderBy == 'published_by' && listOptions.criteria == 'DESC'" class="fa fa-sort-amount-down-alt text-indigo-500 ml-2"></i>
+                                </div>
+                            </th>
+                            <th
+                                v-if="listOptions.getItems !== 'trashed'"
+                                scope="col"
+                                class="an__sticky right-0 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase shadow-sm bg-gray-100"
+                            >
+                                <span class="inline-block">Action</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        <tr v-for="item in content.data" :key="item.id" class="relative">
+                            <td class="pl-2 py-4 text-sm text-center w-px">
+                                <input type="checkbox" :checked="checkIfSelected(item.id)" @click="selectRecord(item.id)" v-formcheckbox class="cursor-pointer" />
+                            </td>
+                            <td
+                                v-for="field in collection.fields"
+                                :key="field.id"
+                                v-show="field.type != 'password' && field.type != 'json' && columns[field.name]"
+                                class="px-6 py-3 text-sm min-w-full whitespace-nowrap"
+                            >
+                                <span v-for="meta in item.meta" :key="meta.id">
+                                    <span v-if="meta.field_name == field.name">
+                                        <span
+                                            v-if="field.type == 'date'"
+                                            :class="{
+                                                'rounded-md bg-gray-100 p-1 mr-1': field.options.repeatable && meta.value !== null,
+                                            }"
+                                        >
+                                            <span v-if="field.options.timepicker">{{ meta.value | date("YYYY-MM-DD hh:mm A") }}</span>
+                                            <span v-else>{{ meta.value | date }}</span>
+                                        </span>
+                                        <span
+                                            v-else-if="field.type == 'longtext' && meta.value !== null"
+                                            :title="meta.value"
+                                            :class="{
+                                                'rounded-md bg-gray-100 p-1 mr-1': field.options.repeatable && meta.value !== null,
+                                            }"
+                                        >
+                                            {{ meta.value.substring(0, 20) }}
+                                            <span v-if="meta.value.length > 20">...</span>
+                                        </span>
+                                        <span v-else-if="field.type == 'richtext'">
+                                            <span v-if="meta.value !== ''" class="text-indigo-500 cursor-pointer hover:bg-gray-100 rounded-md p-2" @click="showText(field, meta.value)"
+                                                ><i class="fas fa-align-center"></i
+                                            ></span>
+                                        </span>
+                                        <span v-else-if="field.type == 'media'">
+                                            <span v-if="meta.value !== ''" class="text-indigo-500 cursor-pointer hover:bg-gray-100 rounded-md p-2" @click="showMedia(field, meta.value)"
+                                                ><i class="fa fa-photo-video"></i
+                                            ></span>
+                                        </span>
+                                        <span v-else-if="field.type == 'relation'">
+                                            <span v-if="meta.value !== ''" class="text-indigo-500 cursor-pointer hover:bg-gray-100 rounded-md p-2" @click="showRelationlist(field, meta.value)"
+                                                ><i class="fa fa-link"></i
+                                            ></span>
+                                        </span>
+                                        <span v-else>
                                             <span
-                                                v-if="field.type == 'date'"
                                                 :class="{
                                                     'rounded-md bg-gray-100 p-1 mr-1': field.options.repeatable && meta.value !== null,
                                                 }"
+                                                >{{ meta.value }}</span
                                             >
-                                                <span v-if="field.options.timepicker">{{ meta.value | date("YYYY-MM-DD hh:mm A") }}</span>
-                                                <span v-else>{{ meta.value | date }}</span>
-                                            </span>
-                                            <span
-                                                v-else-if="field.type == 'longtext' && meta.value !== null"
-                                                :title="meta.value"
-                                                :class="{
-                                                    'rounded-md bg-gray-100 p-1 mr-1': field.options.repeatable && meta.value !== null,
-                                                }"
-                                            >
-                                                {{ meta.value.substring(0, 20) }}
-                                                <span v-if="meta.value.length > 20">...</span>
-                                            </span>
-                                            <span v-else-if="field.type == 'richtext'">
-                                                <span v-if="meta.value !== ''" class="text-indigo-500 cursor-pointer hover:bg-gray-100 rounded-md p-2" @click="showText(field, meta.value)"
-                                                    ><i class="fas fa-align-center"></i
-                                                ></span>
-                                            </span>
-                                            <span v-else-if="field.type == 'media'">
-                                                <span v-if="meta.value !== ''" class="text-indigo-500 cursor-pointer hover:bg-gray-100 rounded-md p-2" @click="showMedia(field, meta.value)"
-                                                    ><i class="fa fa-photo-video"></i
-                                                ></span>
-                                            </span>
-                                            <span v-else-if="field.type == 'relation'">
-                                                <span v-if="meta.value !== ''" class="text-indigo-500 cursor-pointer hover:bg-gray-100 rounded-md p-2" @click="showRelationlist(field, meta.value)"
-                                                    ><i class="fa fa-link"></i
-                                                ></span>
-                                            </span>
-                                            <span v-else>
-                                                <span
-                                                    :class="{
-                                                        'rounded-md bg-gray-100 p-1 mr-1': field.options.repeatable && meta.value !== null,
-                                                    }"
-                                                    >{{ meta.value }}</span
-                                                >
-                                            </span>
                                         </span>
                                     </span>
-                                </td>
-                                <td class="pl-2 py-4 text-sm text-center w-px">
-                                    <div v-if="item.form_id === null">
-                                        <span v-if="item.published_at !== null" class="text-gray-500 rounded-md bg-green-200 px-3 py-1">published</span>
-                                        <span v-else class="text-gray-500 rounded-md bg-gray-200 px-3 py-1">draft</span>
+                                </span>
+                            </td>
+                            <td class="pl-2 py-4 text-sm text-center w-px">
+                                <div v-if="item.form_id === null">
+                                    <span v-if="item.published_at !== null" class="text-gray-500 rounded-md bg-green-200 px-3 py-1">published</span>
+                                    <span v-else class="text-gray-500 rounded-md bg-gray-200 px-3 py-1">draft</span>
+                                </div>
+                                <div v-else>
+                                    <span
+                                        v-if="item.published_at !== null"
+                                        class="text-gray-200 rounded-md bg-blue-400 px-3 py-1"
+                                        v-tooltip="'Submitted at ' + dateFormat(item.form.created_at) + '. Form name: ' + item.form.name"
+                                        >published</span
+                                    >
+                                    <span
+                                        v-else
+                                        class="text-gray-500 rounded-md bg-blue-200 px-3 py-1"
+                                        v-tooltip="'Submitted at ' + dateFormat(item.form.created_at) + '. Form name: ' + item.form.name"
+                                        >draft</span
+                                    >
+                                </div>
+                            </td>
+                            <td v-if="columns.created_at" class="px-6 py-3 text-sm w-px whitespace-nowrap text-gray-600">
+                                {{ item.created_at | date("D MMM YYYY, H:mm") }}
+                            </td>
+                            <td v-if="columns.created_by" class="px-6 py-3 text-sm w-px whitespace-nowrap text-gray-600 text-center">
+                                <div class="bg-green-500 text-white p-2 text-md rounded-full text-center mr-2 w-9" v-tooltip="item.created_by.name">
+                                    <div class="w-full text-center">
+                                        {{ getUserNameInitials(item.created_by.name) }}
                                     </div>
-                                    <div v-else>
-                                        <span
-                                            v-if="item.published_at !== null"
-                                            class="text-gray-200 rounded-md bg-blue-400 px-3 py-1"
-                                            v-tooltip="'Submitted at ' + dateFormat(item.form.created_at) + '. Form name: ' + item.form.name"
-                                            >published</span
-                                        >
-                                        <span
-                                            v-else
-                                            class="text-gray-500 rounded-md bg-blue-200 px-3 py-1"
-                                            v-tooltip="'Submitted at ' + dateFormat(item.form.created_at) + '. Form name: ' + item.form.name"
-                                            >draft</span
-                                        >
+                                </div>
+                            </td>
+                            <td v-if="columns.updated_at" class="px-6 py-3 text-sm w-px whitespace-nowrap text-gray-600">
+                                {{ item.updated_at | date("D MMM YYYY, H:mm") }}
+                            </td>
+                            <td v-if="columns.updated_by" class="px-6 py-3 text-sm w-px whitespace-nowrap text-gray-600">
+                                <div v-if="item.updated_by !== null" class="bg-green-500 text-white p-2 text-md rounded-full text-center mr-2 w-9" v-tooltip="item.updated_by.name">
+                                    <div class="w-full text-center">
+                                        {{ getUserNameInitials(item.updated_by.name) }}
                                     </div>
-                                </td>
-                                <td v-if="columns.created_at" class="px-6 py-3 text-sm w-px whitespace-nowrap text-gray-600">
-                                    {{ item.created_at | date("D MMM YYYY, H:mm") }}
-                                </td>
-                                <td v-if="columns.created_by" class="px-6 py-3 text-sm w-px whitespace-nowrap text-gray-600 text-center">
-                                    <div class="bg-green-500 text-white p-2 text-md rounded-full text-center mr-2 w-9" v-tooltip="item.created_by.name">
-                                        <div class="w-full text-center">
-                                            {{ getUserNameInitials(item.created_by.name) }}
-                                        </div>
+                                </div>
+                            </td>
+                            <td v-if="columns.published_at" class="px-6 py-3 text-sm w-px whitespace-nowrap text-gray-600">
+                                {{ item.published_at | date("D MMM YYYY, H:mm") }}
+                            </td>
+                            <td v-if="columns.published_by" class="px-6 py-3 text-sm w-px whitespace-nowrap text-gray-600">
+                                <div v-if="item.published_by !== null" class="bg-green-500 text-white p-2 text-md rounded-full text-center mr-2 w-9" v-tooltip="item.published_by.name">
+                                    <div class="w-full text-center">
+                                        {{ getUserNameInitials(item.published_by.name) }}
                                     </div>
-                                </td>
-                                <td v-if="columns.updated_at" class="px-6 py-3 text-sm w-px whitespace-nowrap text-gray-600">
-                                    {{ item.updated_at | date("D MMM YYYY, H:mm") }}
-                                </td>
-                                <td v-if="columns.updated_by" class="px-6 py-3 text-sm w-px whitespace-nowrap text-gray-600">
-                                    <div v-if="item.updated_by !== null" class="bg-green-500 text-white p-2 text-md rounded-full text-center mr-2 w-9" v-tooltip="item.updated_by.name">
-                                        <div class="w-full text-center">
-                                            {{ getUserNameInitials(item.updated_by.name) }}
-                                        </div>
-                                    </div>
-                                </td>
-                                <td v-if="columns.published_at" class="px-6 py-3 text-sm w-px whitespace-nowrap text-gray-600">
-                                    {{ item.published_at | date("D MMM YYYY, H:mm") }}
-                                </td>
-                                <td v-if="columns.published_by" class="px-6 py-3 text-sm w-px whitespace-nowrap text-gray-600">
-                                    <div v-if="item.published_by !== null" class="bg-green-500 text-white p-2 text-md rounded-full text-center mr-2 w-9" v-tooltip="item.published_by.name">
-                                        <div class="w-full text-center">
-                                            {{ getUserNameInitials(item.published_by.name) }}
-                                        </div>
-                                    </div>
-                                </td>
-                                <td v-if="listOptions.getItems != 'trashed'" class="position-sticky right-0 px-2 py-4 text-sm w-28 whitespace-nowrap text-center shadow-sm bg-white">
-                                    <div class="py-2">
-                                        <router-link
-                                            :to="{
-                                                name: 'projects.content.edit',
-                                                params: {
-                                                    project_id: $route.params.project_id,
-                                                    col_id: collection_id,
-                                                    content_id: item.id,
-                                                },
-                                            }"
-                                            class="text-indigo-500 p-2 px-3 rounded-md hover:bg-gray-100 cursor-pointer bg-gray-50"
-                                        >
-                                            <i class="fa fa-pencil-alt"></i>
-                                        </router-link>
-                                        <a class="text-orange-500 p-2 px-3 rounded-md hover:bg-gray-100 cursor-pointer bg-gray-50" @click="moveToTrashContent(item)">
-                                            <i class="fa fa-trash-restore"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
+                                </div>
+                            </td>
+                            <td v-if="listOptions.getItems != 'trashed'" class="an__sticky right-0 px-2 py-4 text-sm w-28 whitespace-nowrap text-center shadow-sm bg-white">
+                                <div class="py-2">
+                                    <router-link
+                                        :to="{
+                                            name: 'projects.content.edit',
+                                            params: {
+                                                project_id: $route.params.project_id,
+                                                col_id: collection_id,
+                                                content_id: item.id,
+                                            },
+                                        }"
+                                        class="text-indigo-500 p-2 px-3 rounded-md hover:bg-gray-100 cursor-pointer bg-gray-50"
+                                    >
+                                        <i class="fa fa-pencil-alt"></i>
+                                    </router-link>
+                                    <a class="text-orange-500 p-2 px-3 rounded-md hover:bg-gray-100 cursor-pointer bg-gray-50" @click="moveToTrashContent(item)">
+                                        <i class="fa fa-trash-restore"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
 
-                            <tr v-if="content.data != undefined && content.data.length === 0">
-                                <td colspan="100%" class="text-center text-sm text-gray-500 p-5">No data found</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                        <tr v-if="content.data != undefined && content.data.length === 0">
+                            <td colspan="100%" class="text-center text-sm text-gray-500 p-5">No data found</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <div class="mt-2 clear-both flex justify-between items-center">
-                <div class="block">
-                    <pagination :data="content" size="small" :limit="3" @pagination-change-page="getContent"></pagination>
-                </div>
+        </div>
+        <div class="flex justify-between items-center mt-2">
+            <div class="block">
+                <pagination :data="content" size="small" :limit="3" @pagination-change-page="getContent"></pagination>
+            </div>
 
-                <div class="text-sm italic text-gray-500">{{ content.total }} records, {{ content.from }} - {{ content.to }} showing</div>
+            <div class="text-sm italic text-gray-500">{{ content.total }} records, {{ content.from }} - {{ content.to }} showing</div>
 
-                <div class="text-sm italic text-gray-500">
-                    <select v-model="each" @change="getContent()" v-formselect>
-                        <option value="5">5</option>
-                        <option value="15">15</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
-                    </select>
-                </div>
+            <div class="text-sm italic text-gray-500">
+                <select v-model="each" @change="getContent()" v-formselect>
+                    <option value="5">5</option>
+                    <option value="15">15</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
             </div>
         </div>
 

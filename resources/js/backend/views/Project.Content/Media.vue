@@ -1,11 +1,12 @@
 <template>
-    <div class="admin__content-media-library relative h-screen overflow-auto">
+    <div class="admin__project-content-media-library relative h-screen overflow-auto">
         <project-header :project="project"></project-header>
 
-        <div class="flex pt-4">
+        <div class="flex flex-1 overflow-y-auto">
             <div class="w-3/12 bg-white overflow-x-hidden">
                 <content-sidebar :project="project"></content-sidebar>
             </div>
+
             <div class="w-9/12 p-4 overflow-x-auto">
                 <media-library :project="project"></media-library>
             </div>

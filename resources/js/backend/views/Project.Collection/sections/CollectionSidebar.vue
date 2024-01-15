@@ -29,7 +29,7 @@
                 class="mb-2 relative flex w-full flex-wrap items-stretch mb-2 h-10"
             >
                 <span
-                    class="z-9 h-full leading-snug font-normal absolute text-center text-gray-400 absolute bg-transparent rounded-md text-base items-center justify-center w-8 pl-3 py-3"
+                    class="h-full leading-snug font-normal absolute text-center text-gray-400 absolute bg-transparent rounded-md text-base items-center justify-center w-8 pl-3 py-3"
                 >
                     <i class="fas fa-search"></i>
                 </span>
@@ -41,7 +41,7 @@
                     autofocus
                 />
                 <span
-                    class="z-9 h-full leading-snug font-normal absolute text-center text-gray-400 absolute bg-transparent rounded-md text-base items-center justify-center w-8 py-3 right-0 pr-3 cursor-pointer"
+                    class="h-full leading-snug font-normal absolute text-center text-gray-400 absolute bg-transparent rounded-md text-base items-center justify-center w-8 py-3 right-0 pr-3 cursor-pointer"
                     @click="(searchCollection = ''), (openSearchInput = false)"
                 >
                     <i class="fas fa-times-circle"></i>
@@ -49,37 +49,34 @@
             </div>
         </div>
 
-        <ul>
-            <draggable
-                :list="project.collections"
-                @end="sortCollections"
-                v-bind="dragOptions"
-                handle=".handle"
-            >
-                <transition-group type="transition">
-                    <li
-                        class="mb-2 inline-flex items-center w-full"
-                        v-for="collection in filterSearch"
-                        :key="collection.id"
+        <draggable
+            :list="project.collections"
+            @end="sortCollections"
+            v-bind="dragOptions"
+            handle=".handle"
+            class="_drag-box"
+        >
+            <transition-group type="transition" class="_trans-group">
+                <div
+                    class="mb-2 inline-flex items-center w-full"
+                    v-for="collection in filterSearch"
+                    :key="collection.id"
+                >
+                    <i class="fas fa-grip-vertical mr-4 text-gray-500 an__cursor-move handle"></i>
+                    <router-link
+                        :to="{
+                            name: 'projects.collections.detail',
+                            params: {
+                                id: project.id,
+                                col_id: collection.id,
+                            },
+                        }"
+                        class="block w-full p-2 cursor-pointer hover:bg-gray-100 rounded"
+                        >{{ collection.name }}</router-link
                     >
-                        <i
-                            class="fas fa-grip-vertical mr-4 text-gray-500 cursor-pointer handle"
-                        ></i>
-                        <router-link
-                            :to="{
-                                name: 'projects.collections.detail',
-                                params: {
-                                    id: project.id,
-                                    col_id: collection.id,
-                                },
-                            }"
-                            class="block w-full p-2 cursor-pointer hover:bg-gray-100 rounded"
-                            >{{ collection.name }}</router-link
-                        >
-                    </li>
-                </transition-group>
-            </draggable>
-        </ul>
+                </div>
+            </transition-group>
+        </draggable>
 
         <ui-modal
             :show="openNewCollectionModal"

@@ -1,5 +1,5 @@
 <template>
-    <div class="admin__projects-dashboard m-3 p-3">Welcome Dashboard</div>
+    <div class="admin__projects-dashboard m-3 p-3 overflow-y-auto">Welcome Dashboard</div>
 </template>
 
 <script>

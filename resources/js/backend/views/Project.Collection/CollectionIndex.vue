@@ -1,8 +1,8 @@
 <template>
-    <div class="admin__project-collection h-screen relative overflow-x-hidden">
+    <div class="admin__project-collection-index relative h-full flex flex-col">
         <project-header :project="project"></project-header>
 
-        <div class="w-96 pt-4 bg-white">
+        <div class="w-96 flex flex-1 bg-white overflow-y-auto">
             <collection-sidebar :project="project"></collection-sidebar>
         </div>
     </div>

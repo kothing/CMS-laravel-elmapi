@@ -1,8 +1,8 @@
 <template>
-    <div class="relative h-screen overflow-auto">
+    <div class="admin__project-content-edit relative h-full flex flex-col">
         <project-header :project="project"></project-header>
 
-        <div class="flex pt-4">
+        <div class="flex flex-1 overflow-y-auto">
             <div class="w-3/12 bg-white overflow-x-hidden">
                 <content-sidebar :project="project" class="h-full"></content-sidebar>
             </div>
@@ -759,7 +759,7 @@
             </template>
 
             <template #footer>
-                <ui-button color="gray-100" hover="gray-200" @click.native="closeMediaLibraryModal">
+                <ui-button color="gray-200" hover="gray-300" @click.native="closeMediaLibraryModal">
                     <span class="text-gray-800">Cancel</span>
                 </ui-button>
             </template>
@@ -780,7 +780,7 @@
             </template>
 
             <template #footer>
-                <ui-button color="gray-100" hover="gray-200" @click.native="closeRelationModal">
+                <ui-button color="gray-200" hover="gray-300" @click.native="closeRelationModal">
                     <span class="text-gray-800">Cancel</span>
                 </ui-button>
             </template>

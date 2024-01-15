@@ -1,7 +1,7 @@
 <template>
-    <div class="admin__project-centre relative h-screen w-full m-auto overflow-auto">
+    <div class="admin__project-centre relative h-full flex flex-col">
         <project-header :project="project"></project-header>
-        <div class="grid grid-cols-1 sm:grid-cols-2 pt-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 pt-4 overflow-y-auto">
             <div class="col p-4" v-if="checkRole(['admin' + project.id])">
                 <div class="inline-flex mb-5">
                     <div class="mr-4 text-gray-100 bg-yellow-900 rounded-md text-xl p-4 h-full items-center content-center">
