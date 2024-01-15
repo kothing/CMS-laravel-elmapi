@@ -40,10 +40,10 @@
 
                                 <template #content>
                                     <div v-if="isSavingEnable">
-                                        <ui-button type="button" color="white" hover="gray-200" class="w-full h-full custom__rounded-b-none" @click.native="saveEdit(false, 'close')">
+                                        <ui-button type="button" color="white" hover="gray-200" class="w-full h-full an__rounded-b-none" @click.native="saveEdit(false, 'close')">
                                             <div class="text-gray-600 text-sm text-left">Save and close</div>
                                         </ui-button>
-                                        <ui-button type="button" color="white" hover="gray-200" class="w-full h-full custom__rounded-t-none" @click.native="saveEdit(false, 'new')">
+                                        <ui-button type="button" color="white" hover="gray-200" class="w-full h-full an__rounded-t-none" @click.native="saveEdit(false, 'new')">
                                             <div class="text-gray-600 text-sm text-left">Save and create new</div>
                                         </ui-button>
                                     </div>
@@ -63,10 +63,10 @@
                                 </template>
 
                                 <template #content>
-                                    <ui-button type="button" color="white" hover="gray-200" class="w-full h-full custom__rounded-b-none" @click.native="saveEdit(true, 'close')">
+                                    <ui-button type="button" color="white" hover="gray-200" class="w-full h-full an__rounded-b-none" @click.native="saveEdit(true, 'close')">
                                         <div class="text-gray-600 text-sm text-left">Save, publish and close</div>
                                     </ui-button>
-                                    <ui-button type="button" color="white" hover="gray-200" class="w-full h-full custom__rounded-t-none" @click.native="saveEdit(true, 'new')">
+                                    <ui-button type="button" color="white" hover="gray-200" class="w-full h-full an__rounded-t-none" @click.native="saveEdit(true, 'new')">
                                         <div class="text-gray-600 text-sm text-left">Save, publish and create new</div>
                                     </ui-button>
                                 </template>

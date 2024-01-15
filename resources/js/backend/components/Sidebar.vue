@@ -1,68 +1,66 @@
 <template>
-    <div class="flex flex-col justify-between h-full overflow-y-auto">
-        <div class="flex flex-col">
-            <div class="admin__brand text-center">
-                <brand size="md" mode="light" imgclass="w-20"></brand>
-            </div>
-            <nav class="admin__main-menu flex flex-col overflow-y-auto">
-                <router-link
-                    :to="{ name: 'dashboard' }"
-                    :exact-active-class="'bg-gray-700'"
-                    class="admin__main-menu-item flex flex-nowrap items-center my-2 px-8 py-4 block hover:bg-gray-700"
-                >
-                    <i class="admin__menu-item-icon pr-4 fas fa-tv"></i>
-                    <span class="text-xs">Dashboard</span>
-                </router-link>
-                <router-link
-                    :to="{ name: 'projects' }"
-                    :active-class="'bg-gray-700'"
-                    class="admin__main-menu-item flex flex-nowrap items-center my-2 px-8 py-4 block hover:bg-gray-700"
-                >
-                    <i class="admin__menu-item-icon pr-4 fas fa-list"></i>
-                    <span class="text-xs">Projects</span>
-                </router-link>
-                <div
-                    v-if="isProjectPage"
-                    class="admin__sub-menu pl-10 bg-gray-800"
-                >
-                    <router-link
-                        v-if="checkRole(['admin' + $route.params.project_id])"
-                        :to="{
-                            name: 'projects.collections',
-                            params: { project_id: $route.params.project_id },
-                        }"
-                        :active-class="'bg-gray-700'"
-                        class="admin__sub-menu-item flex flex-nowrap items-center px-6 py-4 block hover:bg-gray-700"
-                    >
-                        <i class="admin__menu-item-icon pr-4 fas fa-table"></i>
-                        <span class="text-xs">Collections</span>
-                    </router-link>
-                    <router-link
-                        :to="{
-                            name: 'projects.content',
-                            params: { project_id: $route.params.project_id },
-                        }"
-                        :active-class="'bg-gray-700'"
-                        class="admin__sub-menu-item flex flex-nowrap items-center px-6 py-4 block hover:bg-gray-700"
-                    >
-                        <i class="admin__menu-item-icon pr-4 fas fa-edit"></i>
-                        <span class="text-xs">Content</span>
-                    </router-link>
-                    <router-link
-                        v-if="checkRole(['super_admin'])"
-                        :to="{
-                            name: 'projects.settings',
-                            params: { project_id: $route.params.project_id },
-                        }"
-                        :active-class="'bg-gray-700'"
-                        class="admin__sub-menu-item flex flex-nowrap items-center px-6 py-4 block hover:bg-gray-700"
-                    >
-                        <i class="admin__menu-item-icon pr-4 fas fa-cog"></i>
-                        <span class="text-xs">Settings</span>
-                    </router-link>
-                </div>
-            </nav>
+    <div class="flex flex-col h-full overflow-y-auto">
+        <div class="admin__brand text-center">
+            <brand size="md" mode="light" imgclass="w-20"></brand>
         </div>
+        <nav class="admin__main-menu flex flex-col flex-1 overflow-y-auto">
+            <router-link
+                :to="{ name: 'dashboard' }"
+                :exact-active-class="'bg-gray-700'"
+                class="admin__main-menu-item flex flex-nowrap items-center my-2 px-8 py-4 block hover:bg-gray-700"
+            >
+                <i class="admin__menu-item-icon pr-4 fas fa-tv"></i>
+                <span class="text-xs">Dashboard</span>
+            </router-link>
+            <router-link
+                :to="{ name: 'projects' }"
+                :active-class="'bg-gray-700'"
+                class="admin__main-menu-item flex flex-nowrap items-center my-2 px-8 py-4 block hover:bg-gray-700"
+            >
+                <i class="admin__menu-item-icon pr-4 fas fa-list"></i>
+                <span class="text-xs">Projects</span>
+            </router-link>
+            <div
+                v-if="isProjectPage"
+                class="admin__sub-menu pl-10 bg-gray-800"
+            >
+                <router-link
+                    v-if="checkRole(['admin' + $route.params.project_id])"
+                    :to="{
+                        name: 'projects.collections',
+                        params: { project_id: $route.params.project_id },
+                    }"
+                    :active-class="'bg-gray-700'"
+                    class="admin__sub-menu-item flex flex-nowrap items-center px-6 py-4 block hover:bg-gray-700"
+                >
+                    <i class="admin__menu-item-icon pr-4 fas fa-table"></i>
+                    <span class="text-xs">Collections</span>
+                </router-link>
+                <router-link
+                    :to="{
+                        name: 'projects.content',
+                        params: { project_id: $route.params.project_id },
+                    }"
+                    :active-class="'bg-gray-700'"
+                    class="admin__sub-menu-item flex flex-nowrap items-center px-6 py-4 block hover:bg-gray-700"
+                >
+                    <i class="admin__menu-item-icon pr-4 fas fa-edit"></i>
+                    <span class="text-xs">Content</span>
+                </router-link>
+                <router-link
+                    v-if="checkRole(['super_admin'])"
+                    :to="{
+                        name: 'projects.settings',
+                        params: { project_id: $route.params.project_id },
+                    }"
+                    :active-class="'bg-gray-700'"
+                    class="admin__sub-menu-item flex flex-nowrap items-center px-6 py-4 block hover:bg-gray-700"
+                >
+                    <i class="admin__menu-item-icon pr-4 fas fa-cog"></i>
+                    <span class="text-xs">Settings</span>
+                </router-link>
+            </div>
+        </nav>
         <nav class="admin__footer-menu">
             <router-link
                 :to="{ name: 'profile' }"

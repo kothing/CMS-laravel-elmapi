@@ -1,6 +1,6 @@
 <template>
     <div class="admin__profile">
-        <div class="w-full custom__xxl:w-3/4 m-auto mt-5 px-4">
+        <div class="w-full an__xxl:w-3/4 m-auto mt-5 px-4">
             <div class="w-full p-4 flex border-b">
                 <div class="w-full">
                     <div class="text-xl font-bold">My Profile</div>
