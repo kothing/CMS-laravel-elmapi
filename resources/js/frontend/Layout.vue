@@ -1,5 +1,5 @@
 <template>
-  <div class="admin__container flex h-screen">
+  <div class="app__container flex h-screen">
     <div class="flex-1 overflow-x-hidden">
       <router-view></router-view>
     </div>

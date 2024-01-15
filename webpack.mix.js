@@ -25,7 +25,9 @@ mix.js('resources/js/app.js', 'public/js').vue()
     .postCss('resources/css/admin.css', 'public/css', [
         require('tailwindcss')('./tailwind.config.js')
     ])
-    .postCss('resources/css/app.css', 'public/css')
+    .postCss('resources/css/app.css', 'public/css', [
+        require('tailwindcss')('./tailwind.config.js')
+    ])
     .webpackConfig({
         output: {
             chunkFilename: 'js/partials/[name].js?id=[hash]',

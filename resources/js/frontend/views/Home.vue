@@ -1,23 +1,28 @@
 <template>
-  <div class="app__home m-3 p-3">Aine Home</div>
+  <div class="app__home m-3 p-3">
+    <div class="flex flex-col items-center justify-center text-center my-5">
+        <img class="w-12 w-12 mx-auto" src="/images/logo-64x64-dark.svg">
+        <p class="mt-4">「AineCMS」 frontend page</p>
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
-  components: {},
+    components: {},
 
-  data() {
-    return {
-      locales: [],
-    };
-  },
+    data() {
+        return {
+            locales: [],
+        };
+    },
 
-  methods: {
-    //
-  },
+    methods: {
+        //
+    },
 
-  mounted() {
-    //
-  },
+    mounted() {
+        //
+    },
 };
 </script>
