@@ -27,7 +27,7 @@
             <div
                 v-for="project in projects"
                 :key="project.id"
-                class="bg-white hover:bg-gray-50 m-2 text-gray-900 cursor-pointer items-center rounded-md shadow-md"
+                class="bg-white m-2 text-gray-900 cursor-pointer items-center rounded-md shadow-sm hover:shadow-dm"
             >
                 <router-link
                     :to="{
@@ -197,14 +197,14 @@ export default {
         },
         closeNewProjectModal() {
             this.openNewProjectModal = false;
-            (this.new_project = {
+            this.new_project = {
                 default_locale: "en",
                 type: 1,
                 errors: {
                     name: "",
                 },
-            }),
-                (this.processing = false);
+            };
+            this.processing = false;
         },
         getProjects() {
             axios
