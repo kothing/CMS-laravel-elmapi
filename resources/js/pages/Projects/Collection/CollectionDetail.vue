@@ -41,8 +41,8 @@
     
                                         <div class="w-full flex justify-between">
                                             <div class="flex items-center space-x-1">
-                                                <span class="text-blue-900 text-sm rounded-md bg-gray-200 px-3">#{{ field.name }}</span>
-                                                <span class="text-blue-900 text-sm rounded-md bg-indigo-200 px-3">
+                                                <span class="text-blue-900 text-sm rounded-md bg-gray-200 px-3 truncate">#{{ field.name }}</span>
+                                                <span class="text-blue-900 text-sm rounded-md bg-indigo-200 px-3 truncate">
                                                     {{ field.type }}
                                                     <span v-if="field.type == 'enumeration'">
                                                         <span v-if="field.options.multiple">: multiple</span>
@@ -59,11 +59,11 @@
                                                         <span v-else-if="field.options.relation.type == 2">: one-to-many</span>
                                                     </span>
                                                 </span>
-                                                <span class="text-blue-900 text-sm rounded-md bg-gray-100 px-3" v-if="field.validations.required.status"><i class="fas fa-star-of-life text-xs"></i> required</span>
-                                                <span class="text-blue-900 text-sm rounded-md bg-gray-100 px-3" v-if="field.validations.unique.status"><i class="fas fa-fingerprint text-xs"></i> unique</span>
-                                                <span class="text-blue-900 text-sm rounded-md bg-gray-100 px-3" v-if="field.options.repeatable"><i class="fas fa-redo text-xs"></i> repeatable</span>
-                                                <span class="text-blue-900 text-sm rounded-md bg-gray-100 px-3" v-if="field.options.hideInContentList">hide in content list</span>
-                                                <span class="text-blue-900 text-sm rounded-md bg-gray-100 px-3" v-if="field.options.hiddenInAPI">hidden in api</span>
+                                                <span class="text-blue-900 text-sm rounded-md bg-gray-100 px-3 truncate" v-if="field.validations.required.status"><i class="fas fa-star-of-life text-xs"></i> required</span>
+                                                <span class="text-blue-900 text-sm rounded-md bg-gray-100 px-3 truncate" v-if="field.validations.unique.status"><i class="fas fa-fingerprint text-xs"></i> unique</span>
+                                                <span class="text-blue-900 text-sm rounded-md bg-gray-100 px-3 truncate" v-if="field.options.repeatable"><i class="fas fa-redo text-xs"></i> repeatable</span>
+                                                <span class="text-blue-900 text-sm rounded-md bg-gray-100 px-3 truncate" v-if="field.options.hideInContentList">hide in content list</span>
+                                                <span class="text-blue-900 text-sm rounded-md bg-gray-100 px-3 truncate" v-if="field.options.hiddenInAPI">hidden in api</span>
                                             </div>
     
                                             <div class="flex justify-between space-x-1">
