@@ -1,5 +1,5 @@
 <template>
-    <div class="admin__project-collection-detail relative h-full flex flex-col">
+    <div class="admin__project-collection-list relative h-full flex flex-col">
         <project-header :project="project"></project-header>
 
         <div class="flex flex-1 overflow-y-auto">

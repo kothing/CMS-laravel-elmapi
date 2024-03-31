@@ -65,7 +65,7 @@
                     <i class="fas fa-grip-vertical mr-4 text-gray-500 an__cursor-move handle"></i>
                     <router-link
                         :to="{
-                            name: 'projects.collections.detail',
+                            name: 'projects.collections.list',
                             params: {
                                 id: project.id,
                                 col_id: collection.id,

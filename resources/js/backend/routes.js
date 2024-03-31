@@ -9,7 +9,7 @@ const Profile = () => import(/* webpackChunkName: "backend.profile" */ "./views/
 const Projects = () => import(/* webpackChunkName: "backend.projects" */ "./views/Projects");
 const ProjectIndex = () => import(/* webpackChunkName: "project.index" */ "./views/Project/Index");
 const ProjectCollectionIndex = () => import(/* webpackChunkName: "project.collection" */ "./views/Project.Collection/CollectionIndex");
-const ProjectCollectionDetail = () => import(/* webpackChunkName: "project.collection.detail" */ "./views/Project.Collection/CollectionDetail");
+const ProjectCollectionList = () => import(/* webpackChunkName: "project.collection.list" */ "./views/Project.Collection/CollectionList");
 const ProjectContentIndex = () => import(/* webpackChunkName: "project.content" */ "./views/Project.Content/ContentIndex");
 const ProjectContentList = () => import(/* webpackChunkName: "project.content.list" */ "./views/Project.Content/List");
 const ProjectContentNew = () => import(/* webpackChunkName: "project.content.new" */ "./views/Project.Content/New");
@@ -73,8 +73,8 @@ const routes = [
     },
     {
         path: "/project/:project_id/collections/:col_id",
-        name: "projects.collections.detail",
-        component: ProjectCollectionDetail,
+        name: "projects.collections.list",
+        component: ProjectCollectionList,
         beforeEnter: (to, from, next) => {
             const roles = store.getters && store.getters.user.roles;
 
