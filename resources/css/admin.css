@@ -19,6 +19,11 @@
     background-color: #e4e7eb;
 }
 
+/* Hidden */
+.hidden {
+    display: none !important;
+}
+
 .admin__container {
     
 }
