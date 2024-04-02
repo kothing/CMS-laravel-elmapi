@@ -19,7 +19,6 @@
                                     <i class="fa fa-ellipsis-h object-bottom"></i>
                                 </button>
                             </template>
-
                             <template #content>
                                 <ui-button type="button" color="white" hover="gray-200" class="w-full h-full" @click.native="openEditCollectionModal = true">
                                     <div class="text-black text-sm text-left"><i class="fa fa-edit"></i> Edit Collection</div>
@@ -45,7 +44,7 @@
                     <transition-group type="transition" class="_trans-group">
                         <div class="w-full mb-3" v-for="field in collection.fields" :key="field.id">
                             <div class="flex items-center w-full bg-white rounded-md p-4 shadow-sm">
-                                <i class="fas fa-grip-vertical mr-4 text-gray-500 an__cursor-move handle"></i>
+                                <i class="fas fa-grip-vertical mr-3 text-gray-500 an__cursor-move handle"></i>
                                 <div :class="fieldDetails[field.type].bg" class="mr-4 text-gray-100 rounded-md text-xl items-center text-center flex field_icon_xl">
                                     <i :class="fieldDetails[field.type].icon" class="w-full"></i>
                                 </div>
@@ -53,11 +52,10 @@
                                     <div class="text-lg">
                                         {{ field.label }}
                                     </div>
-
                                     <div class="w-full flex justify-between">
                                         <div class="flex items-center space-x-1">
-                                            <span class="text-blue-900 text-sm rounded-md bg-gray-200 px-3 truncate">#{{ field.name }}</span>
-                                            <span class="text-blue-900 text-sm rounded-md bg-indigo-200 px-3 truncate">
+                                            <span class="field_name text-blue-900 text-sm rounded-md bg-gray-200 px-2 truncate">#{{ field.name }}</span>
+                                            <span class="field_type text-blue-900 text-sm rounded-md bg-indigo-200 px-2 truncate">
                                                 {{ field.type }}
                                                 <span v-if="field.type == 'enumeration'">
                                                     <span v-if="field.options.multiple">: multiple</span>
@@ -74,23 +72,22 @@
                                                     <span v-else-if="field.options.relation.type == 2">: one-to-many</span>
                                                 </span>
                                             </span>
-                                            <span class="text-blue-900 text-sm rounded-md bg-gray-100 px-3 truncate" v-if="field.validations.required.status">
+                                            <span class="field_validations text-blue-900 text-sm rounded-md bg-gray-100 px-2 truncate" v-if="field.validations.required.status">
                                                 <i class="fas fa-star-of-life text-xs"></i> required
                                             </span>
-                                            <span class="text-blue-900 text-sm rounded-md bg-gray-100 px-3 truncate" v-if="field.validations.unique.status">
+                                            <span class="field_validations text-blue-900 text-sm rounded-md bg-gray-100 px-2 truncate" v-if="field.validations.unique.status">
                                                 <i class="fas fa-fingerprint text-xs"></i> unique
                                             </span>
-                                            <span class="text-blue-900 text-sm rounded-md bg-gray-100 px-3 truncate" v-if="field.options.repeatable">
+                                            <span class="field_options text-blue-900 text-sm rounded-md bg-gray-100 px-2 truncate" v-if="field.options.repeatable">
                                                 <i class="fas fa-redo text-xs"></i> repeatable
                                             </span>
-                                            <span class="text-blue-900 text-sm rounded-md bg-gray-100 px-3 truncate" v-if="field.options.hideInContentList">
+                                            <span class="field_options text-blue-900 text-sm rounded-md bg-gray-100 px-2 truncate display-none" v-if="field.options.hideInContentList">
                                                 hide in content list
                                             </span>
-                                            <span class="text-blue-900 text-sm rounded-md bg-gray-100 px-3 truncate" v-if="field.options.hiddenInAPI">
+                                            <span class="field_options text-blue-900 text-sm rounded-md bg-gray-100 px-2 truncate display-none" v-if="field.options.hiddenInAPI">
                                                 hidden in api
                                             </span>
                                         </div>
-
                                         <div class="flex items-center justify-between space-x-1">
                                             <a
                                                 @click="openNewFieldModal(field.type, true, field)"

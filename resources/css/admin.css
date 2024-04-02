@@ -100,6 +100,22 @@
     min-height: 48px;
 }
 
+.field_name {
+    max-width: 90px;
+}
+
+.field_type {
+    max-width: 140PX;
+}
+
+.field_validations {
+    max-width: 90px;
+}
+
+.field_options {
+    max-width: 100px;
+}
+
 .vue__time-picker input.display-time {
     border: 1px solid #d2d2d2;
     width: 10em;
@@ -421,6 +437,18 @@ input:checked ~ .dot {
 /* shadow */
 .hover\:shadow-dm {
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.an_max-w-sm {
+    max-width: 16rem;
+}
+
+.an_max-w-md {
+    max-width: 20rem;
+}
+
+.an_max-w-lg {
+    max-width: 24rem;
 }
 
 @media (min-width: 1440px) {
