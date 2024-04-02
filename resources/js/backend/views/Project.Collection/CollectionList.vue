@@ -81,10 +81,10 @@
                                             <span class="field_options text-blue-900 text-sm rounded-md bg-gray-100 px-2 truncate" v-if="field.options.repeatable">
                                                 <i class="fas fa-redo text-xs"></i> repeatable
                                             </span>
-                                            <span class="field_options text-blue-900 text-sm rounded-md bg-gray-100 px-2 truncate display-none" v-if="field.options.hideInContentList">
+                                            <span class="field_options text-blue-900 text-sm rounded-md bg-gray-100 px-2 truncate hidden" v-if="field.options.hideInContentList">
                                                 hide in content list
                                             </span>
-                                            <span class="field_options text-blue-900 text-sm rounded-md bg-gray-100 px-2 truncate display-none" v-if="field.options.hiddenInAPI">
+                                            <span class="field_options text-blue-900 text-sm rounded-md bg-gray-100 px-2 truncate hidden" v-if="field.options.hiddenInAPI">
                                                 hidden in api
                                             </span>
                                         </div>
