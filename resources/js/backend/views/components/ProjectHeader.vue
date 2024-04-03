@@ -1,53 +1,45 @@
 <template>
-    <div class="admin__project-header w-full p-4 border-b bg-white an__sticky top-0 z-1">
-        <div class="flex items-center">
-            <span class="pr-4">
-                <router-link :to="{ name: 'projects' }">
-                    <i class="fas fa-home"></i>
-                </router-link>
-            </span>
-            <span class="pr-4">
-                <router-link :to="{ name: 'projects.index', params: { project_id: project.id } }">
-                    Project
-                </router-link>
-            </span>
-            <span class="pr-4" v-if="isProjectPage">
-                <router-link
-                    v-if="getPageType === 'collections' && checkRole(['admin' + $route.params.project_id])"
-                    :to="{
-                        name: 'projects.collections',
-                        params: { project_id: $route.params.project_id },
-                    }"
-                >
-                    <i>/</i> Collections
-                </router-link>
-                <router-link
-                    v-if="getPageType === 'content'"
-                    :to="{
-                        name: 'projects.content',
-                        params: { project_id: $route.params.project_id },
-                    }"
-                >
-                    <i>/</i> Content
-                </router-link>
-                <router-link
-                    v-if="getPageType === 'settings' && checkRole(['super_admin'])"
-                    :to="{
-                        name: 'projects.settings',
-                        params: { project_id: $route.params.project_id },
-                    }"
-                >
-                    <i>/</i> Settings
-                </router-link>
-            </span>
-        </div>
-        <div class="flex flex-col">
+    <div class="admin__project-header w-full border-b bg-white an__sticky top-0 z-1">
+        <div class="px-4 py-2 border-b">
             <div class="text-xl font-bold">
-                <router-link :to="{ name: 'projects.index', params: { project_id: project.id } }">
-                    Project: {{ project.name }}
-                </router-link>
+                Project: {{ project.name }}
             </div>
-            <div class="text-sm">{{ project.description }}</div>
+            <div class="text-sm">{{ project.description || "Project description" }}</div>
+        </div>
+        <div class="flex items-center px-4 py-2 text-gray-600">
+            <span class="px-1">
+                <router-link :to="{ name: 'projects' }">
+                    <i class="fas fa-list text-sm text-gray-500"></i> Projects List
+                </router-link>
+            </span>
+            <span class="px-1">
+                <i class="px-1 text-sm">/</i>
+                <router-link :to="{ name: 'projects.index', params: { project_id: project.id } }">
+                    <i class="fa fa-cubes text-sm text-gray-500"></i> Project
+                </router-link>
+            </span>
+            <template v-if="getPageType === 'collections' || getPageType === 'content' || getPageType === 'settings'">
+                <span class="px-0">
+                    <template v-if="getPageType === 'collections' && checkRole(['admin' + $route.params.project_id])">
+                        <i class="px-1 text-sm">/</i>
+                        <router-link :to="{ name: 'projects.collections', params: { project_id:$route.params.project_id }}">
+                            <i class="fa fa-table text-sm text-gray-500"></i> Collections
+                        </router-link>
+                    </template>
+                    <template v-if="getPageType === 'content'">
+                        <i class="px-1 text-sm">/</i>
+                        <router-link :to="{ name: 'projects.content', params: { project_id: $route.params.project_id }}">
+                            <i class="fa fa-edit text-sm text-gray-500"></i> Content
+                        </router-link>
+                    </template>
+                    <template v-if="getPageType === 'settings' && checkRole(['super_admin'])">
+                        <i class="px-1 text-sm">/</i>
+                        <router-link :to="{ name: 'projects.settings', params: { project_id: $route.params.project_id }}">
+                            <i class="fa fa-cog text-sm text-gray-500"></i> Settings
+                        </router-link>
+                    </template>
+                </span>
+            </template>
         </div>
     </div>
 </template>

@@ -21,7 +21,7 @@
                     >
                         <div
                             @click="openNewFormModal = true"
-                            class="bg-green-500 hover:bg-green-600 text-white cursor-pointer items-center flex justify-center py-5"
+                            class="bg-green-500 hover:bg-green-600 text-white cursor-pointer items-center flex justify-center py-5 rounded-md"
                         >
                             <i class="fas fa-plus-circle md:mr-4 text-sm md:text-xl"></i>
                             Create a New Form

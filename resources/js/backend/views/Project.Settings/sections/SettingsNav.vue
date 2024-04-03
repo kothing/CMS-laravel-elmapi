@@ -1,7 +1,6 @@
 <template>
     <div class="admin__project-nav p-4 bg-white">
-        <h4 class="mb-2 p-2 font-bold text-lg">Settings</h4>
-
+        <h4 class="mb-2 p-2 font-bold text-lg border-b border-gray-100">Settings</h4>
         <ul>
             <li class="mb-2">
                 <router-link

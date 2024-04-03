@@ -1,6 +1,6 @@
 <template>
     <div class="admin__project-collection-sidebar p-4 bg-white">
-        <div class="mb-4">
+        <div class="mb-4 border-b border-gray-100">
             <h4
                 class="mb-2 p-2 font-bold text-lg flex justify-between items-center h-10"
                 v-if="!openSearchInput"
