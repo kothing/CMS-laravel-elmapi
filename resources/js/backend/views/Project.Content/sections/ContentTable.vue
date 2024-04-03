@@ -471,7 +471,7 @@
             </template>
 
             <template #footer>
-                <ui-button color="gray-100" hover="gray-200" @click.native="closeTextModal">
+                <ui-button color="gray-200" hover="gray-300" @click.native="closeTextModal">
                     <span class="text-gray-800">Close</span>
                 </ui-button>
             </template>

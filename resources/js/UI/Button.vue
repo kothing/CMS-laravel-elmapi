@@ -36,17 +36,17 @@
                 } else {
                     let bgcolor = 'bg-'+this.color;
                     let arr = this.color.split('-');
-                    let hover = this.hover == null ? 'bg-'+arr[0]+'-'+(parseInt(arr[1]) + 100) : 'bg-'+this.hover;
-                    let active = 'bg-'+arr[0]+'-'+(parseInt(arr[1]) + 100);
+                    let hover = this.hover == null ? 'bg-'+arr[0]+'-'+(parseInt(arr[1]) + 200) : 'bg-'+this.hover;
+                    let active = 'bg-'+arr[0]+'-'+(parseInt(arr[1]) + 200);
                     let focus = 'border-'+arr[0]+'-'+(parseInt(arr[1]) - 100);
                     let focusShadow = 'shadow-outline-'+arr[0];
 
                     cls = bgcolor+' hover:'+hover+' active:'+active;
                 }
 
-                if(this.padding === null)
+                if(this.padding === null) {
                     cls += ' p-2 ';
-                else {
+                } else {
                     cls += ' '+this.padding+' ';
                 }
                 

@@ -129,8 +129,8 @@
 
             <template #footer>
                 <ui-button
-                    color="gray-100"
-                    hover="gray-200"
+                    color="gray-200"
+                    hover="gray-300"
                     @click.native="closeNewCollectionModal"
                 >
                     <span class="text-gray-800">Cancel</span>
