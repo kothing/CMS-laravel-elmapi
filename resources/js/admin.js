@@ -15,8 +15,8 @@ import "sweetalert2/dist/sweetalert2.min.css";
 import VuePagination from "laravel-vue-pagination";
 import VCalendar from "v-calendar";
 
-import "@fortawesome/fontawesome-free/css/all.min.css";
-import "nprogress/nprogress.css";
+import "./vendor/fontawesome-pro/css/all.min.css";
+import "./vendor/nprogress/nprogress.css";
 
 import Slugify from "./plugins/slugify";
 
@@ -47,7 +47,7 @@ const VueToast = createToastInterface({
 });
 
 // NProgress
-const NProgress = require("nprogress");
+const NProgress = require("./vendor/nprogress/nprogress");
 NProgress.configure({
     showSpinner: false,
 });

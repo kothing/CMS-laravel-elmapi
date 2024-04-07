@@ -2,7 +2,7 @@ import Vue from "vue";
 import VCalendar from "v-calendar";
 import VSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
-import "@fortawesome/fontawesome-free/css/all.min.css";
+import "./vendor/fontawesome-pro/css/all.min.css";
 
 import "./utils/directives";
 import "./utils/filters";

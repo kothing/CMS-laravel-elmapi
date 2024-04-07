@@ -25,13 +25,11 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
-        "@fortawesome/fontawesome-free": "^5.15.2",
         "@tailwindcss/forms": "^0.2.1",
         "axios": "^0.21",
         "deep-diff": "^1.0.2",
         "laravel-vue-pagination": "^2.3.1",
         "moment": "^2.29.1",
-        "nprogress": "^0.2.0",
         "quill-image-resize-module": "^3.0.0",
         "v-calendar": "^2.3.2",
         "v-clipboard": "^2.2.3",
