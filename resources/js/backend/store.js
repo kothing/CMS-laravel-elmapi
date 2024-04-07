@@ -14,11 +14,15 @@ const getDefaultState = () => {
 const store = new Vuex.Store({
     state: {
         user: {},
+        settings: {},
         columnSettings: []
     },
     mutations: {
         UPDATE_USER: (state, user) => {
             state.user = user;
+        },
+        UPDATE_SETTINGS:(state, settings) => {
+            state.settings = settings;
         },
         SET_COLUMNS: (state, obj) => {
             state.columnSettings.push(obj);

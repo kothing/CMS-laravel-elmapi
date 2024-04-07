@@ -5,6 +5,7 @@ import store from "./store";
 Vue.use(VueRouter);
 
 const Dashboard = () => import(/* webpackChunkName: "backend.dashboard" */ "./views/Dashboard");
+const Settings = () => import(/* webpackChunkName: "backend.settings" */ "./views/Settings");
 const Profile = () => import(/* webpackChunkName: "backend.profile" */ "./views/Profile");
 const Projects = () => import(/* webpackChunkName: "backend.projects" */ "./views/Projects");
 const ProjectIndex = () => import(/* webpackChunkName: "project.index" */ "./views/Project/Index");
@@ -30,6 +31,7 @@ const ProjectSettingsWebhookLogs = () => import(/* webpackChunkName: "project.se
  */
 const routes = [
     { path: "/", name: "dashboard", component: Dashboard },
+    { path: "/settings", name: "settings", component: Settings },
     { path: "/profile", name: "profile", component: Profile },
     { path: "/projects/", name: "projects", component: Projects },
     {
