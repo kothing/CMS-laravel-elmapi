@@ -80,6 +80,14 @@ export default {
     },
 
     methods: {
+        getSettings() {
+            axios
+            .get("/admin/settings")
+            .then((response) => {
+                this.settings = response.data;
+            });
+        },
+
         updateSettings() {
             axios.post("/admin/settings/update", this.settings).then(
                 (response) => {
@@ -93,7 +101,10 @@ export default {
                 }
             );
         },
+    },
 
+    mounted() {
+        this.getSettings();
     },
 };
 </script>

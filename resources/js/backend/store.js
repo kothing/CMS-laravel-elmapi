@@ -40,7 +40,7 @@ const store = new Vuex.Store({
                 .get('admin/user')
                 .then((response) => { commit('UPDATE_USER', response.data) });
         },
-        async getSetting({commit}) {
+        async getSettings({commit}) {
             return await axios
                 .get('admin/settings')
                 .then((response) => { commit('UPDATE_SETTINGS', response.data) });
@@ -54,6 +54,7 @@ const store = new Vuex.Store({
     },
     getters: {
         user: state => state.user,
+        settings: state => state.settings,
         columnSettings: state => state.columnSettings,
     }
 })
