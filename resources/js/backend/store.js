@@ -40,6 +40,11 @@ const store = new Vuex.Store({
                 .get('admin/user')
                 .then((response) => { commit('UPDATE_USER', response.data) });
         },
+        async getSetting({commit}) {
+            return await axios
+                .get('admin/settings')
+                .then((response) => { commit('UPDATE_SETTINGS', response.data) });
+        },
         setColumns({commit}, obj){
             commit('SET_COLUMNS', obj)
         },

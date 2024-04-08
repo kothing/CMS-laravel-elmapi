@@ -8,7 +8,7 @@
             <div class="w-full bg-white rounded-md shadow-sm p-4">
                 <form class="space-y-6">
                     <div class="form-item">
-                        <label v-formlabel>App Name (app_name)</label>
+                        <label v-formlabel>App Name</label>
                         <div class="mt-1 relative">
                             <input
                                 type="text"
@@ -24,12 +24,29 @@
                             </p>
                         </div>
                     </div>
+                    <div class="form-item">
+                        <label v-formlabel>Description</label>
+                        <div class="mt-1 relative">
+                            <input
+                                type="text"
+                                v-model="settings.description"
+                                autofocus
+                                v-forminput
+                            />
+                            <p
+                                class="text-sm text-red-600 mt-1"
+                                v-if="settings.errors.description"
+                            >
+                                {{ settings.errors.description[0] }}
+                            </p>
+                        </div>
+                    </div>
                     <div class="form-button">
                         <label v-formlabel></label>
                         <div class="mt-1 relative">
                             <ui-button
                                 :color="'indigo-500'"
-                                @click.native="saveSettings()"
+                                @click.native="updateSettings()"
                             >
                                 Update Settings
                             </ui-button>
@@ -54,14 +71,25 @@ export default {
         return {
             settings: {
                 name: store.state.settings.name,
+                description: store.state.settings.description,
                 errors: {},
             },
         };
     },
 
     methods: {
-        saveSettings() {
-            //
+        updateSettings() {
+            axios.post("/admin/settings/update", this.settings).then(
+                (response) => {
+                    this.$toast.success("Saved.");
+                    this.settings.errors = {};
+                },
+                (error) => {
+                    if (error.response.status == 422) {
+                        this.settings.errors = error.response.data.errors;
+                    }
+                }
+            );
         },
 
     },
