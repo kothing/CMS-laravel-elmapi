@@ -235,6 +235,7 @@
                                     v-model="new_user.name"
                                     v-forminput
                                     autofocus
+                                    placeholder="Name"
                                 />
                                 <p
                                     class="text-sm text-red-600 mt-1"
@@ -254,6 +255,7 @@
                                         v-model="new_user.email"
                                         v-forminput
                                         class="rounded-l-none"
+                                        placeholder="Email"
                                     />
                                 </div>
                                 <p
@@ -275,6 +277,7 @@
                                         v-model="new_user.password"
                                         v-forminput
                                         class="rounded-l-none"
+                                        placeholder="Password"
                                     />
                                     <span
                                         class="inline-flex items-center px-3 rounded-r-sm border border-l-0 border-gray-300 bg-gray-50 text-gray-500 text-sm cursor-pointer"

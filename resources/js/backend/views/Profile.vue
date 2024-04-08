@@ -15,6 +15,7 @@
                                 v-model="user.name"
                                 autofocus
                                 v-forminput
+                                placeholder="User name"
                             />
                             <p
                                 class="text-sm text-red-600 mt-1"
@@ -48,6 +49,7 @@
                                 v-model="user.email"
                                 autofocus
                                 v-forminput
+                                placeholder="Email"
                             />
                             <p
                                 class="text-sm text-red-600 mt-1"
@@ -80,6 +82,7 @@
                             v-model="user.password"
                             autofocus
                             v-forminput
+                            placeholder="Password"
                         />
                         <p
                             class="text-sm text-red-600 mt-1"
@@ -97,6 +100,7 @@
                             v-model="user.password_confirmation"
                             autofocus
                             v-forminput
+                            placeholder="Password"
                         />
                     </div>
                 </div>

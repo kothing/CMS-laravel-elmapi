@@ -15,6 +15,7 @@
                                 v-model="settings.name"
                                 autofocus
                                 v-forminput
+                                placeholder="App name"
                             />
                             <p
                                 class="text-sm text-red-600 mt-1"
@@ -32,6 +33,7 @@
                                 v-model="settings.description"
                                 autofocus
                                 v-forminput
+                                placeholder="App description"
                             />
                             <p
                                 class="text-sm text-red-600 mt-1"

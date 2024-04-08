@@ -100,6 +100,7 @@
                                         )
                                     "
                                     autofocus
+                                    placeholder="Name"
                                 />
                                 <p
                                     class="text-sm text-red-600 mt-2"
@@ -114,6 +115,7 @@
                                     type="text"
                                     v-model="new_collection.slug"
                                     v-forminput
+                                    placeholder="Slug"
                                 />
                                 <p
                                     class="text-sm text-red-600 mt-2"

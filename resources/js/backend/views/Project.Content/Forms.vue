@@ -60,6 +60,7 @@
                             v-model="new_form.name"
                             autofocus
                             v-forminput
+                            placeholder="Form Name"
                         />
                         <p class="text-sm text-red-600 mt-2">
                             {{ new_form.errors.name[0] }}
@@ -71,6 +72,7 @@
                             type="text"
                             v-model="new_form.description"
                             v-forminput
+                            placeholder="Description"
                         />
                     </div>
                 </div>

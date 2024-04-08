@@ -20,6 +20,7 @@
                                         v-model="editProjectData.name"
                                         autofocus
                                         v-forminput
+                                        placeholder="Project Name"
                                     />
                                     <p class="text-sm text-red-600 mt-2">
                                         {{ editProjectData.errors.name[0] }}
@@ -34,6 +35,7 @@
                                         type="text"
                                         v-model="editProjectData.description"
                                         v-forminput
+                                        placeholder="Description"
                                     />
                                 </div>
                             </div>

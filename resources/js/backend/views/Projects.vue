@@ -55,6 +55,7 @@
                                 v-model="new_project.name"
                                 autofocus
                                 v-forminput
+                                placeholder="Project name"
                             />
                             <p class="text-sm text-red-600 mt-2">
                                 {{ new_project.errors.name[0] }}
@@ -66,6 +67,7 @@
                                 type="text"
                                 v-model="new_project.description"
                                 v-forminput
+                                placeholder="Project description"
                             />
                         </div>
                         <div class="mt-6">

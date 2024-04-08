@@ -305,9 +305,7 @@
                                                 <input
                                                     type="email"
                                                     v-model="input.value"
-                                                    :placeholder="
-                                                        field.placeholder
-                                                    "
+                                                    :placeholder="field.placeholder"
                                                     v-forminput
                                                     class="rounded-l-none"
                                                 />
@@ -386,6 +384,7 @@
                                     type="password"
                                     v-model="newData.data[field.name]"
                                     v-forminput
+                                    placeholder="Password"
                                     class="rounded-l-none"
                                 />
                             </div>
@@ -623,9 +622,7 @@
                                                             type="text"
                                                             v-forminput
                                                             :value="inputValue"
-                                                            @click="
-                                                                togglePopover
-                                                            "
+                                                            @click="togglePopover"
                                                         />
                                                     </div>
                                                 </template>

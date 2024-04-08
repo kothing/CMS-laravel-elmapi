@@ -396,8 +396,23 @@
                     <form @submit.prevent="addNewFieldSubmit">
                         <div class="mt-2">
                             <label v-formlabel>Label</label>
-                            <input v-if="!editStatus" type="text" v-model="new_field.label" v-forminput @input="new_field.name = $slugify(new_field.label)" autofocus />
-                            <input v-else type="text" v-model="new_field.label" v-forminput autofocus />
+                            <input 
+                                v-if="!editStatus" 
+                                type="text" 
+                                v-model="new_field.label" 
+                                v-forminput 
+                                @input="new_field.name = $slugify(new_field.label)" 
+                                autofocus
+                                placeholder="Label"
+                            />
+                            <input 
+                                v-else
+                                type="text" 
+                                v-model="new_field.label" 
+                                v-forminput 
+                                autofocus
+                                placeholder="Label"
+                            />
 
                             <p class="text-sm text-red-600 mt-1" v-if="new_field.errors.label">
                                 {{ new_field.errors.label[0] }}
@@ -405,7 +420,7 @@
                         </div>
                         <div class="mt-6">
                             <label v-formlabel>Field Name</label>
-                            <input type="text" v-model="new_field.name" v-forminput />
+                            <input type="text" v-model="new_field.name" v-forminput placeholder="Field Name" />
                             <p class="text-sm text-yellow-600 mt-1" v-if="editStatus">
                                 <i class="fa fa-exclamation-triangle"></i>
                                 Changing the field name can cause content data loss
@@ -416,7 +431,7 @@
                         </div>
                         <div class="mt-6">
                             <label v-formlabel>Description (optional)</label>
-                            <input type="text" v-model="new_field.description" v-forminput />
+                            <input type="text" v-model="new_field.description" v-forminput placeholder="Description" />
                             <p class="text-xs text-gray-600 mt-1">Displays a hint for the field when creating or editing content</p>
                             <p class="text-sm text-red-600 mt-1" v-if="new_field.errors.description">
                                 {{ new_field.errors.description[0] }}
@@ -438,7 +453,7 @@
                             "
                         >
                             <label v-formlabel>Placeholder (optional)</label>
-                            <input type="text" v-model="new_field.placeholder" v-forminput />
+                            <input type="text" v-model="new_field.placeholder" v-forminput placeholder="Placeholder" />
                             <p class="text-sm text-red-600 mt-1" v-if="new_field.errors.placeholder">
                                 {{ new_field.errors.placeholder[0] }}
                             </p>

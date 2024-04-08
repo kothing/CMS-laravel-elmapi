@@ -202,6 +202,7 @@
                                     type="text"
                                     v-model="new_webhook.data.name"
                                     v-forminput
+                                    placeholder="Name"
                                 />
                                 <p
                                     class="text-sm text-red-600 mt-1"
@@ -216,6 +217,7 @@
                                     type="text"
                                     v-model="new_webhook.data.description"
                                     v-forminput
+                                    placeholder="Description"
                                 />
                             </div>
                             <div class="mt-5">
@@ -243,6 +245,7 @@
                                         :type="secretShow ? 'text' : 'password'"
                                         v-model="new_webhook.data.secret"
                                         v-forminput
+                                        placeholder="Secret"
                                         class="rounded-l-none"
                                     />
                                     <span

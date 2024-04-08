@@ -144,11 +144,21 @@
                         <div class="mt-6 clear-both">
                             <div>
                                 <label v-formlabel>File Name</label>
-                                <input type="text" v-model="fileUpdateData.name" class="text-sm w-full rounded-md border-gray-300" />
+                                <input
+                                    type="text" 
+                                    v-model="fileUpdateData.name" 
+                                    placeholder="File"
+                                    class="text-sm w-full rounded-md border-gray-300"
+                                />
                             </div>
                             <div class="mt-4">
                                 <label v-formlabel>Caption</label>
-                                <input type="text" v-model="fileUpdateData.caption" class="text-sm w-full rounded-md border-gray-300" />
+                                <input
+                                    type="text" 
+                                    v-model="fileUpdateData.caption" 
+                                    placeholder="Caption"
+                                    class="text-sm w-full rounded-md border-gray-300"
+                                />
                             </div>
                             <div class="mt-4">
                                 <label v-formlabel>File Path</label>
@@ -156,7 +166,14 @@
                                     <span class="inline-flex items-center px-3 rounded-l-sm border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm cursor-pointer"
                                         ><i class="far fa-copy"></i
                                     ></span>
-                                    <input type="text" readonly disabled :value="selectedFile.full_url" class="text-sm w-full rounded-md border-gray-300 rounded-l-none cursor-pointer" />
+                                    <input
+                                        type="text" 
+                                        readonly 
+                                        disabled 
+                                        :value="selectedFile.full_url"
+                                        placeholder="File Path"
+                                        class="text-sm w-full rounded-md border-gray-300 rounded-l-none cursor-pointer"
+                                    />
                                 </div>
                             </div>
                             <div class="mt-4">
