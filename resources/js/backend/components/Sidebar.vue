@@ -63,6 +63,14 @@
         </nav>
         <nav class="admin__footer-menu">
             <router-link
+                :to="{ name: 'settings' }"
+                :active-class="'bg-gray-700'"
+                class="admin__footer-menu-item flex flex-nowrap items-center px-8 py-4 block hover:bg-gray-700 cursor-pointer"
+            >
+                <i class="admin__menu-item-icon pr-4 fas fa-cogs"></i>
+                <span class="text-xs">Setting</span>
+            </router-link>
+            <router-link
                 :to="{ name: 'profile' }"
                 :active-class="'bg-gray-700'"
                 class="admin__footer-menu-item flex flex-nowrap items-center px-8 py-4 block hover:bg-gray-700 cursor-pointer"
