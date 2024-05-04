@@ -61,7 +61,6 @@
 </template>
 
 <script>
-import store from "../store";
 import UiButton from "../../UI/Button.vue";
 
 export default {
@@ -72,8 +71,8 @@ export default {
     data() {
         return {
             settings: {
-                name: store.state.settings.name,
-                description: store.state.settings.description,
+                name: null,
+                description: null,
                 errors: {},
             },
         };
@@ -83,9 +82,14 @@ export default {
         getSettings() {
             axios
             .get("/admin/settings")
-            .then((response) => {
-                this.settings = response.data;
-            });
+            .then(
+                (response) => {
+                    this.settings = response.data;
+                },
+                (error) => {
+                    console.warn(error);
+                }
+            );
         },
 
         updateSettings() {

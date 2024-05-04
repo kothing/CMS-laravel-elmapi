@@ -31,7 +31,7 @@ const ProjectSettingsWebhookLogs = () => import(/* webpackChunkName: "project.se
  */
 const routes = [
     { path: "/", name: "dashboard", component: Dashboard },
-    { path: "/settings", name: "settings", component: Settings },
+    // { path: "/settings", name: "settings", component: Settings },
     { path: "/profile", name: "profile", component: Profile },
     { path: "/projects/", name: "projects", component: Projects },
     {
